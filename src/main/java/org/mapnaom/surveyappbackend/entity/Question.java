@@ -29,6 +29,8 @@ public class Question extends BaseEntity {
 
     @Column(nullable = false, length = 200)
     private String criterion;
+    @Column(nullable = false, length = 200)
+    private String text;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)

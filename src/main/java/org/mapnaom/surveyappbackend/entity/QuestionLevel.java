@@ -26,4 +26,17 @@ public class QuestionLevel extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "question_id", nullable = false)
     private Question question;
+    private double title;
+    private double score;
+
+    public void setLevelOrder(Integer levelOrder) {
+        // This method is intentionally left empty to ignore the levelOrder field
+        // levelOrder is not stored in the database
+    }
+
+        public double getLevelOrder() {
+        // This method is intentionally left empty to ignore the levelOrder field
+        // levelOrder is not stored in the database
+        return 0;
+    }
 }
