@@ -29,6 +29,8 @@ public class UserService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole() != null ? request.getRole() : UserRole.USER)
                 .enabled(true)
+                .deleted(false)
+                .ldapUser(false)
                 .build();
 
         return userRepository.save(user);

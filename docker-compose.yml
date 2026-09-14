@@ -1,0 +1,59 @@
+services:
+  app:
+    build: .
+    image: survey-app-backend:latest
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-survey_db}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-sgsec!1390}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO:-update}
+      LDAP_URL: ${LDAP_URL:-ldap://ldap:389}
+      LDAP_BASE_DN: ${LDAP_BASE_DN:-dc=example,dc=org}
+      LDAP_BIND_DN: ${LDAP_BIND_DN:-cn=admin,dc=example,dc=org}
+      LDAP_BIND_PASSWORD: ${LDAP_BIND_PASSWORD:-admin}
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production-change-me-1234567890}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin}
+      INITIAL_SURVEY_TITLE: ${INITIAL_SURVEY_TITLE:-پرسشنامه کلاس جهانی}
+      INITIAL_SURVEY_VERSION: ${INITIAL_SURVEY_VERSION:-worldclass-v1}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-survey_db}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sgsec!1390}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  ldap:
+    image: osixia/openldap:1.5.0
+    environment:
+      LDAP_ORGANISATION: ${LDAP_ORGANISATION:-Example}
+      LDAP_DOMAIN: ${LDAP_DOMAIN:-example.org}
+      LDAP_ADMIN_PASSWORD: ${LDAP_BIND_PASSWORD:-admin}
+    ports:
+      - "389:389"
+    volumes:
+      - ldap_data:/var/lib/ldap
+      - ldap_config:/etc/ldap/slapd.d
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  ldap_data:
+  ldap_config:

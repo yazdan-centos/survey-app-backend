@@ -1,0 +1,78 @@
+package org.mapnaom.surveyappbackend.config;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapnaom.surveyappbackend.entity.Dimension;
+import org.mapnaom.surveyappbackend.entity.Question;
+import org.mapnaom.surveyappbackend.entity.Survey;
+import org.mapnaom.surveyappbackend.repository.DimensionRepository;
+import org.mapnaom.surveyappbackend.repository.QuestionRepository;
+import org.mapnaom.surveyappbackend.repository.SurveyRepository;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.test.util.ReflectionTestUtils;
+import tools.jackson.databind.ObjectMapper;
+
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+class DataInitiatorTest {
+
+    @Mock SurveyRepository surveyRepository;
+    @Mock DimensionRepository dimensionRepository;
+    @Mock QuestionRepository questionRepository;
+
+    private DataInitiator initiator;
+
+    @BeforeEach
+    void setUp() {
+        initiator = new DataInitiator(
+                surveyRepository,
+                dimensionRepository,
+                questionRepository,
+                new ObjectMapper());
+        ReflectionTestUtils.setField(initiator, "surveyTitle", "World-Class Survey");
+        ReflectionTestUtils.setField(initiator, "surveyVersion", "worldclass-v1");
+        ReflectionTestUtils.setField(initiator, "questionsResource", new ClassPathResource("surveyQuestions.json"));
+    }
+
+    @Test
+    void createsCompleteSurveyDataWhenVersionIsMissing() throws Exception {
+        when(surveyRepository.save(any(Survey.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(dimensionRepository.findByKey(any())).thenReturn(Optional.empty());
+        when(dimensionRepository.save(any(Dimension.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(questionRepository.save(any(Question.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        initiator.run(null);
+
+        ArgumentCaptor<Question> questionCaptor = ArgumentCaptor.forClass(Question.class);
+        verify(questionRepository, org.mockito.Mockito.times(100)).save(questionCaptor.capture());
+        assertThat(questionCaptor.getAllValues()).hasSize(100);
+        assertThat(questionCaptor.getAllValues())
+                .allSatisfy(question -> assertThat(question.getLevels()).hasSize(4));
+        assertThat(questionCaptor.getAllValues())
+                .flatExtracting(Question::getLevels)
+                .hasSize(400);
+        verify(dimensionRepository, org.mockito.Mockito.times(5)).save(any(Dimension.class));
+    }
+
+    @Test
+    void skipsSeedingWhenSurveyVersionExists() throws Exception {
+        when(surveyRepository.existsByVersion("worldclass-v1")).thenReturn(true);
+
+        initiator.run(null);
+
+        verify(surveyRepository, never()).save(any());
+        verify(dimensionRepository, never()).save(any());
+        verify(questionRepository, never()).save(any());
+    }
+}

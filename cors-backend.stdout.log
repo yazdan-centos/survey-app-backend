@@ -1,0 +1,4622 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< org.mapnaom:survey-app-backend >-------------------
+[INFO] Building survey-app-backend 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:4.1.1:run (default-cli) > test-compile @ survey-app-backend >>>
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ survey-app-backend ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ survey-app-backend ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ survey-app-backend ---
+[INFO] skip non existing resourceDirectory C:\Users\Administrator\Downloads\worldclass-survey-backend\survey-app-backend\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ survey-app-backend ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] <<< spring-boot:4.1.1:run (default-cli) < test-compile @ survey-app-backend <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:4.1.1:run (default-cli) @ survey-app-backend ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-09-14T04:13:20.308-08:00  INFO 27508 --- [survey-app-backend] [           main] o.m.s.SurveyAppBackendApplication        : Starting SurveyAppBackendApplication using Java 17.0.12 with PID 27508 (C:\Users\Administrator\Downloads\worldclass-survey-backend\survey-app-backend\target\classes started by Administrator in C:\Users\Administrator\Downloads\worldclass-survey-backend\survey-app-backend)
+2026-09-14T04:13:20.312-08:00  INFO 27508 --- [survey-app-backend] [           main] o.m.s.SurveyAppBackendApplication        : No active profile set, falling back to 1 default profile: "default"
+2026-09-14T04:13:20.763-08:00  INFO 27508 --- [survey-app-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-14T04:13:20.810-08:00  INFO 27508 --- [survey-app-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 37 ms. Found 5 JPA repository interfaces.
+2026-09-14T04:13:21.200-08:00  INFO 27508 --- [survey-app-backend] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-09-14T04:13:21.211-08:00  INFO 27508 --- [survey-app-backend] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-09-14T04:13:21.211-08:00  INFO 27508 --- [survey-app-backend] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-09-14T04:13:21.257-08:00  INFO 27508 --- [survey-app-backend] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 912 ms
+2026-09-14T04:13:21.381-08:00  INFO 27508 --- [survey-app-backend] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-09-14T04:13:21.417-08:00  INFO 27508 --- [survey-app-backend] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-09-14T04:13:21.691-08:00  INFO 27508 --- [survey-app-backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-14T04:13:21.717-08:00  INFO 27508 --- [survey-app-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-09-14T04:13:21.838-08:00  INFO 27508 --- [survey-app-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@380e33c2
+2026-09-14T04:13:21.843-08:00  INFO 27508 --- [survey-app-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-09-14T04:13:21.896-08:00  INFO 27508 --- [survey-app-backend] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/survey_db]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 15.3
+	Default catalog/schema: survey_db/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-09-14T04:13:22.856-08:00  INFO 27508 --- [survey-app-backend] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    set client_min_messages = WARNING
+Hibernate: 
+    alter table if exists demographic_answers 
+       drop constraint if exists FKqdhsalyd7apml328waxjcv66c
+Hibernate: 
+    alter table if exists question_levels 
+       drop constraint if exists FK3p9woxdylv3haytnoe9epfxdt
+Hibernate: 
+    alter table if exists questions 
+       drop constraint if exists FKc4hrx5r5un4459ldpjqoco5vn
+Hibernate: 
+    alter table if exists questions 
+       drop constraint if exists FKnf38uiy78c0g0tmo68btk3y0p
+Hibernate: 
+    alter table if exists survey_answers 
+       drop constraint if exists FKn81p4d9cpgbht50a8o50ntcv
+Hibernate: 
+    alter table if exists survey_answers 
+       drop constraint if exists FK5uq8oeol8ihkd2swk71t62j6h
+Hibernate: 
+    drop table if exists demographic_answers cascade
+Hibernate: 
+    drop table if exists dimensions cascade
+Hibernate: 
+    drop table if exists question_levels cascade
+Hibernate: 
+    drop table if exists questions cascade
+Hibernate: 
+    drop table if exists survey_answers cascade
+Hibernate: 
+    drop table if exists survey_responses cascade
+Hibernate: 
+    drop table if exists surveys cascade
+Hibernate: 
+    drop table if exists users cascade
+Hibernate: 
+    create table demographic_answers (
+        created_at timestamp(6) with time zone not null,
+        updated_at timestamp(6) with time zone not null,
+        id uuid not null,
+        response_id uuid not null,
+        field_key varchar(100) not null,
+        value text not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table dimensions (
+        display_order integer not null,
+        created_at timestamp(6) with time zone not null,
+        updated_at timestamp(6) with time zone not null,
+        id uuid not null,
+        key varchar(80) not null unique,
+        label varchar(200) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table question_levels (
+        level_number integer not null,
+        score float(53) not null,
+        title float(53) not null,
+        created_at timestamp(6) with time zone not null,
+        updated_at timestamp(6) with time zone not null,
+        id uuid not null,
+        question_id uuid not null,
+        description text not null,
+        primary key (id),
+        unique (question_id, level_number)
+    )
+Hibernate: 
+    create table questions (
+        display_order integer not null,
+        created_at timestamp(6) with time zone not null,
+        updated_at timestamp(6) with time zone not null,
+        dimension_id uuid not null,
+        id uuid not null,
+        survey_id uuid not null,
+        code varchar(20) not null,
+        role varchar(20) not null check ((role in ('MANAGERS','BOARD','CUSTOMERS','SUPPLIERS'))),
+        criterion varchar(200) not null,
+        text varchar(200) not null,
+        primary key (id),
+        unique (survey_id, role, code)
+    )
+Hibernate: 
+    create table survey_answers (
+        selected_level integer,
+        skipped boolean not null,
+        created_at timestamp(6) with time zone not null,
+        updated_at timestamp(6) with time zone not null,
+        id uuid not null,
+        question_id uuid not null,
+        response_id uuid not null,
+        primary key (id),
+        unique (response_id, question_id)
+    )
+Hibernate: 
+    create table survey_responses (
+        created_at timestamp(6) with time zone not null,
+        submitted_at timestamp(6) with time zone not null,
+        updated_at timestamp(6) with time zone not null,
+        id uuid not null,
+        role varchar(20) not null check ((role in ('MANAGERS','BOARD','CUSTOMERS','SUPPLIERS'))),
+        respondent_username varchar(150),
+        primary key (id)
+    )
+Hibernate: 
+    create table surveys (
+        active boolean not null,
+        created_at timestamp(6) with time zone not null,
+        updated_at timestamp(6) with time zone not null,
+        id uuid not null,
+        version varchar(50) not null unique,
+        title varchar(200) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table users (
+        deleted boolean not null,
+        enabled boolean not null,
+        ldap_user boolean not null,
+        created_at timestamp(6) with time zone not null,
+        updated_at timestamp(6) with time zone not null,
+        id uuid not null,
+        role varchar(30) not null check ((role in ('ADMIN','SURVEY_ADMIN','USER'))),
+        department varchar(100),
+        employee_id varchar(100),
+        first_name varchar(100),
+        last_name varchar(100),
+        password varchar(100),
+        username varchar(100) not null unique,
+        display_name varchar(200),
+        email varchar(200) unique,
+        dn varchar(300),
+        primary key (id)
+    )
+Hibernate: 
+    alter table if exists demographic_answers 
+       add constraint FKqdhsalyd7apml328waxjcv66c 
+       foreign key (response_id) 
+       references survey_responses
+Hibernate: 
+    alter table if exists question_levels 
+       add constraint FK3p9woxdylv3haytnoe9epfxdt 
+       foreign key (question_id) 
+       references questions
+Hibernate: 
+    alter table if exists questions 
+       add constraint FKc4hrx5r5un4459ldpjqoco5vn 
+       foreign key (dimension_id) 
+       references dimensions
+Hibernate: 
+    alter table if exists questions 
+       add constraint FKnf38uiy78c0g0tmo68btk3y0p 
+       foreign key (survey_id) 
+       references surveys
+Hibernate: 
+    alter table if exists survey_answers 
+       add constraint FKn81p4d9cpgbht50a8o50ntcv 
+       foreign key (question_id) 
+       references questions
+Hibernate: 
+    alter table if exists survey_answers 
+       add constraint FK5uq8oeol8ihkd2swk71t62j6h 
+       foreign key (response_id) 
+       references survey_responses
+2026-09-14T04:13:23.059-08:00  INFO 27508 --- [survey-app-backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-14T04:13:23.109-08:00  INFO 27508 --- [survey-app-backend] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-09-14T04:13:23.436-08:00  WARN 27508 --- [survey-app-backend] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-09-14T04:13:23.462-08:00  INFO 27508 --- [survey-app-backend] [           main] eAuthenticationProviderManagerConfigurer : Found 2 AuthenticationProvider beans, with names [ldapAuthenticationProvider, daoAuthenticationProvider]. Global Authentication Manager will not be configured with AuthenticationProviders. Consider publishing a single AuthenticationProvider bean, or wiring your Providers directly using the DSL.
+2026-09-14T04:13:23.463-08:00  INFO 27508 --- [survey-app-backend] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2026-09-14T04:13:23.880-08:00  INFO 27508 --- [survey-app-backend] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-09-14T04:13:23.885-08:00  INFO 27508 --- [survey-app-backend] [           main] o.m.s.SurveyAppBackendApplication        : Started SurveyAppBackendApplication in 3.889 seconds (process running for 4.158)
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at, deleted, department, display_name, dn, email, employee_id, enabled, first_name, last_name, ldap_user, password, role, updated_at, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        s1_0.id 
+    from
+        surveys s1_0 
+    where
+        s1_0.version=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.created_at,
+        d1_0.display_order,
+        d1_0.key,
+        d1_0.label,
+        d1_0.updated_at 
+    from
+        dimensions d1_0 
+    where
+        d1_0.key=?
+Hibernate: 
+    insert 
+    into
+        surveys
+        (active, created_at, title, updated_at, version, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        dimensions
+        (created_at, display_order, key, label, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.created_at,
+        d1_0.display_order,
+        d1_0.key,
+        d1_0.label,
+        d1_0.updated_at 
+    from
+        dimensions d1_0 
+    where
+        d1_0.key=?
+Hibernate: 
+    insert 
+    into
+        dimensions
+        (created_at, display_order, key, label, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.created_at,
+        d1_0.display_order,
+        d1_0.key,
+        d1_0.label,
+        d1_0.updated_at 
+    from
+        dimensions d1_0 
+    where
+        d1_0.key=?
+Hibernate: 
+    insert 
+    into
+        dimensions
+        (created_at, display_order, key, label, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.created_at,
+        d1_0.display_order,
+        d1_0.key,
+        d1_0.label,
+        d1_0.updated_at 
+    from
+        dimensions d1_0 
+    where
+        d1_0.key=?
+Hibernate: 
+    insert 
+    into
+        dimensions
+        (created_at, display_order, key, label, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.created_at,
+        d1_0.display_order,
+        d1_0.key,
+        d1_0.label,
+        d1_0.updated_at 
+    from
+        dimensions d1_0 
+    where
+        d1_0.key=?
+Hibernate: 
+    insert 
+    into
+        dimensions
+        (created_at, display_order, key, label, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        questions
+        (code, created_at, criterion, dimension_id, display_order, role, survey_id, text, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        question_levels
+        (created_at, description, level_number, question_id, score, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+2026-09-14T04:13:48.991-08:00  INFO 27508 --- [survey-app-backend] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-09-14T04:13:48.993-08:00  INFO 27508 --- [survey-app-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-09-14T04:13:48.995-08:00  INFO 27508 --- [survey-app-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.deleted,
+        u1_0.department,
+        u1_0.display_name,
+        u1_0.dn,
+        u1_0.email,
+        u1_0.employee_id,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.last_name,
+        u1_0.ldap_user,
+        u1_0.password,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        s1_0.id,
+        s1_0.active,
+        s1_0.created_at,
+        s1_0.title,
+        s1_0.updated_at,
+        s1_0.version 
+    from
+        surveys s1_0
+Hibernate: 
+    select
+        q1_0.survey_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.dimension_id,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.survey_id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.created_at,
+        d1_0.display_order,
+        d1_0.key,
+        d1_0.label,
+        d1_0.updated_at 
+    from
+        dimensions d1_0 
+    where
+        d1_0.id=?
+Hibernate: 
+    select
+        q1_0.dimension_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.survey_id,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.dimension_id=?
+Hibernate: 
+    select
+        s1_0.id,
+        s1_0.active,
+        s1_0.created_at,
+        s1_0.title,
+        s1_0.updated_at,
+        s1_0.version 
+    from
+        surveys s1_0
+Hibernate: 
+    select
+        q1_0.survey_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.dimension_id,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.survey_id=?
+2026-09-14T04:19:18.414-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-09-14T04:19:18.417-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.created_at,
+        d1_0.display_order,
+        d1_0.key,
+        d1_0.label,
+        d1_0.updated_at 
+    from
+        dimensions d1_0 
+    where
+        d1_0.id=?
+Hibernate: 
+    select
+        q1_0.dimension_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.survey_id,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.dimension_id=?
+2026-09-14T04:19:18.441-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-4] .w.s.m.s.DefaultHandlerExceptionResolver : Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-09-14T04:19:18.442-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-4] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+Hibernate: 
+    insert 
+    into
+        surveys
+        (active, created_at, title, updated_at, version, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        s1_0.id,
+        s1_0.active,
+        s1_0.created_at,
+        s1_0.title,
+        s1_0.updated_at,
+        s1_0.version 
+    from
+        surveys s1_0
+Hibernate: 
+    select
+        q1_0.survey_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.dimension_id,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.survey_id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.created_at,
+        d1_0.display_order,
+        d1_0.key,
+        d1_0.label,
+        d1_0.updated_at 
+    from
+        dimensions d1_0 
+    where
+        d1_0.id=?
+Hibernate: 
+    select
+        q1_0.dimension_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.survey_id,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.dimension_id=?
+2026-09-14T04:19:28.889-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-09-14T04:19:28.890-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+Hibernate: 
+    select
+        s1_0.id,
+        s1_0.active,
+        s1_0.created_at,
+        s1_0.title,
+        s1_0.updated_at,
+        s1_0.version 
+    from
+        surveys s1_0
+Hibernate: 
+    select
+        q1_0.survey_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.dimension_id,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.survey_id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.created_at,
+        d1_0.display_order,
+        d1_0.key,
+        d1_0.label,
+        d1_0.updated_at 
+    from
+        dimensions d1_0 
+    where
+        d1_0.id=?
+Hibernate: 
+    select
+        q1_0.dimension_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.survey_id,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.dimension_id=?
+2026-09-14T04:19:32.029-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-09-14T04:19:32.030-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+Hibernate: 
+    select
+        s1_0.id,
+        s1_0.active,
+        s1_0.created_at,
+        s1_0.title,
+        s1_0.updated_at,
+        s1_0.version 
+    from
+        surveys s1_0
+Hibernate: 
+    select
+        q1_0.survey_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.dimension_id,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.survey_id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.created_at,
+        d1_0.display_order,
+        d1_0.key,
+        d1_0.label,
+        d1_0.updated_at 
+    from
+        dimensions d1_0 
+    where
+        d1_0.id=?
+Hibernate: 
+    select
+        q1_0.dimension_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.survey_id,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.dimension_id=?
+2026-09-14T04:19:32.049-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-09-14T04:19:32.050-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+Hibernate: 
+    insert 
+    into
+        surveys
+        (active, created_at, title, updated_at, version, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+2026-09-14T04:19:59.972-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-8] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: 23505
+2026-09-14T04:19:59.973-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-8] org.hibernate.orm.jdbc.error             : ERROR: duplicate key value violates unique constraint "surveys_version_key"
+  Detail: Key (version)=(1) already exists.
+2026-09-14T04:19:59.988-08:00 ERROR 27508 --- [survey-app-backend] [nio-8080-exec-8] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.dao.DataIntegrityViolationException: could not execute statement [ERROR: duplicate key value violates unique constraint "surveys_version_key"
+  Detail: Key (version)=(1) already exists.] [insert into surveys (active,created_at,title,updated_at,version,id) values (?,?,?,?,?,?)]; SQL [insert into surveys (active,created_at,title,updated_at,version,id) values (?,?,?,?,?,?)]; constraint [surveys_version_key]] with root cause
+
+org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "surveys_version_key"
+  Detail: Key (version)=(1) already exists.
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2993) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2656) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:446) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:533) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:449) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:197) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:158) ~[postgresql-42.7.13.jar:42.7.13]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java) ~[HikariCP-7.0.2.jar:na]
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:185) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.performNonBatchedMutation(AbstractMutationExecutor.java:145) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.jdbc.mutation.internal.MutationExecutorSingleNonBatched.performNonBatchedOperations(MutationExecutorSingleNonBatched.java:53) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.execute(AbstractMutationExecutor.java:65) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.execute(AbstractMutationExecutor.java:54) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.doStaticInserts(InsertCoordinatorStandard.java:183) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.coordinateInsert(InsertCoordinatorStandard.java:123) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.insert(InsertCoordinatorStandard.java:96) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:108) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:634) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:505) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:386) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:40) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:138) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.internal.SessionImpl.fireFlush(SessionImpl.java:1472) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:498) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2100) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:2021) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:426) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:167) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commitNoRollbackOnly(JdbcResourceLocalTransactionCoordinatorImpl.java:252) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:242) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:89) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:552) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.processCommit(AbstractPlatformTransactionManager.java:794) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.commit(AbstractPlatformTransactionManager.java:757) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.commitTransactionAfterReturning(TransactionAspectSupport.java:687) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:408) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:135) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:166) ~[spring-data-jpa-4.1.1.jar:4.1.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:222) ~[spring-aop-7.0.9.jar:7.0.9]
+	at jdk.proxy2/jdk.proxy2.$Proxy139.save(Unknown Source) ~[na:na]
+	at org.mapnaom.surveyappbackend.service.SurveyService.create(SurveyService.java:23) ~[classes/:na]
+	at org.mapnaom.surveyappbackend.controller.SurveyController.create(SurveyController.java:22) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:903) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.9.jar:7.0.9]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.24.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:132) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:59) ~[tomcat-embed-websocket-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$2(FilterChainProxy.java:235) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:376) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:132) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:86) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.mapnaom.surveyappbackend.security.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:43) ~[classes/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:385) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195) ~[spring-security-web-7.1.1.jar:7.1.1]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317) ~[spring-security-config-7.1.1.jar:7.1.1]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.9.jar:7.0.9]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:535) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:86) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:347) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:406) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:71) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1307) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:2036) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:949) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:483) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74) ~[tomcat-embed-core-11.0.24.jar:11.0.24]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+
+Hibernate: 
+    select
+        s1_0.id,
+        s1_0.active,
+        s1_0.created_at,
+        s1_0.title,
+        s1_0.updated_at,
+        s1_0.version 
+    from
+        surveys s1_0
+Hibernate: 
+    select
+        q1_0.survey_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.dimension_id,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.survey_id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.created_at,
+        d1_0.display_order,
+        d1_0.key,
+        d1_0.label,
+        d1_0.updated_at 
+    from
+        dimensions d1_0 
+    where
+        d1_0.id=?
+Hibernate: 
+    select
+        q1_0.dimension_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.survey_id,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.dimension_id=?
+2026-09-14T04:22:10.011-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-09-14T04:22:10.012-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+Hibernate: 
+    select
+        s1_0.id,
+        s1_0.active,
+        s1_0.created_at,
+        s1_0.title,
+        s1_0.updated_at,
+        s1_0.version 
+    from
+        surveys s1_0
+Hibernate: 
+    select
+        q1_0.survey_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.dimension_id,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.survey_id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.created_at,
+        d1_0.display_order,
+        d1_0.key,
+        d1_0.label,
+        d1_0.updated_at 
+    from
+        dimensions d1_0 
+    where
+        d1_0.id=?
+Hibernate: 
+    select
+        q1_0.dimension_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.survey_id,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.dimension_id=?
+2026-09-14T04:22:10.027-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-4] .w.s.m.s.DefaultHandlerExceptionResolver : Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-09-14T04:22:10.028-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-4] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+Hibernate: 
+    insert 
+    into
+        surveys
+        (active, created_at, title, updated_at, version, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        s1_0.id,
+        s1_0.active,
+        s1_0.created_at,
+        s1_0.title,
+        s1_0.updated_at,
+        s1_0.version 
+    from
+        surveys s1_0
+Hibernate: 
+    select
+        q1_0.survey_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.dimension_id,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.survey_id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.created_at,
+        d1_0.display_order,
+        d1_0.key,
+        d1_0.label,
+        d1_0.updated_at 
+    from
+        dimensions d1_0 
+    where
+        d1_0.id=?
+Hibernate: 
+    select
+        q1_0.dimension_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.survey_id,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.dimension_id=?
+2026-09-14T04:22:20.146-08:00  WARN 27508 --- [survey-app-backend] [io-8080-exec-10] .w.s.m.s.DefaultHandlerExceptionResolver : Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-09-14T04:22:20.148-08:00  WARN 27508 --- [survey-app-backend] [io-8080-exec-10] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+Hibernate: 
+    select
+        s1_0.id,
+        s1_0.active,
+        s1_0.created_at,
+        s1_0.title,
+        s1_0.updated_at,
+        s1_0.version 
+    from
+        surveys s1_0
+Hibernate: 
+    select
+        q1_0.survey_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.dimension_id,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.survey_id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.created_at,
+        d1_0.display_order,
+        d1_0.key,
+        d1_0.label,
+        d1_0.updated_at 
+    from
+        dimensions d1_0 
+    where
+        d1_0.id=?
+Hibernate: 
+    select
+        q1_0.dimension_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.survey_id,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.dimension_id=?
+2026-09-14T04:22:27.762-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-09-14T04:22:27.763-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+Hibernate: 
+    select
+        s1_0.id,
+        s1_0.active,
+        s1_0.created_at,
+        s1_0.title,
+        s1_0.updated_at,
+        s1_0.version 
+    from
+        surveys s1_0
+Hibernate: 
+    select
+        q1_0.survey_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.dimension_id,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.survey_id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.created_at,
+        d1_0.display_order,
+        d1_0.key,
+        d1_0.label,
+        d1_0.updated_at 
+    from
+        dimensions d1_0 
+    where
+        d1_0.id=?
+Hibernate: 
+    select
+        q1_0.dimension_id,
+        q1_0.id,
+        q1_0.code,
+        q1_0.created_at,
+        q1_0.criterion,
+        q1_0.display_order,
+        q1_0.role,
+        q1_0.survey_id,
+        q1_0.text,
+        q1_0.updated_at 
+    from
+        questions q1_0 
+    where
+        q1_0.dimension_id=?
+2026-09-14T04:22:27.777-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-09-14T04:22:27.778-08:00  WARN 27508 --- [survey-app-backend] [nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (501) exceeds the maximum allowed (500, from `StreamWriteConstraints.getMaxNestingDepth()`)]
