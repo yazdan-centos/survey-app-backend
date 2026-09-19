@@ -37,6 +37,10 @@ public class UserSyncService {
 
             if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
+                if (Boolean.TRUE.equals(user.getDeleted())) {
+                    skipped++;
+                    continue;
+                }
                 boolean changed = updateUserFields(user, adUser);
                 if (changed) {
                     userRepository.save(user);
@@ -95,11 +99,6 @@ public class UserSyncService {
 
         if (!Boolean.TRUE.equals(user.getLdapUser())) {
             user.setLdapUser(true);
-            changed = true;
-        }
-
-        if (Boolean.TRUE.equals(user.getDeleted())) {
-            user.setDeleted(false);
             changed = true;
         }
 

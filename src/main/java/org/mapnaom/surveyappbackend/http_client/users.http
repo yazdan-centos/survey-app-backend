@@ -1,0 +1,50 @@
+@baseUrl = http://localhost:8080
+@adminToken = REPLACE_WITH_ADMIN_ACCESS_TOKEN
+@userId = 00000000-0000-0000-0000-000000000000
+
+### Find all users
+GET {{baseUrl}}/api/users
+Authorization: Bearer {{adminToken}}
+
+### Find user by ID
+GET {{baseUrl}}/api/users/{{userId}}
+Authorization: Bearer {{adminToken}}
+
+### Update user (omitted password, role and enabled are preserved)
+PUT {{baseUrl}}/api/users/{{userId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "username": "alice",
+  "email": "alice@example.com",
+  "firstName": "Alice",
+  "lastName": "Example",
+  "displayName": "Alice Example",
+  "employeeId": "00123",
+  "department": "Engineering"
+}
+
+### Search users
+GET {{baseUrl}}/api/users/search?q=alice&role=USER&enabled=true&page=0&size=20&sort=username,asc
+Authorization: Bearer {{adminToken}}
+
+### Download and fill the template, then save it beside this file as users.xlsx
+GET {{baseUrl}}/api/users/template
+Authorization: Bearer {{adminToken}}
+
+### Import users from the completed worksheet
+POST {{baseUrl}}/api/users/import
+Authorization: Bearer {{adminToken}}
+Content-Type: multipart/form-data; boundary=UserImportBoundary
+
+--UserImportBoundary
+Content-Disposition: form-data; name="file"; filename="users.xlsx"
+Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+< ./users.xlsx
+--UserImportBoundary--
+
+### Soft delete user
+DELETE {{baseUrl}}/api/users/{{userId}}
+Authorization: Bearer {{adminToken}}

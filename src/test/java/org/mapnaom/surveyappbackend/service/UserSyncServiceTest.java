@@ -25,6 +25,20 @@ class UserSyncServiceTest {
     @InjectMocks UserSyncService userSyncService;
 
     @Test
+    void syncDoesNotRestoreDeletedUsers() {
+        User deleted = User.builder().username("deleted").deleted(true).enabled(false).build();
+        when(adUserReaderService.readUsers()).thenReturn(List.of(AdUserDto.builder().username("deleted").build()));
+        when(userRepository.findByUsername("deleted")).thenReturn(Optional.of(deleted));
+
+        UserSyncResponse response = userSyncService.syncFromActiveDirectory();
+
+        assertThat(response.getSkippedCount()).isEqualTo(1);
+        assertThat(deleted.getDeleted()).isTrue();
+        assertThat(deleted.getEnabled()).isFalse();
+        verify(userRepository, never()).save(any());
+    }
+
+    @Test
     void syncCountsCreatedUpdatedAndSkippedUsers() {
         AdUserDto created = AdUserDto.builder().username("new").email("new@example.com").enabled(true).build();
         AdUserDto skipped = AdUserDto.builder().username(" ").build();

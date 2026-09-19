@@ -1,0 +1,64 @@
+@baseUrl = http://localhost:8083
+@questionId = 1
+@jwtToken =
+
+### Login and save JWT token to env var
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+> {%
+  client.global.set("jwtToken", response.body.token || response.body.accessToken || response.body.jwt || "");
+%}
+
+### List all questions
+GET {{baseUrl}}/api/questions
+Authorization: Bearer {{jwtToken}}
+Accept: application/json
+
+### Get a question by id
+GET {{baseUrl}}/api/questions/{{questionId}}
+Authorization: Bearer {{jwtToken}}
+Accept: application/json
+
+### Create a new question
+POST {{baseUrl}}/api/questions
+Authorization: Bearer {{jwtToken}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "text": "What is your favorite programming language?",
+  "type": "TEXT",
+  "required": true
+}
+
+### Update an existing question
+PUT {{baseUrl}}/api/questions/{{questionId}}
+Authorization: Bearer {{jwtToken}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "text": "What is your favorite programming language?",
+  "type": "MULTIPLE_CHOICE",
+  "required": true,
+  "options": [
+    "Java",
+    "Python",
+    "JavaScript",
+    "C#"
+  ]
+}
+
+### Delete a question
+DELETE {{baseUrl}}/api/questions/{{questionId}}
+Authorization: Bearer {{jwtToken}}
+Accept: application/json
+
