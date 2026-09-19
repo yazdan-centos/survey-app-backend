@@ -2,6 +2,12 @@
 
 All `/api/users` endpoints require a bearer token with `ROLE_ADMIN`, including the existing create and AD sync endpoints. User JSON responses omit passwords and password hashes.
 
+## Initial users
+
+At application startup, `UserDataInitializer` imports the first worksheet of the bundled `مدیران.xlsx` resource independently of survey initialization. Column A supplies the display name (split at the first whitespace into first/last names), B the employee ID, D the department, and E (`Account`) the email and username. Columns C and F are unused.
+
+New accounts are enabled local users with role `USER` and initial password `password123`, stored using the configured BCrypt password encoder. Blank accounts and duplicate rows are skipped. Existing usernames or emails are left unchanged, including their passwords, so restarts only add missing users. The separately configured system administrator is unchanged.
+
 | Method | Path | Result |
 | --- | --- | --- |
 | GET | `/api/users` | All non-deleted users |
