@@ -83,6 +83,7 @@ public class SecurityConfig {
                  .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/surveys/dashboard").hasAnyRole("ADMIN", "SURVEY_ADMIN")
                         .requestMatchers("/api/users", "/api/users/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

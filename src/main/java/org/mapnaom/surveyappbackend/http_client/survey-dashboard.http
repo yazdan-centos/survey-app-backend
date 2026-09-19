@@ -1,0 +1,7 @@
+@baseUrl = http://localhost:8080
+@accessToken = REPLACE_WITH_SURVEY_ADMIN_OR_ADMIN_TOKEN
+
+### Survey admin dashboard: global totals and per-survey audience metrics
+GET {{baseUrl}}/api/surveys/dashboard
+Authorization: Bearer {{accessToken}}
+Accept: application/json
