@@ -16,22 +16,24 @@ import java.util.UUID;
 @RequestMapping("/api/survey-responses")
 @RequiredArgsConstructor
 public class SurveyResponseController {
-    private final SurveyResponseService responseService;
+    private final SurveyResponseService surveyResponseService;
 
     @PostMapping
-    public ResponseEntity<SurveyResponseDetails> create(@Valid @RequestBody SaveSurveyResponseRequest request) {
-        var response = responseService.create(request);
-        return ResponseEntity.created(URI.create("/api/survey-responses/" + response.id())).body(response);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<SurveyResponseDetails> findById(@PathVariable UUID id) {
-        return ResponseEntity.ok(responseService.findById(id));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<SurveyResponseDetails> update(@PathVariable UUID id,
+    public ResponseEntity<SurveyResponseDetails> createSurveyResponse(
             @Valid @RequestBody SaveSurveyResponseRequest request) {
-        return ResponseEntity.ok(responseService.update(id, request));
+        var surveyResponse = surveyResponseService.create(request);
+        return ResponseEntity.created(URI.create("/api/survey-responses/" + surveyResponse.id()))
+                .body(surveyResponse);
+    }
+
+    @GetMapping("/{responseId}")
+    public ResponseEntity<SurveyResponseDetails> getSurveyResponseById(@PathVariable UUID responseId) {
+        return ResponseEntity.ok(surveyResponseService.findById(responseId));
+    }
+
+    @PutMapping("/{responseId}")
+    public ResponseEntity<SurveyResponseDetails> updateSurveyResponse(@PathVariable UUID responseId,
+            @Valid @RequestBody SaveSurveyResponseRequest request) {
+        return ResponseEntity.ok(surveyResponseService.update(responseId, request));
     }
 }

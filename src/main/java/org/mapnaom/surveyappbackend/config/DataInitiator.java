@@ -40,11 +40,7 @@ public class DataInitiator implements ApplicationRunner {
     private final QuestionRepository questionRepository;
     private final ObjectMapper objectMapper;
 
-    @Value("${app.data.survey.title:پرسشنامه کلاس جهانی}")
-    private String surveyTitle;
 
-    @Value("${app.data.survey.version:worldclass-v1}")
-    private String surveyVersion;
 
     @Value("classpath:surveyQuestions.json")
     private Resource questionsResource;
@@ -52,13 +48,13 @@ public class DataInitiator implements ApplicationRunner {
     @Override
     @Transactional
     public void run(ApplicationArguments args) throws IOException {
-        if (surveyRepository.existsByVersion(surveyVersion)) {
+        if (surveyRepository.existsByVersion("1.0.0")) {
             return;
         }
 
         Survey survey = new Survey();
-        survey.setTitle(surveyTitle);
-        survey.setVersion(surveyVersion);
+        survey.setTitle("پیمایش کلاس جهانی");
+        survey.setVersion("1.0.0");
         survey.setActive(true);
         survey = surveyRepository.save(survey);
 

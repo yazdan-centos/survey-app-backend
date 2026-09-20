@@ -15,7 +15,7 @@ public class UserSyncController {
     private final UserSyncService userSyncService;
 
     @PostMapping("/sync/ad")
-    public ResponseEntity<UserSyncResponse> syncUsersFromAd() {
+    public ResponseEntity<UserSyncResponse> syncUsersFromActiveDirectory() {
         return ResponseEntity.ok(userSyncService.syncFromActiveDirectory());
     }
 }

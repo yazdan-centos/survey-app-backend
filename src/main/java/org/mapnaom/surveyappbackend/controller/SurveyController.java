@@ -14,19 +14,19 @@ import java.util.UUID;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/surveys")
+@RequestMapping("/api/v1/surveys")
 @RequiredArgsConstructor
 public class SurveyController {
 
     private final SurveyService surveyService;
 
     @PostMapping
-    public ResponseEntity<Survey> create(@Valid @RequestBody CreateSurveyRequest request) {
+    public ResponseEntity<Survey> createSurvey(@Valid @RequestBody CreateSurveyRequest request) {
         return ResponseEntity.ok(surveyService.create(request));
     }
 
     @GetMapping
-    public ResponseEntity<List<Survey>> getAll() {
+    public ResponseEntity<List<Survey>> getAllSurveys() {
         return ResponseEntity.ok(surveyService.findAll());
     }
 
@@ -35,15 +35,15 @@ public class SurveyController {
         return ResponseEntity.ok(surveyService.findActiveSurvey());
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Survey> update(@PathVariable UUID id,
-                                         @Valid @RequestBody UpdateSurveyRequest request) {
-        return ResponseEntity.ok(surveyService.update(id, request));
+    @PutMapping("/{surveyId}")
+    public ResponseEntity<Survey> updateSurvey(@PathVariable UUID surveyId,
+            @Valid @RequestBody UpdateSurveyRequest request) {
+        return ResponseEntity.ok(surveyService.update(surveyId, request));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        surveyService.delete(id);
+    @DeleteMapping("/{surveyId}")
+    public ResponseEntity<Void> deleteSurvey(@PathVariable UUID surveyId) {
+        surveyService.delete(surveyId);
         return ResponseEntity.noContent().build();
     }
 }

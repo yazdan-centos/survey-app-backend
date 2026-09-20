@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/surveys/dashboard")
 @RequiredArgsConstructor
 public class SurveyDashboardController {
-    private final SurveyDashboardService dashboardService;
+    private final SurveyDashboardService surveyDashboardService;
 
     @GetMapping
-    public ResponseEntity<SurveyDashboardResponse> getDashboard() {
-        return ResponseEntity.ok().cacheControl(CacheControl.noStore()).body(dashboardService.getDashboard());
+    public ResponseEntity<SurveyDashboardResponse> getSurveyDashboard() {
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.noStore())
+                .body(surveyDashboardService.getDashboard());
     }
 }

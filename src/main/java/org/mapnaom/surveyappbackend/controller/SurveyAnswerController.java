@@ -17,29 +17,32 @@ import java.util.UUID;
 @RequestMapping("/api/survey-responses/{responseId}/answers")
 @RequiredArgsConstructor
 public class SurveyAnswerController {
-    private final SurveyAnswerService answerService;
+    private final SurveyAnswerService surveyAnswerService;
 
     @PostMapping
-    public ResponseEntity<SurveyAnswerDetails> create(@PathVariable UUID responseId,
+    public ResponseEntity<SurveyAnswerDetails> createSurveyAnswer(@PathVariable UUID responseId,
             @Valid @RequestBody SaveSurveyAnswerRequest request) {
-        var answer = answerService.create(responseId, request);
-        return ResponseEntity.created(URI.create("/api/survey-responses/" + responseId + "/answers/" + answer.id()))
-                .body(answer);
+        var surveyAnswer = surveyAnswerService.create(responseId, request);
+        return ResponseEntity.created(
+                        URI.create("/api/survey-responses/" + responseId + "/answers/" + surveyAnswer.id()))
+                .body(surveyAnswer);
     }
 
     @GetMapping
-    public ResponseEntity<List<SurveyAnswerDetails>> findByResponseId(@PathVariable UUID responseId) {
-        return ResponseEntity.ok(answerService.findByResponseId(responseId));
+    public ResponseEntity<List<SurveyAnswerDetails>> getSurveyAnswersByResponseId(@PathVariable UUID responseId) {
+        return ResponseEntity.ok(surveyAnswerService.findByResponseId(responseId));
     }
 
     @GetMapping("/{answerId}")
-    public ResponseEntity<SurveyAnswerDetails> findById(@PathVariable UUID responseId, @PathVariable UUID answerId) {
-        return ResponseEntity.ok(answerService.findById(responseId, answerId));
+    public ResponseEntity<SurveyAnswerDetails> getSurveyAnswerById(@PathVariable UUID responseId,
+            @PathVariable UUID answerId) {
+        return ResponseEntity.ok(surveyAnswerService.findById(responseId, answerId));
     }
 
     @PutMapping("/{answerId}")
-    public ResponseEntity<SurveyAnswerDetails> update(@PathVariable UUID responseId, @PathVariable UUID answerId,
+    public ResponseEntity<SurveyAnswerDetails> updateSurveyAnswer(@PathVariable UUID responseId,
+            @PathVariable UUID answerId,
             @Valid @RequestBody SaveSurveyAnswerRequest request) {
-        return ResponseEntity.ok(answerService.update(responseId, answerId, request));
+        return ResponseEntity.ok(surveyAnswerService.update(responseId, answerId, request));
     }
 }

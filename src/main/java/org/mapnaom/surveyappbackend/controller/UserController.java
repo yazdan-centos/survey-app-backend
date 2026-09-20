@@ -34,45 +34,45 @@ public class UserController {
     private final UserExcelService userExcelService;
 
     @PostMapping
-    public ResponseEntity<UserResponse> create(@Valid @RequestBody CreateUserRequest request) {
+    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
         return ResponseEntity.ok(UserResponse.from(userService.create(request)));
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponse>> findAll() {
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
         return ResponseEntity.ok(userService.findAll().stream().map(UserResponse::from).toList());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> findById(@PathVariable UUID id) {
-        return ResponseEntity.ok(UserResponse.from(userService.findById(id)));
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserResponse> getUserById(@PathVariable UUID userId) {
+        return ResponseEntity.ok(UserResponse.from(userService.findById(userId)));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserResponse> update(@PathVariable UUID id,
-                                              @Valid @RequestBody UpdateUserRequest request) {
-        return ResponseEntity.ok(UserResponse.from(userService.update(id, request)));
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserResponse> updateUser(@PathVariable UUID userId,
+            @Valid @RequestBody UpdateUserRequest request) {
+        return ResponseEntity.ok(UserResponse.from(userService.update(userId, request)));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        userService.delete(id);
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID userId) {
+        userService.delete(userId);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<UserResponse>> search(@ModelAttribute UserSearchRequest filter,
+    public ResponseEntity<Page<UserResponse>> searchUsers(@ModelAttribute UserSearchRequest filter,
             @PageableDefault(size = 20, sort = "username") Pageable pageable) {
         return ResponseEntity.ok(userService.search(filter, pageable).map(UserResponse::from));
     }
 
     @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<UserImportResponse> importByExcel(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<UserImportResponse> importUsersFromExcel(@RequestParam("file") MultipartFile file) {
         return ResponseEntity.ok(userExcelService.importByExcel(file));
     }
 
     @GetMapping("/template")
-    public ResponseEntity<ByteArrayResource> downloadWorksheetTemplate() {
+    public ResponseEntity<ByteArrayResource> downloadUserImportTemplate() {
         byte[] data = userExcelService.downloadWorksheetTemplate();
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=users-template.xlsx")
@@ -82,7 +82,7 @@ public class UserController {
     }
 
     @ExceptionHandler(ResponseStatusException.class)
-    public ResponseEntity<ProblemDetail> handleUserError(ResponseStatusException exception) {
+    public ResponseEntity<ProblemDetail> handleResponseStatusException(ResponseStatusException exception) {
         return ResponseEntity.status(exception.getStatusCode())
                 .body(ProblemDetail.forStatusAndDetail(exception.getStatusCode(), exception.getReason()));
     }

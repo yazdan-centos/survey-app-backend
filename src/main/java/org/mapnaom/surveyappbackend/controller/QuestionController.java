@@ -26,17 +26,17 @@ public class QuestionController {
     private final QuestionExcelService questionExcelService;
 
     @PostMapping
-    public ResponseEntity<Question> create(@Valid @RequestBody CreateQuestionRequest request) {
+    public ResponseEntity<Question> createQuestion(@Valid @RequestBody CreateQuestionRequest request) {
         return ResponseEntity.ok(questionService.create(request));
     }
 
     @GetMapping("/survey/{surveyId}")
-    public ResponseEntity<List<Question>> getBySurvey(@PathVariable UUID surveyId) {
+    public ResponseEntity<List<Question>> getQuestionsBySurveyId(@PathVariable UUID surveyId) {
         return ResponseEntity.ok(questionService.getBySurvey(surveyId));
     }
 
     @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> importExcel(
+    public ResponseEntity<String> importQuestionsFromExcel(
             @RequestParam UUID surveyId,
             @RequestParam MultipartFile file) {
         questionExcelService.importQuestions(surveyId, file);
@@ -44,7 +44,7 @@ public class QuestionController {
     }
 
     @GetMapping("/export")
-    public ResponseEntity<ByteArrayResource> exportExcel(@RequestParam UUID surveyId) {
+    public ResponseEntity<ByteArrayResource> exportQuestionsToExcel(@RequestParam UUID surveyId) {
         byte[] data = questionExcelService.exportQuestions(surveyId);
 
         ByteArrayResource resource = new ByteArrayResource(data);
