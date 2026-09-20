@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.UUID;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/survey-responses")
 @RequiredArgsConstructor

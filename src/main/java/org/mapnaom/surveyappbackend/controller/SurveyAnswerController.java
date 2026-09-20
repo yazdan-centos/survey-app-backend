@@ -12,6 +12,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/survey-responses/{responseId}/answers")
 @RequiredArgsConstructor

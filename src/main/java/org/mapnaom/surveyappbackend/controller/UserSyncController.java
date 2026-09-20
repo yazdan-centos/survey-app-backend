@@ -6,6 +6,7 @@ import org.mapnaom.surveyappbackend.service.UserSyncService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor

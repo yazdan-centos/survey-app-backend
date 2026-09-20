@@ -24,7 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.UUID;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor

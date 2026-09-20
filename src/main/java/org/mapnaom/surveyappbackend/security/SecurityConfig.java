@@ -83,6 +83,8 @@ public class SecurityConfig {
                  .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/login").permitAll()
+                        // Browsers send CORS preflight requests without credentials.
+                        .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/surveys/dashboard").hasAnyRole("ADMIN", "SURVEY_ADMIN")
                         .requestMatchers("/api/users", "/api/users/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
@@ -92,10 +94,12 @@ public class SecurityConfig {
 
     @Bean
     CorsConfigurationSource corsConfigurationSource(
-            @Value("${app.cors.allowed-origins:http://localhost:5173,http://127.0.0.1:5173}")
+            @Value("${app.cors.allowed-origins:http://localhost:[*],http://127.0.0.1:[*]}")
             List<String> allowedOrigins) {
         var configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(allowedOrigins.stream().map(String::trim).toList());
+        // Origin patterns support local dev servers on any port while still
+        // requiring an explicit origin/pattern in deployed environments.
+        configuration.setAllowedOriginPatterns(allowedOrigins.stream().map(String::trim).toList());
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept"));
         configuration.setExposedHeaders(List.of("Authorization", "Content-Disposition"));

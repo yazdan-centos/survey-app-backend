@@ -5,10 +5,12 @@ import org.mapnaom.surveyappbackend.dto.survey.SurveyDashboardResponse;
 import org.mapnaom.surveyappbackend.service.SurveyDashboardService;
 import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/surveys/dashboard")
 @RequiredArgsConstructor
