@@ -1,5 +1,7 @@
 package org.mapnaom.surveyappbackend.controller;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.junit.jupiter.api.Test;
 import org.mapnaom.surveyappbackend.dto.survey.SurveyDashboardResponse;
 import org.mapnaom.surveyappbackend.dto.survey.SurveyDashboardResponse.*;
@@ -65,7 +67,41 @@ class SurveyDashboardControllerTest {
 
     @Test
     void anonymousRequestsAreRejected() throws Exception {
-        mvc.perform(get("/api/surveys/dashboard")).andExpect(status().is4xxClientError());
+        mvc.perform(get("/api/surveys/dashboard")).andExpect(status().isUnauthorized());
+        verifyNoInteractions(service);
+    }
+
+    @Test
+    void adminBearerTokensCanReadPaginatedDashboardRequest() throws Exception {
+        for (String authority : List.of("ROLE_ADMIN", "ROLE_SURVEY_ADMIN")) {
+            var claims = mock(Claims.class);
+            when(claims.getSubject()).thenReturn("reviewer");
+            when(claims.get("authorities")).thenReturn(List.of(authority));
+            when(jwtService.parse("valid-token")).thenReturn(claims);
+            mvc.perform(get("/api/surveys/dashboard?page=0&size=10")
+                            .header("Authorization", "Bearer valid-token"))
+                    .andExpect(status().isOk());
+        }
+        verify(service, times(2)).getDashboard();
+    }
+
+    @Test
+    void expiredBearerTokenRequiresLoginInsteadOfReturningForbidden() throws Exception {
+        when(jwtService.parse("expired-token")).thenThrow(new ExpiredJwtException(null, null, "expired"));
+        mvc.perform(get("/api/surveys/dashboard").header("Authorization", "Bearer expired-token"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.message").exists());
+        verifyNoInteractions(service);
+    }
+
+    @Test
+    void ordinaryUserBearerTokenRemainsForbidden() throws Exception {
+        var claims = mock(Claims.class);
+        when(claims.getSubject()).thenReturn("respondent");
+        when(claims.get("authorities")).thenReturn(List.of("ROLE_USER"));
+        when(jwtService.parse("user-token")).thenReturn(claims);
+        mvc.perform(get("/api/surveys/dashboard").header("Authorization", "Bearer user-token"))
+                .andExpect(status().isForbidden());
         verifyNoInteractions(service);
     }
 }

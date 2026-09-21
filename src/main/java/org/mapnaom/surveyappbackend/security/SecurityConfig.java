@@ -81,6 +81,17 @@ public class SecurityConfig {
                                             CorsConfigurationSource corsConfigurationSource) throws Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource))
                  .csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling(errors -> errors
+                        .authenticationEntryPoint((request, response, exception) -> {
+                            response.setStatus(401);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"message\":\"Your session is missing or expired. Please sign in again.\"}");
+                        })
+                        .accessDeniedHandler((request, response, exception) -> {
+                            response.setStatus(403);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"message\":\"You do not have permission to access this resource.\"}");
+                        }))
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/login").permitAll()
                         // Browsers send CORS preflight requests without credentials.

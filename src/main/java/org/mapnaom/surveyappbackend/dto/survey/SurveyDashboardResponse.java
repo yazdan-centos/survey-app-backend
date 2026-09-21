@@ -24,4 +24,5 @@ public record SurveyDashboardResponse(Instant generatedAt, Summary summary, List
     public record AudienceStats(SurveyRole role, long responseCount, long answerCount,
                                 long answeredCount, long skippedCount, BigDecimal skipRate) {
     }
+
 }
