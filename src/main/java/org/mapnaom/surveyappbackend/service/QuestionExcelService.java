@@ -20,8 +20,29 @@ import java.util.*;
 @RequiredArgsConstructor
 public class QuestionExcelService {
 
+    private static final List<String> TEMPLATE_HEADERS = List.of(
+            "code", "text", "role", "level_title", "level_score", "level_order");
+
     private final SurveyRepository surveyRepository;
     private final QuestionRepository questionRepository;
+
+    public byte[] downloadWorksheetTemplate() {
+        try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            Sheet sheet = workbook.createSheet("Questions");
+            sheet.createFreezePane(0, 1);
+            Row header = sheet.createRow(0);
+
+            for (int i = 0; i < TEMPLATE_HEADERS.size(); i++) {
+                header.createCell(i).setCellValue(TEMPLATE_HEADERS.get(i));
+                sheet.setColumnWidth(i, i == 1 ? 60 * 256 : 20 * 256);
+            }
+
+            workbook.write(out);
+            return out.toByteArray();
+        } catch (Exception e) {
+            throw new IllegalStateException("Could not generate question worksheet template", e);
+        }
+    }
 
     public void importQuestions(UUID surveyId, MultipartFile file) {
         Survey survey = surveyRepository.findById(surveyId)

@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.mapnaom.surveyappbackend.dto.survey.CreateSurveyRequest;
 import org.mapnaom.surveyappbackend.dto.survey.UpdateSurveyRequest;
-import org.mapnaom.surveyappbackend.entity.Survey;
+import org.mapnaom.surveyappbackend.dto.survey.SurveyResponseDto;
 import org.mapnaom.surveyappbackend.service.SurveyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,24 +21,24 @@ public class SurveyController {
     private final SurveyService surveyService;
 
     @PostMapping
-    public ResponseEntity<Survey> createSurvey(@Valid @RequestBody CreateSurveyRequest request) {
-        return ResponseEntity.ok(surveyService.create(request));
+    public ResponseEntity<SurveyResponseDto> createSurvey(@Valid @RequestBody CreateSurveyRequest request) {
+        return ResponseEntity.ok(SurveyResponseDto.from(surveyService.create(request)));
     }
 
     @GetMapping
-    public ResponseEntity<List<Survey>> getAllSurveys() {
-        return ResponseEntity.ok(surveyService.findAll());
+    public ResponseEntity<List<SurveyResponseDto>> getAllSurveys() {
+        return ResponseEntity.ok(surveyService.findAll().stream().map(SurveyResponseDto::from).toList());
     }
 
     @GetMapping("/active")
-    public ResponseEntity<Survey> getActiveSurvey() {
-        return ResponseEntity.ok(surveyService.findActiveSurvey());
+    public ResponseEntity<SurveyResponseDto> getActiveSurvey() {
+        return ResponseEntity.ok(SurveyResponseDto.from(surveyService.findActiveSurvey()));
     }
 
     @PutMapping("/{surveyId}")
-    public ResponseEntity<Survey> updateSurvey(@PathVariable UUID surveyId,
+    public ResponseEntity<SurveyResponseDto> updateSurvey(@PathVariable UUID surveyId,
             @Valid @RequestBody UpdateSurveyRequest request) {
-        return ResponseEntity.ok(surveyService.update(surveyId, request));
+        return ResponseEntity.ok(SurveyResponseDto.from(surveyService.update(surveyId, request)));
     }
 
     @DeleteMapping("/{surveyId}")

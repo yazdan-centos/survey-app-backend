@@ -10,6 +10,7 @@ Endpoints are grouped alphabetically by entity, then sorted by path and HTTP met
 | GET | `/api/questions/export?surveyId={surveyId}` | `exportQuestionsToExcel` | Export a survey's questions to an Excel file. |
 | POST | `/api/questions/import?surveyId={surveyId}` | `importQuestionsFromExcel` | Import questions for a survey from a multipart Excel file. |
 | GET | `/api/questions/survey/{surveyId}` | `getQuestionsBySurveyId` | List questions for a survey. |
+| GET | `/api/questions/template` | `downloadQuestionImportTemplate` | Download the question import template. |
 
 ## Survey Answers
 

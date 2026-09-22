@@ -55,4 +55,16 @@ public class QuestionController {
                 .contentLength(data.length)
                 .body(resource);
     }
+
+    @GetMapping("/template")
+    public ResponseEntity<ByteArrayResource> downloadQuestionImportTemplate() {
+        byte[] data = questionExcelService.downloadWorksheetTemplate();
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=questions-template.xlsx")
+                .contentType(MediaType.parseMediaType(
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+                .contentLength(data.length)
+                .body(new ByteArrayResource(data));
+    }
 }
