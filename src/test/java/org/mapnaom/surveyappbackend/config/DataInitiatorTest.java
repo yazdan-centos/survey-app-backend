@@ -66,16 +66,20 @@ class DataInitiatorTest {
                 .flatExtracting(Question::getLevels)
                 .hasSize(400);
         verify(dimensionRepository, org.mockito.Mockito.times(5)).save(any(Dimension.class));
+        verify(criterionRepository, org.mockito.Mockito.times(30)).save(any(Criterion.class));
     }
 
     @Test
-    void skipsSeedingWhenSurveyVersionExists() throws Exception {
+    void seedsDimensionsAndCriteriaWithoutDuplicatingExistingSurvey() throws Exception {
         when(surveyRepository.existsByVersion("1.0.0")).thenReturn(true);
+        when(dimensionRepository.save(any(Dimension.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(criterionRepository.save(any(Criterion.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         initiator.run(null);
 
         verify(surveyRepository, never()).save(any());
-        verify(dimensionRepository, never()).save(any());
+        verify(dimensionRepository, org.mockito.Mockito.times(5)).save(any(Dimension.class));
+        verify(criterionRepository, org.mockito.Mockito.times(30)).save(any(Criterion.class));
         verify(questionRepository, never()).save(any());
     }
 }

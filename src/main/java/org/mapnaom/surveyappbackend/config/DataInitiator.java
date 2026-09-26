@@ -52,6 +52,13 @@ public class DataInitiator implements ApplicationRunner {
     @Override
     @Transactional
     public void run(ApplicationArguments args) throws IOException {
+        Map<String, List<QuestionSeed>> questionsByRole;
+        try (var input = questionsResource.getInputStream()) {
+            questionsByRole = objectMapper.readValue(input, new TypeReference<>() {});
+        }
+        Map<String, Dimension> dimensionsByKey = loadDimensions();
+        Map<String, Map<String, Criterion>> criteriaByDimension = loadCriteria(dimensionsByKey, questionsByRole);
+
         if (surveyRepository.existsByVersion("1.0.0")) {
             return;
         }
@@ -62,31 +69,13 @@ public class DataInitiator implements ApplicationRunner {
         survey.setActive(true);
         survey = surveyRepository.save(survey);
 
-        Map<String, Dimension> dimensionsByKey = loadDimensions();
-        Map<Dimension, Map<String, Criterion>> criteriaByDimension = new LinkedHashMap<>();
-        Map<String, List<QuestionSeed>> questionsByRole = objectMapper.readValue(
-                questionsResource.getInputStream(),
-                new TypeReference<>() {
-                });
-
         for (Map.Entry<String, List<QuestionSeed>> roleEntry : questionsByRole.entrySet()) {
             SurveyRole role = SurveyRole.valueOf(roleEntry.getKey().toUpperCase());
             int displayOrder = 1;
             for (QuestionSeed seed : roleEntry.getValue()) {
                 Question question = new Question();
                 question.setSurvey(survey);
-                Dimension dimension = requireDimension(dimensionsByKey, seed.dimensionKey());
-                Criterion criterion = criteriaByDimension.computeIfAbsent(dimension, key -> new LinkedHashMap<>())
-                        .computeIfAbsent(seed.criterion(), name -> criterionRepository
-                                .findByDimensionIdAndName(dimension.getId(), name)
-                                .orElseGet(() -> {
-                                    Criterion created = new Criterion();
-                                    created.setName(name);
-                                    created.setDimension(dimension);
-                                    Criterion saved = criterionRepository.save(created);
-                                    dimension.getCriteria().add(saved);
-                                    return saved;
-                                }));
+                Criterion criterion = criteriaByDimension.get(seed.dimensionKey()).get(seed.criterion());
                 question.setRole(role);
                 question.setCode(seed.code());
                 question.setCriterion(criterion);
@@ -107,6 +96,28 @@ public class DataInitiator implements ApplicationRunner {
                 questionRepository.save(question);
             }
         }
+    }
+
+    private Map<String, Map<String, Criterion>> loadCriteria(
+            Map<String, Dimension> dimensionsByKey, Map<String, List<QuestionSeed>> questionsByRole) {
+        Map<String, Map<String, Criterion>> criteriaByDimension = new LinkedHashMap<>();
+        for (List<QuestionSeed> seeds : questionsByRole.values()) {
+            for (QuestionSeed seed : seeds) {
+                Dimension dimension = requireDimension(dimensionsByKey, seed.dimensionKey());
+                criteriaByDimension.computeIfAbsent(seed.dimensionKey(), key -> new LinkedHashMap<>())
+                        .computeIfAbsent(seed.criterion(), name -> criterionRepository
+                                .findByDimensionIdAndName(dimension.getId(), name)
+                                .orElseGet(() -> {
+                                    Criterion criterion = new Criterion();
+                                    criterion.setName(name);
+                                    criterion.setDimension(dimension);
+                                    Criterion saved = criterionRepository.save(criterion);
+                                    dimension.getCriteria().add(saved);
+                                    return saved;
+                                }));
+            }
+        }
+        return criteriaByDimension;
     }
 
     private Map<String, Dimension> loadDimensions() {
