@@ -67,6 +67,6 @@ public class SurveyService {
 
     public Survey findActiveSurvey() {
         return surveyRepository.findByActiveTrue()
-                .orElseThrow(() -> new RuntimeException("No active survey found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No active survey found"));
     }
 }

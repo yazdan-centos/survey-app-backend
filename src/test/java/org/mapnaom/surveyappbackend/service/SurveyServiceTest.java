@@ -53,6 +53,14 @@ class SurveyServiceTest {
     }
 
     @Test
+    void missingActiveSurveyReturnsNotFound() {
+        when(surveyRepository.findByActiveTrue()).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> surveyService.findActiveSurvey())
+                .isInstanceOfSatisfying(ResponseStatusException.class,
+                        exception -> assertThat(exception.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND));
+    }
+
+    @Test
     void updateChangesFieldsAndPreservesIdentityAndQuestions() {
         UUID id = UUID.randomUUID();
         Survey survey = new Survey();

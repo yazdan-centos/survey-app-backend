@@ -11,6 +11,8 @@ import org.mapnaom.surveyappbackend.entity.Survey;
 import org.mapnaom.surveyappbackend.repository.QuestionRepository;
 import org.mapnaom.surveyappbackend.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.mapnaom.surveyappbackend.dto.question.QuestionResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,5 +58,10 @@ public class QuestionService {
 
     public List<Question> getBySurvey(UUID surveyId) {
         return questionRepository.findBySurveyId(surveyId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<QuestionResponseDto> getSurveyQuestions(UUID surveyId) {
+        return questionRepository.findBySurveyId(surveyId).stream().map(QuestionResponseDto::from).toList();
     }
 }

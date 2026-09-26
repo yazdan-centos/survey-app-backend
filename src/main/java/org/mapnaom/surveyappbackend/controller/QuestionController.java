@@ -3,6 +3,7 @@ package org.mapnaom.surveyappbackend.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.mapnaom.surveyappbackend.dto.question.CreateQuestionRequest;
+import org.mapnaom.surveyappbackend.dto.question.QuestionResponseDto;
 import org.mapnaom.surveyappbackend.entity.Question;
 import org.mapnaom.surveyappbackend.service.QuestionExcelService;
 import org.mapnaom.surveyappbackend.service.QuestionService;
@@ -31,8 +32,8 @@ public class QuestionController {
     }
 
     @GetMapping("/survey/{surveyId}")
-    public ResponseEntity<List<Question>> getQuestionsBySurveyId(@PathVariable UUID surveyId) {
-        return ResponseEntity.ok(questionService.getBySurvey(surveyId));
+    public ResponseEntity<List<QuestionResponseDto>> getQuestionsBySurveyId(@PathVariable UUID surveyId) {
+        return ResponseEntity.ok(questionService.getSurveyQuestions(surveyId));
     }
 
     @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

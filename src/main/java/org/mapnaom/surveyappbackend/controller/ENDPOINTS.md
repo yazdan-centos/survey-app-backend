@@ -50,6 +50,13 @@ Dimension and criterion endpoints require authentication. Successful reads, crea
 | GET | `/api/questions/survey/{surveyId}` | `getQuestionsBySurveyId` | List questions for a survey. |
 | GET | `/api/questions/template` | `downloadQuestionImportTemplate` | Download the question import template. |
 
+`GET /api/questions/survey/{surveyId}` returns bounded question DTOs with `id`,
+`surveyId`, `code`, `text`, `role`, `displayOrder`, `criterionId`, `criterionName`,
+`dimension` (`id`, `key`, `label`, `displayOrder`, audit timestamps), and `levels`
+(`id`, `levelNumber`, `description`). Nested entities and back-references are
+omitted. Levels are sorted by `levelNumber`; clients group questions by dimension
+and filter by role. The active-survey endpoint returns 404 if no survey is active.
+
 ## Survey Answers
 
 | Method | Path | Handler | Description |
