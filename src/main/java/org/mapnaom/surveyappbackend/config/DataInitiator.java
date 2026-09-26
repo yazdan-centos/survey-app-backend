@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@org.springframework.core.annotation.Order(10)
 @RequiredArgsConstructor
 public class DataInitiator implements ApplicationRunner {
 

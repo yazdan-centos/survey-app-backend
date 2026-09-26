@@ -3,9 +3,9 @@
 # FULL AUTOMATIC PRODUCTION DEPLOYMENT SCRIPT
 # AlmaLinux 9 | Spring Boot (Java 21) + PostgreSQL + React (Vite or CRA, auto-detected) + nginx
 #
-# Host:     141.11.1.18
+# Host:     172.30.233.8
 # Backend:  https://github.com/yazdan-centos/survey-app-backend.git
-# Frontend: hhttps://github.com/yazdan-centos/survey-app-frontend.git
+# Frontend: https://github.com/yazdan-centos/survey-app-frontend.git
 #
 # Usage (as root on the target host):
 #   ./deploy.sh
@@ -21,7 +21,7 @@ set -euo pipefail
 BACKEND_REPO="https://github.com/yazdan-centos/survey-app-backend.git"
 FRONTEND_REPO="https://github.com/yazdan-centos/survey-app-frontend.git"
 
-SERVER_IP="141.11.1.18"
+SERVER_IP="172.30.233.8"
 SSH_PORT="9011"
 
 BACKEND_BIND="127.0.0.1"          # backend is only reachable through nginx

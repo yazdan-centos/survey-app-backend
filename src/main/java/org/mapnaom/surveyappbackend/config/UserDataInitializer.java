@@ -21,6 +21,7 @@ import java.util.Locale;
 import java.util.Set;
 
 @Component
+@org.springframework.core.annotation.Order(20)
 @RequiredArgsConstructor
 public class UserDataInitializer implements ApplicationRunner {
 

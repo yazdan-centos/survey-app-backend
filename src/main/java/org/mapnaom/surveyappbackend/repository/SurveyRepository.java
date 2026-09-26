@@ -10,6 +10,7 @@ import java.util.UUID;
 @Repository
 public interface SurveyRepository extends JpaRepository<Survey, UUID> {
     boolean existsByVersion(String version);
+    Optional<Survey> findByVersion(String version);
 
     @Query("select s from Survey s where s.active = true")
     Optional<Survey> findByActiveTrue();

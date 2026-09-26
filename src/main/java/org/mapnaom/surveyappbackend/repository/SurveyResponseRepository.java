@@ -11,6 +11,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface SurveyResponseRepository extends JpaRepository<SurveyResponse, UUID> {
+    @Query("select (count(d) > 0) from DemographicAnswer d where d.fieldKey = :key and d.value = :value")
+    boolean existsByDemographic(@Param("key") String key, @Param("value") String value);
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select r from SurveyResponse r where r.id = :id")
     Optional<SurveyResponse> findForUpdate(@Param("id") UUID id);
