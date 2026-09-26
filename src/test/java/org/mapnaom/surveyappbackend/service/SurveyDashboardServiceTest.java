@@ -168,9 +168,12 @@ class SurveyDashboardServiceTest {
         entityManager.persist(dimension);
         Question question = new Question();
         question.setSurvey(survey);
-        question.setDimension(dimension);
+        Criterion criterion = new Criterion();
+        criterion.setName("Quality");
+        criterion.setDimension(dimension);
+        entityManager.persist(criterion);
+        question.setCriterion(criterion);
         question.setCode(UUID.randomUUID().toString().substring(0, 16));
-        question.setCriterion("Quality");
         question.setText("Question");
         question.setRole(role);
         entityManager.persist(question);

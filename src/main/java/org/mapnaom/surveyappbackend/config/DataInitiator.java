@@ -1,6 +1,8 @@
 package org.mapnaom.surveyappbackend.config;
 
 import lombok.RequiredArgsConstructor;
+import org.mapnaom.surveyappbackend.entity.Criterion;
+import org.mapnaom.surveyappbackend.repository.CriterionRepository;
 import org.mapnaom.surveyappbackend.entity.Dimension;
 import org.mapnaom.surveyappbackend.entity.Question;
 import org.mapnaom.surveyappbackend.entity.QuestionLevel;
@@ -38,6 +40,7 @@ public class DataInitiator implements ApplicationRunner {
 
     private final SurveyRepository surveyRepository;
     private final DimensionRepository dimensionRepository;
+    private final CriterionRepository criterionRepository;
     private final QuestionRepository questionRepository;
     private final ObjectMapper objectMapper;
 
@@ -60,6 +63,7 @@ public class DataInitiator implements ApplicationRunner {
         survey = surveyRepository.save(survey);
 
         Map<String, Dimension> dimensionsByKey = loadDimensions();
+        Map<Dimension, Map<String, Criterion>> criteriaByDimension = new LinkedHashMap<>();
         Map<String, List<QuestionSeed>> questionsByRole = objectMapper.readValue(
                 questionsResource.getInputStream(),
                 new TypeReference<>() {
@@ -71,10 +75,22 @@ public class DataInitiator implements ApplicationRunner {
             for (QuestionSeed seed : roleEntry.getValue()) {
                 Question question = new Question();
                 question.setSurvey(survey);
-                question.setDimension(requireDimension(dimensionsByKey, seed.dimensionKey()));
+                Dimension dimension = requireDimension(dimensionsByKey, seed.dimensionKey());
+                Criterion criterion = criteriaByDimension.computeIfAbsent(dimension, key -> new LinkedHashMap<>())
+                        .computeIfAbsent(seed.criterion(), name -> criterionRepository
+                                .findByDimensionIdAndName(dimension.getId(), name)
+                                .orElseGet(() -> {
+                                    Criterion created = new Criterion();
+                                    created.setName(name);
+                                    created.setDimension(dimension);
+                                    Criterion saved = criterionRepository.save(created);
+                                    dimension.getCriteria().add(saved);
+                                    return saved;
+                                }));
                 question.setRole(role);
                 question.setCode(seed.code());
-                question.setCriterion(seed.criterion());
+                question.setCriterion(criterion);
+                criterion.getQuestions().add(question);
                 question.setText(seed.criterion());
                 question.setDisplayOrder(displayOrder++);
 

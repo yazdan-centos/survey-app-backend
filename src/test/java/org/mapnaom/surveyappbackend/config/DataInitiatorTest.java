@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapnaom.surveyappbackend.entity.Dimension;
+import org.mapnaom.surveyappbackend.entity.Criterion;
+import org.mapnaom.surveyappbackend.repository.CriterionRepository;
 import org.mapnaom.surveyappbackend.entity.Question;
 import org.mapnaom.surveyappbackend.entity.Survey;
 import org.mapnaom.surveyappbackend.repository.DimensionRepository;
@@ -29,6 +31,7 @@ class DataInitiatorTest {
 
     @Mock SurveyRepository surveyRepository;
     @Mock DimensionRepository dimensionRepository;
+    @Mock CriterionRepository criterionRepository;
     @Mock QuestionRepository questionRepository;
 
     private DataInitiator initiator;
@@ -38,10 +41,9 @@ class DataInitiatorTest {
         initiator = new DataInitiator(
                 surveyRepository,
                 dimensionRepository,
+                criterionRepository,
                 questionRepository,
                 new ObjectMapper());
-        ReflectionTestUtils.setField(initiator, "surveyTitle", "World-Class Survey");
-        ReflectionTestUtils.setField(initiator, "surveyVersion", "worldclass-v1");
         ReflectionTestUtils.setField(initiator, "questionsResource", new ClassPathResource("surveyQuestions.json"));
     }
 
@@ -50,6 +52,7 @@ class DataInitiatorTest {
         when(surveyRepository.save(any(Survey.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(dimensionRepository.findByKey(any())).thenReturn(Optional.empty());
         when(dimensionRepository.save(any(Dimension.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(criterionRepository.save(any(Criterion.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(questionRepository.save(any(Question.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         initiator.run(null);
@@ -67,7 +70,7 @@ class DataInitiatorTest {
 
     @Test
     void skipsSeedingWhenSurveyVersionExists() throws Exception {
-        when(surveyRepository.existsByVersion("worldclass-v1")).thenReturn(true);
+        when(surveyRepository.existsByVersion("1.0.0")).thenReturn(true);
 
         initiator.run(null);
 

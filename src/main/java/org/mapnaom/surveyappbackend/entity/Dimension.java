@@ -27,5 +27,5 @@ public class Dimension extends BaseEntity {
     private int displayOrder;
 
     @OneToMany(mappedBy = "dimension")
-    private List<Question> questions = new ArrayList<>();
+    private List<Criterion> criteria = new ArrayList<>();
 }

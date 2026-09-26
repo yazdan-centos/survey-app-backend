@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.mapnaom.surveyappbackend.entity.Question;
+import org.mapnaom.surveyappbackend.entity.Criterion;
+import org.mapnaom.surveyappbackend.repository.CriterionRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.mapnaom.surveyappbackend.entity.QuestionLevel;
 import org.mapnaom.surveyappbackend.entity.Survey;
 import org.mapnaom.surveyappbackend.entity.SurveyRole;
@@ -21,10 +24,11 @@ import java.util.*;
 public class QuestionExcelService {
 
     private static final List<String> TEMPLATE_HEADERS = List.of(
-            "code", "text", "role", "level_title", "level_score", "level_order");
+            "code", "text", "role", "level_title", "level_score", "level_order", "criterion_id");
 
     private final SurveyRepository surveyRepository;
     private final QuestionRepository questionRepository;
+    private final CriterionRepository criterionRepository;
 
     public byte[] downloadWorksheetTemplate() {
         try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
@@ -44,6 +48,7 @@ public class QuestionExcelService {
         }
     }
 
+    @Transactional
     public void importQuestions(UUID surveyId, MultipartFile file) {
         Survey survey = surveyRepository.findById(surveyId)
                 .orElseThrow(() -> new RuntimeException("Survey not found"));
@@ -64,6 +69,10 @@ public class QuestionExcelService {
                 Integer levelScore = getInteger(row.getCell(4));
                 Integer levelOrder = getInteger(row.getCell(5));
 
+                UUID criterionId = UUID.fromString(getString(row.getCell(6)));
+                Criterion criterion = criterionRepository.findById(criterionId)
+                        .orElseThrow(() -> new IllegalArgumentException("Criterion not found: " + criterionId));
+
                 String key = code + "_" + roleStr;
 
                 Question question = questionMap.computeIfAbsent(key, k -> {
@@ -71,14 +80,21 @@ public class QuestionExcelService {
                     q.setSurvey(survey);
                     q.setCode(code);
                     q.setText(text);
+                    q.setCriterion(criterion);
                     q.setRole(SurveyRole.valueOf(roleStr));
                     q.setLevels(new ArrayList<>());
                     return q;
                 });
 
+                if (!question.getCriterion().getId().equals(criterionId)) {
+                    throw new IllegalArgumentException("Conflicting criteria for question: " + code);
+                }
+                if (levelTitle == null || levelTitle.isBlank()) continue;
+
                 QuestionLevel level = new QuestionLevel();
                 level.setQuestion(question);
-                level.setTitle(Double.parseDouble(levelTitle));
+                level.setDescription(levelTitle);
+                level.setLevelNumber(levelScore);
                 level.setScore(levelScore);
                 level.setLevelOrder(levelOrder);
 
@@ -92,6 +108,7 @@ public class QuestionExcelService {
         }
     }
 
+    @Transactional(readOnly = true)
     public byte[] exportQuestions(UUID surveyId) {
         List<Question> questions = questionRepository.findBySurveyId(surveyId);
 
@@ -105,6 +122,7 @@ public class QuestionExcelService {
             header.createCell(3).setCellValue("level_title");
             header.createCell(4).setCellValue("level_score");
             header.createCell(5).setCellValue("level_order");
+            header.createCell(6).setCellValue("criterion_id");
 
             int rowNum = 1;
             for (Question question : questions) {
@@ -113,6 +131,7 @@ public class QuestionExcelService {
                     row.createCell(0).setCellValue(question.getCode());
                     row.createCell(1).setCellValue(question.getText());
                     row.createCell(2).setCellValue(question.getRole().name());
+                    row.createCell(6).setCellValue(question.getCriterion().getId().toString());
                     continue;
                 }
 
@@ -121,8 +140,9 @@ public class QuestionExcelService {
                     row.createCell(0).setCellValue(question.getCode());
                     row.createCell(1).setCellValue(question.getText());
                     row.createCell(2).setCellValue(question.getRole().name());
-                    row.createCell(3).setCellValue(level.getTitle());
-                    row.createCell(4).setCellValue(level.getScore());
+                    row.createCell(6).setCellValue(question.getCriterion().getId().toString());
+                    row.createCell(3).setCellValue(level.getDescription());
+                    row.createCell(4).setCellValue(level.getLevelNumber());
                     row.createCell(5).setCellValue(level.getLevelOrder());
                 }
 

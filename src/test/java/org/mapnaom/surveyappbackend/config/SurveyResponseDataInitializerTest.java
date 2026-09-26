@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.*;
 class SurveyResponseDataInitializerTest {
     @Autowired SurveyRepository surveys;
     @Autowired DimensionRepository dimensions;
+    @Autowired CriterionRepository criteria;
     @Autowired QuestionRepository questions;
     @Autowired UserRepository users;
     @Autowired SurveyResponseRepository responses;
@@ -29,10 +30,31 @@ class SurveyResponseDataInitializerTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        DataInitiator surveySeed = new DataInitiator(surveys, dimensions, questions, new ObjectMapper());
+        DataInitiator surveySeed = new DataInitiator(surveys, dimensions, criteria, questions, new ObjectMapper());
         ReflectionTestUtils.setField(surveySeed, "questionsResource", new ClassPathResource("surveyQuestions.json"));
         surveySeed.run(null);
         initializer = new SurveyResponseDataInitializer(surveys, questions, users, responses);
+    }
+
+    @Test
+    void persistsAndReloadsTheCompleteQuestionHierarchy() {
+        entityManager.flush();
+        entityManager.clear();
+
+        assertThat(dimensions.findAll()).hasSize(5).allSatisfy(dimension -> {
+            assertThat(dimension.getCriteria()).isNotEmpty().allSatisfy(criterion -> {
+                assertThat(criterion.getDimension()).isSameAs(dimension);
+                assertThat(criterion.getName()).isNotBlank();
+                assertThat(criteria.findByDimensionIdAndName(dimension.getId(), criterion.getName()))
+                        .contains(criterion);
+                assertThat(criterion.getQuestions()).isNotEmpty().allSatisfy(question -> {
+                    assertThat(question.getCriterion()).isSameAs(criterion);
+                    assertThat(question.getLevels()).hasSize(4).allSatisfy(level ->
+                            assertThat(level.getQuestion()).isSameAs(question));
+                });
+            });
+        });
+        assertThat(questions.count()).isEqualTo(100);
     }
 
     @Test

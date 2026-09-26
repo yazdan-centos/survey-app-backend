@@ -28,8 +28,6 @@ public class Question extends BaseEntity {
     private String code;
 
     @Column(nullable = false, length = 200)
-    private String criterion;
-    @Column(nullable = false, length = 200)
     private String text;
 
     @Enumerated(EnumType.STRING)
@@ -44,8 +42,8 @@ public class Question extends BaseEntity {
     private Survey survey;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "dimension_id", nullable = false)
-    private Dimension dimension;
+    @JoinColumn(name = "criterion_id", nullable = false)
+    private Criterion criterion;
 
     @OneToMany(mappedBy = "question", cascade = jakarta.persistence.CascadeType.ALL, orphanRemoval = true)
     @OrderBy("levelNumber ASC")

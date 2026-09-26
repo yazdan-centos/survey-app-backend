@@ -45,6 +45,7 @@ class SurveySubmissionPersistenceTest {
     @Autowired SurveyRepository surveyRepository;
     @Autowired QuestionRepository questionRepository;
     @Autowired DimensionRepository dimensionRepository;
+    @Autowired CriterionRepository criterionRepository;
     @Autowired EntityManager entityManager;
     @Autowired PlatformTransactionManager transactionManager;
 
@@ -78,6 +79,8 @@ class SurveySubmissionPersistenceTest {
             questionRepository.deleteAll();
             questionRepository.flush();
             surveyRepository.deleteAll();
+            criterionRepository.deleteAll();
+            criterionRepository.flush();
             dimensionRepository.deleteAll();
         });
     }
@@ -310,9 +313,15 @@ class SurveySubmissionPersistenceTest {
     private Question question(Survey survey, Dimension dimension, String code, SurveyRole role) {
         Question question = new Question();
         question.setSurvey(survey);
-        question.setDimension(dimension);
+        Criterion criterion = criterionRepository.findByDimensionIdAndName(dimension.getId(), "Quality")
+                .orElseGet(() -> {
+                    Criterion created = new Criterion();
+                    created.setName("Quality");
+                    created.setDimension(dimension);
+                    return criterionRepository.saveAndFlush(created);
+                });
+        question.setCriterion(criterion);
         question.setCode(code);
-        question.setCriterion("Quality");
         question.setText("How effective is the service?");
         question.setRole(role);
         for (int number = 1; number <= 2; number++) {

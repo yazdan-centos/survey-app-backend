@@ -13,6 +13,9 @@ public class CreateQuestionRequest {
     @NotNull
     private UUID surveyId;
 
+    @NotNull
+    private UUID criterionId;
+
     @NotBlank
     private String code;
 

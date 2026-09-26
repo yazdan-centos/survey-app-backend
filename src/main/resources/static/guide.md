@@ -6,7 +6,7 @@ This guide is a short glossary for developers who are new to survey systems and 
 
 ```text
 Survey
-  └── Questions ── belong to ── Dimension
+  └── Questions ── belong to ── Criterion ── belongs to ── Dimension
          └── QuestionLevels
 
 SurveyResponse
@@ -44,15 +44,14 @@ The database does not currently enforce that only one survey version is active.
 One prompt in a survey for a particular audience.
 
 - `code`: short identifier. It must be unique within the combination of survey, `role`, and code.
-- `criterion`: criterion or category being evaluated.
+- `criterion`: required parent criterion (a `Criterion` entity).
 - `text`: the prompt shown to the respondent.
 - `role`: intended respondent audience, represented by `SurveyRole`.
 - `displayOrder`: position when presenting questions.
 - `survey`: required parent survey.
-- `dimension`: required classification used to group questions.
 - `levels`: possible rating levels for this question, ordered by `levelNumber`.
 
-Questions require both a survey and a dimension before they can be stored successfully.
+Questions require both a survey and a criterion before they can be stored successfully.
 
 ### QuestionLevel
 
@@ -73,9 +72,19 @@ A reusable grouping or area of assessment, such as “Leadership” or “Operat
 - `key`: stable unique identifier used by code or integrations.
 - `label`: display name.
 - `displayOrder`: position when dimensions are displayed.
-- `questions`: questions assigned to this dimension.
+- `criteria`: criteria assigned to this dimension.
 
-Dimensions are independent entities and can be reused by many questions.
+Dimensions are independent entities and can contain many criteria.
+
+### Criterion
+
+A named assessment criterion within a dimension.
+
+- `name`: required name, unique within its dimension.
+- `dimension`: required parent dimension.
+- `questions`: questions assigned to this criterion.
+
+Question creation requests identify an existing criterion using `criterionId`. Question Excel templates and exports include a `criterion_id` column containing that UUID.
 
 ### SurveyRole
 
@@ -155,5 +164,5 @@ Spring Security exposes these as authorities named `ROLE_ADMIN`, `ROLE_SURVEY_AD
 
 ## Developer tips
 
-Use enum names exactly as declared when sending or importing data; values are persisted as strings. Set both sides of relationships when constructing an object graph (for example, assign `question.setSurvey(survey)` and add the question to `survey.getQuestions()`). Before persisting questions or levels, populate every non-null field, especially `Question.dimension`, `Question.criterion`, `Question.text`, and `QuestionLevel.description`.
+Use enum names exactly as declared when sending or importing data; values are persisted as strings. Set both sides of relationships when constructing an object graph (for example, assign `question.setSurvey(survey)` and add the question to `survey.getQuestions()`). Before persisting questions or levels, populate every non-null field, especially `Criterion.dimension`, `Criterion.name`, `Question.criterion`, `Question.text`, and `QuestionLevel.description`.
 

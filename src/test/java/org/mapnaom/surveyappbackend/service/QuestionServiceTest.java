@@ -6,6 +6,7 @@ import org.mapnaom.surveyappbackend.dto.question.CreateQuestionLevelRequest;
 import org.mapnaom.surveyappbackend.dto.question.CreateQuestionRequest;
 import org.mapnaom.surveyappbackend.entity.*;
 import org.mapnaom.surveyappbackend.repository.QuestionRepository;
+import org.mapnaom.surveyappbackend.repository.CriterionRepository;
 import org.mapnaom.surveyappbackend.repository.SurveyRepository;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -22,14 +23,19 @@ import static org.mockito.Mockito.*;
 class QuestionServiceTest {
     @Mock QuestionRepository questionRepository;
     @Mock SurveyRepository surveyRepository;
+    @Mock CriterionRepository criterionRepository;
     @InjectMocks QuestionService questionService;
 
     @Test
     void createMapsQuestionAndLevels() {
         UUID surveyId = UUID.randomUUID();
         Survey survey = new Survey();
+        Criterion criterion = new Criterion();
+        criterion.setId(UUID.randomUUID());
         CreateQuestionRequest request = new CreateQuestionRequest();
         request.setSurveyId(surveyId); request.setCode("Q1"); request.setText("Leadership"); request.setRole(SurveyRole.MANAGERS);
+        request.setCriterionId(criterion.getId());
+        when(criterionRepository.findById(criterion.getId())).thenReturn(java.util.Optional.of(criterion));
         CreateQuestionLevelRequest level = new CreateQuestionLevelRequest();
         level.setTitle("Excellent"); level.setScore(5); level.setLevelOrder(1);
         request.setLevels(List.of(level));
@@ -40,13 +46,26 @@ class QuestionServiceTest {
 
         assertThat(result.getSurvey()).isSameAs(survey);
         assertThat(result.getCode()).isEqualTo("Q1");
-        assertThat(result.getCriterion()).isEqualTo("Leadership");
+        assertThat(result.getCriterion()).isSameAs(criterion);
+        assertThat(result.getText()).isEqualTo("Leadership");
         assertThat(result.getRole()).isEqualTo(SurveyRole.MANAGERS);
         assertThat(result.getLevels()).singleElement().satisfies(l -> {
             assertThat(l.getDescription()).isEqualTo("Excellent");
             assertThat(l.getLevelNumber()).isEqualTo(5);
             assertThat(l.getQuestion()).isSameAs(result);
         });
+    }
+
+    @Test
+    void createThrowsWhenCriterionMissing() {
+        CreateQuestionRequest request = new CreateQuestionRequest();
+        request.setSurveyId(UUID.randomUUID());
+        request.setCriterionId(UUID.randomUUID());
+        when(surveyRepository.findById(request.getSurveyId())).thenReturn(java.util.Optional.of(new Survey()));
+        when(criterionRepository.findById(request.getCriterionId())).thenReturn(java.util.Optional.empty());
+
+        assertThatThrownBy(() -> questionService.create(request)).hasMessage("Criterion not found");
+        verifyNoInteractions(questionRepository);
     }
 
     @Test
