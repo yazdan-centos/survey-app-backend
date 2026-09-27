@@ -2,7 +2,9 @@ package org.mapnaom.surveyappbackend.config;
 
 import lombok.RequiredArgsConstructor;
 import org.mapnaom.surveyappbackend.entity.Criterion;
+import org.mapnaom.surveyappbackend.entity.DemoGraphicQuestion;
 import org.mapnaom.surveyappbackend.repository.CriterionRepository;
+import org.mapnaom.surveyappbackend.repository.DemoGraphicQuestionRepository;
 import org.mapnaom.surveyappbackend.entity.Dimension;
 import org.mapnaom.surveyappbackend.entity.Question;
 import org.mapnaom.surveyappbackend.entity.QuestionLevel;
@@ -21,6 +23,7 @@ import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +45,7 @@ public class DataInitiator implements ApplicationRunner {
     private final DimensionRepository dimensionRepository;
     private final CriterionRepository criterionRepository;
     private final QuestionRepository questionRepository;
+    private final DemoGraphicQuestionRepository demographicQuestionRepository;
     private final ObjectMapper objectMapper;
 
 
@@ -49,8 +53,11 @@ public class DataInitiator implements ApplicationRunner {
     @Value("classpath:surveyQuestions.json")
     private Resource questionsResource;
 
+    @Value("classpath:static/demographics.json")
+    private Resource demographicsResource;
+
     @Override
-    @Transactional
+    @Transactional(rollbackFor = IOException.class)
     public void run(ApplicationArguments args) throws IOException {
         Map<String, List<QuestionSeed>> questionsByRole;
         try (var input = questionsResource.getInputStream()) {
@@ -58,6 +65,7 @@ public class DataInitiator implements ApplicationRunner {
         }
         Map<String, Dimension> dimensionsByKey = loadDimensions();
         Map<String, Map<String, Criterion>> criteriaByDimension = loadCriteria(dimensionsByKey, questionsByRole);
+        loadDemographicQuestions();
 
         if (surveyRepository.existsByVersion("1.0.0")) {
             return;
@@ -94,6 +102,27 @@ public class DataInitiator implements ApplicationRunner {
                 }
 
                 questionRepository.save(question);
+            }
+        }
+    }
+
+    private void loadDemographicQuestions() throws IOException {
+        Map<String, List<DemographicQuestionSeed>> questionsByGroup;
+        try (var input = demographicsResource.getInputStream()) {
+            questionsByGroup = objectMapper.readValue(input, new TypeReference<>() {});
+        }
+        for (Map.Entry<String, List<DemographicQuestionSeed>> entry : questionsByGroup.entrySet()) {
+            String groupKey = entry.getKey();
+            for (int index = 0; index < entry.getValue().size(); index++) {
+                if (demographicQuestionRepository.existsByGroupKeyAndDisplayOrder(groupKey, index)) continue;
+                DemographicQuestionSeed seed = entry.getValue().get(index);
+                DemoGraphicQuestion question = new DemoGraphicQuestion();
+                question.setGroupKey(groupKey);
+                question.setDisplayOrder(index);
+                question.setQuestion(seed.question());
+                question.setType(seed.type());
+                question.setOptions(new ArrayList<>(seed.options()));
+                demographicQuestionRepository.save(question);
             }
         }
     }
@@ -158,5 +187,8 @@ public class DataInitiator implements ApplicationRunner {
 
     private record QuestionSeed(String code, String dimensionKey, String dimensionLabel,
                                 String criterion, List<String> levels) {
+    }
+
+    private record DemographicQuestionSeed(String question, String type, List<String> options) {
     }
 }

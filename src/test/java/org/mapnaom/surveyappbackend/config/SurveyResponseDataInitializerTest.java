@@ -23,6 +23,7 @@ class SurveyResponseDataInitializerTest {
     @Autowired DimensionRepository dimensions;
     @Autowired CriterionRepository criteria;
     @Autowired QuestionRepository questions;
+    @Autowired DemoGraphicQuestionRepository demographicQuestions;
     @Autowired UserRepository users;
     @Autowired SurveyResponseRepository responses;
     @Autowired EntityManager entityManager;
@@ -30,8 +31,9 @@ class SurveyResponseDataInitializerTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        DataInitiator surveySeed = new DataInitiator(surveys, dimensions, criteria, questions, new ObjectMapper());
+        DataInitiator surveySeed = new DataInitiator(surveys, dimensions, criteria, questions, demographicQuestions, new ObjectMapper());
         ReflectionTestUtils.setField(surveySeed, "questionsResource", new ClassPathResource("surveyQuestions.json"));
+        ReflectionTestUtils.setField(surveySeed, "demographicsResource", new ClassPathResource("static/demographics.json"));
         surveySeed.run(null);
         initializer = new SurveyResponseDataInitializer(surveys, questions, users, responses);
     }

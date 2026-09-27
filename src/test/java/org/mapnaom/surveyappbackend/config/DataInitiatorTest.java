@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapnaom.surveyappbackend.entity.Dimension;
 import org.mapnaom.surveyappbackend.entity.Criterion;
 import org.mapnaom.surveyappbackend.repository.CriterionRepository;
+import org.mapnaom.surveyappbackend.repository.DemoGraphicQuestionRepository;
 import org.mapnaom.surveyappbackend.entity.Question;
 import org.mapnaom.surveyappbackend.entity.Survey;
 import org.mapnaom.surveyappbackend.repository.DimensionRepository;
@@ -33,6 +34,7 @@ class DataInitiatorTest {
     @Mock DimensionRepository dimensionRepository;
     @Mock CriterionRepository criterionRepository;
     @Mock QuestionRepository questionRepository;
+    @Mock DemoGraphicQuestionRepository demographicQuestionRepository;
 
     private DataInitiator initiator;
 
@@ -43,8 +45,10 @@ class DataInitiatorTest {
                 dimensionRepository,
                 criterionRepository,
                 questionRepository,
+                demographicQuestionRepository,
                 new ObjectMapper());
         ReflectionTestUtils.setField(initiator, "questionsResource", new ClassPathResource("surveyQuestions.json"));
+        ReflectionTestUtils.setField(initiator, "demographicsResource", new ClassPathResource("static/demographics.json"));
     }
 
     @Test
@@ -67,6 +71,7 @@ class DataInitiatorTest {
                 .hasSize(400);
         verify(dimensionRepository, org.mockito.Mockito.times(5)).save(any(Dimension.class));
         verify(criterionRepository, org.mockito.Mockito.times(30)).save(any(Criterion.class));
+        verify(demographicQuestionRepository, org.mockito.Mockito.times(23)).save(any());
     }
 
     @Test
@@ -81,5 +86,6 @@ class DataInitiatorTest {
         verify(dimensionRepository, org.mockito.Mockito.times(5)).save(any(Dimension.class));
         verify(criterionRepository, org.mockito.Mockito.times(30)).save(any(Criterion.class));
         verify(questionRepository, never()).save(any());
+        verify(demographicQuestionRepository, org.mockito.Mockito.times(23)).save(any());
     }
 }
