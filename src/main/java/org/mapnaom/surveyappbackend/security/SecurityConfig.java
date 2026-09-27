@@ -1,5 +1,6 @@
 package org.mapnaom.surveyappbackend.security;
 
+import jakarta.servlet.DispatcherType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -93,10 +94,11 @@ public class SecurityConfig {
                             response.getWriter().write("{\"message\":\"You do not have permission to access this resource.\"}");
                         }))
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/login").permitAll()
+                .authorizeHttpRequests(auth -> auth.dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+                        .requestMatchers("/api/auth/login").permitAll()
                         // Browsers send CORS preflight requests without credentials.
                         .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/v1/surveys/active").permitAll()
+                        .requestMatchers("/api/v1/surveys/active").hasAnyRole("USER", "ADMIN", "SURVEY_ADMIN")
                         .requestMatchers("/api/surveys/dashboard").hasAnyRole("ADMIN", "SURVEY_ADMIN")
                         .requestMatchers("/api/users", "/api/users/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
