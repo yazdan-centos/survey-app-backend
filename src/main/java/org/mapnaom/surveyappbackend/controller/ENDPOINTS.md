@@ -20,6 +20,28 @@ Example request:
 {"name":"Leadership","dimensionId":"00000000-0000-0000-0000-000000000001"}
 ```
 
+## Demographic questions
+
+| Method | Path | Handler | Description |
+| --- | --- | --- | --- |
+| GET | `/api/demographic-questions` | `getAll` | List questions ordered by `groupKey` and `displayOrder`; optionally filter with `?groupKey=board`. |
+| POST | `/api/demographic-questions` | `create` | Create a demographic question. |
+| POST | `/api/demographic-questions/import` | `importFromExcelFile` | Import questions from a multipart `.xlsx` upload with a `file` field. |
+| GET | `/api/demographic-questions/template` | `downloadTemplateExcelFile` | Download `demographic-questions-template.xlsx`. |
+| DELETE | `/api/demographic-questions/{id}` | `delete` | Delete a question. |
+| GET | `/api/demographic-questions/{id}` | `getById` | Get one question. |
+| PUT | `/api/demographic-questions/{id}` | `update` | Replace a question's group, text, type, order, and options. |
+
+POST and PUT accept `groupKey` (nonblank, maximum 30 characters), `question` (nonblank), `type` (optional, maximum 20 characters), `displayOrder` (nonnegative integer), and `options` (at least one nonblank string). The source data uses `managers`, `board`, and `stakeholders` as group keys. The pair `groupKey` and `displayOrder` must be unique. Responses include these fields plus `id`, `createdAt`, and `updatedAt`. Reads, creates, updates, and imports return 200; deletes return 204. Missing questions return 404, invalid input returns 400, and duplicate positions return 409. Authentication is required.
+
+Example request:
+
+```json
+{"groupKey":"board","question":"Your role?","type":"select","displayOrder":0,"options":["Director","Other"]}
+```
+
+The Excel template has a header row with `groupKey`, `question`, `type`, `displayOrder`, and `option1` through `option13`. Use one row per question and leave `type` blank when unused. At least one option is required; additional consecutive `optionN` columns can be added. Import inserts new questions and rejects positions that already exist or repeat in the workbook. Validation happens before any rows are saved.
+
 ## Dimensions
 
 | Method | Path | Handler | Description |
