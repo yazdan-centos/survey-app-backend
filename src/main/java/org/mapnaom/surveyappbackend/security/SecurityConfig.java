@@ -109,7 +109,7 @@ public class SecurityConfig {
 
     @Bean
     CorsConfigurationSource corsConfigurationSource(
-            @Value("${app.cors.allowed-origins:http://localhost:[*],http://127.0.0.1:[*]}")
+            @Value("${app.cors.allowed-origins:http://localhost:[*],http://127.0.0.1:[*],http://141.11.1.18:[*],http://155.117.13.33:[*]}")
             List<String> allowedOrigins) {
         var configuration = new CorsConfiguration();
         // Origin patterns support local dev servers on any port while still
