@@ -99,8 +99,12 @@ public class SecurityConfig {
                         // Browsers send CORS preflight requests without credentials.
                         .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/v1/surveys/active").hasAnyRole("USER", "ADMIN", "SURVEY_ADMIN")
+                        // Per-user profile endpoints must be reachable by regular users,
+                        // so they take precedence over the /api/users/** ADMIN rule below.
+                        .requestMatchers("/api/users/me/**").hasAnyRole("USER", "ADMIN", "SURVEY_ADMIN")
                         .requestMatchers("/api/surveys/dashboard").hasAnyRole("ADMIN", "SURVEY_ADMIN")
                         .requestMatchers("/api/questions/search").hasAnyRole("ADMIN", "SURVEY_ADMIN")
+                        .requestMatchers("/api/survey-assignments/**").hasAnyRole("ADMIN", "SURVEY_ADMIN")
                         .requestMatchers("/api/users", "/api/users/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

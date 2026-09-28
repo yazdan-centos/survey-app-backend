@@ -3,6 +3,9 @@ package org.mapnaom.surveyappbackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -52,4 +55,7 @@ public class User extends BaseEntity {
 
     @Column(length = 300)
     private String dn;
+
+    @OneToMany(mappedBy = "user")
+    private List<SurveyAssignment> surveyAssignments = new ArrayList<>();
 }

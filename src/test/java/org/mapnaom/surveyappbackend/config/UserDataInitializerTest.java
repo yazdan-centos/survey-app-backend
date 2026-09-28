@@ -39,7 +39,8 @@ class UserDataInitializerTest {
     @Test
     void importsBundledUsersWithEmailLoginAndEncodedPasswordOnlyOnce() throws Exception {
         var savedEmails = new HashSet<String>();
-        when(userRepository.existsByUsername(anyString())).thenAnswer(call -> savedEmails.contains(call.getArgument(0)));
+        when(userRepository.existsByUsername(anyString())).thenAnswer(call ->
+                "admin".equals(call.getArgument(0)) || savedEmails.contains(call.getArgument(0)));
         when(userRepository.save(any(User.class))).thenAnswer(call -> {
             User user = call.getArgument(0);
             savedEmails.add(user.getEmail());
@@ -70,6 +71,7 @@ class UserDataInitializerTest {
 
     @Test
     void preservesExistingAccountsMatchedByEmail() throws Exception {
+        when(userRepository.existsByUsername("admin")).thenReturn(true);
         when(userRepository.existsByEmail(anyString())).thenReturn(true);
 
         initializer.run(null);
@@ -79,6 +81,7 @@ class UserDataInitializerTest {
 
     @Test
     void skipsBlankAccountsAndDuplicateRows() throws Exception {
+        when(userRepository.existsByUsername("admin")).thenReturn(true);
         try (var workbook = new XSSFWorkbook(); var output = new ByteArrayOutputStream()) {
             var sheet = workbook.createSheet();
             sheet.createRow(0).createCell(4).setCellValue("Account");
@@ -94,5 +97,25 @@ class UserDataInitializerTest {
         var captor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(captor.capture());
         assertThat(captor.getValue().getUsername()).isEqualTo("alice@example.com");
+    }
+
+    @Test
+    void createsAdminWithEncodedPasswordOnlyOnce() throws Exception {
+        when(userRepository.existsByUsername("admin")).thenReturn(false, true);
+        when(userRepository.existsByEmail(anyString())).thenReturn(true);
+
+        initializer.run(null);
+        initializer.run(null);
+
+        var captor = ArgumentCaptor.forClass(User.class);
+        verify(userRepository).save(captor.capture());
+        User admin = captor.getValue();
+        assertThat(admin.getUsername()).isEqualTo("admin");
+        assertThat(admin.getPassword()).isNotEqualTo("admin");
+        assertThat(passwordEncoder.matches("admin", admin.getPassword())).isTrue();
+        assertThat(admin.getRole()).isEqualTo(UserRole.ADMIN);
+        assertThat(admin.getEnabled()).isTrue();
+        assertThat(admin.getDeleted()).isFalse();
+        assertThat(admin.getLdapUser()).isFalse();
     }
 }

@@ -7,11 +7,16 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
-public record SurveyResponseDetails(UUID id, SurveyRole role, String respondentUsername, Instant submittedAt,
+public record SurveyResponseDetails(UUID id, SurveyRole role, String respondentUsername,
+                                    UUID userId, UUID surveyId, UUID surveyAssignmentId,
+                                    Instant submittedAt,
                                     List<SurveyAnswerDetails> answers, List<DemographicDetails> demographics,
                                     Instant createdAt, Instant updatedAt) {
     public static SurveyResponseDetails from(SurveyResponse response) {
         return new SurveyResponseDetails(response.getId(), response.getRole(), response.getRespondentUsername(),
+                response.getUser() == null ? null : response.getUser().getId(),
+                response.getSurvey() == null ? null : response.getSurvey().getId(),
+                response.getSurveyAssignment() == null ? null : response.getSurveyAssignment().getId(),
                 response.getSubmittedAt(), response.getAnswers().stream().map(SurveyAnswerDetails::from).toList(),
                 response.getDemographics().stream()
                         .map(d -> new DemographicDetails(d.getId(), d.getFieldKey(), d.getValue())).toList(),

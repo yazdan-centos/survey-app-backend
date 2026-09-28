@@ -30,4 +30,10 @@ public class Survey extends BaseEntity {
 
     @OneToMany(mappedBy = "survey")
     private List<Question> questions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "survey")
+    private List<SurveyAssignment> assignments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "survey")
+    private List<SurveyResponse> responses = new ArrayList<>();
 }

@@ -34,6 +34,7 @@ public class UserDataInitializer implements ApplicationRunner {
     @Override
     @Transactional(rollbackFor = IOException.class)
     public void run(ApplicationArguments args) throws IOException {
+        createAdminIfMissing();
         try (var input = usersResource.getInputStream(); var workbook = new XSSFWorkbook(input)) {
             var sheet = workbook.getSheetAt(0);
             var formatter = new DataFormatter(Locale.ROOT);
@@ -67,6 +68,21 @@ public class UserDataInitializer implements ApplicationRunner {
                         .build());
             }
         }
+    }
+
+    private void createAdminIfMissing() {
+        if (userRepository.existsByUsername("admin")) {
+            return;
+        }
+        userRepository.save(User.builder()
+                .username("admin")
+                .displayName("System Administrator")
+                .password(passwordEncoder.encode("admin"))
+                .role(UserRole.ADMIN)
+                .enabled(true)
+                .deleted(false)
+                .ldapUser(false)
+                .build());
     }
 
     private String value(Row row, int column, DataFormatter formatter) {
