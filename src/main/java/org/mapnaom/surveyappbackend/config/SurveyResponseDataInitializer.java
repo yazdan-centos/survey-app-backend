@@ -56,6 +56,8 @@ public class SurveyResponseDataInitializer implements ApplicationRunner {
         for (User user : users.subList(0, 5)) {
             SurveyResponse response = new SurveyResponse();
             response.setRespondentUsername(user.getUsername());
+            response.setUser(user);
+            response.setSurvey(survey);
             response.setRole(SurveyRole.MANAGERS);
             response.setSubmittedAt(Instant.now());
             for (Question question : questions) {

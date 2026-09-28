@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,4 +18,10 @@ public interface SurveyResponseRepository extends JpaRepository<SurveyResponse, 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select r from SurveyResponse r where r.id = :id")
     Optional<SurveyResponse> findForUpdate(@Param("id") UUID id);
+
+    boolean existsByUserIdAndSurveyId(UUID userId, UUID surveyId);
+
+    List<SurveyResponse> findAllByUserIdOrderBySubmittedAtDesc(UUID userId);
+
+    List<SurveyResponse> findAllBySurveyId(UUID surveyId);
 }
