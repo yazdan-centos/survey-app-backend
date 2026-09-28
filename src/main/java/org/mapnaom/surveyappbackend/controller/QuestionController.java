@@ -4,10 +4,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.mapnaom.surveyappbackend.dto.question.CreateQuestionRequest;
 import org.mapnaom.surveyappbackend.dto.question.QuestionResponseDto;
+import org.mapnaom.surveyappbackend.dto.question.QuestionSearchRequest;
 import org.mapnaom.surveyappbackend.entity.Question;
 import org.mapnaom.surveyappbackend.service.QuestionExcelService;
 import org.mapnaom.surveyappbackend.service.QuestionService;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +29,20 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final QuestionExcelService questionExcelService;
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<QuestionResponseDto>> searchQuestions(
+            @Valid @ModelAttribute QuestionSearchRequest filter,
+            @PageableDefault(size = 20, sort = "displayOrder") Pageable pageable) {
+        return ResponseEntity.ok(questionService.search(filter, pageable));
+    }
+
+    @PostMapping(value = "/search", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<QuestionResponseDto>> searchQuestionsWithBody(
+            @Valid @RequestBody QuestionSearchRequest filter,
+            @PageableDefault(size = 20, sort = "displayOrder") Pageable pageable) {
+        return ResponseEntity.ok(questionService.search(filter, pageable));
+    }
 
     @PostMapping
     public ResponseEntity<Question> createQuestion(@Valid @RequestBody CreateQuestionRequest request) {

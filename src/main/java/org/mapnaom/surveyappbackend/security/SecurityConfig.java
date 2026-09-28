@@ -100,6 +100,7 @@ public class SecurityConfig {
                         .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/v1/surveys/active").hasAnyRole("USER", "ADMIN", "SURVEY_ADMIN")
                         .requestMatchers("/api/surveys/dashboard").hasAnyRole("ADMIN", "SURVEY_ADMIN")
+                        .requestMatchers("/api/questions/search").hasAnyRole("ADMIN", "SURVEY_ADMIN")
                         .requestMatchers("/api/users", "/api/users/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -113,6 +114,8 @@ public class SecurityConfig {
         var configuration = new CorsConfiguration();
         // Origin patterns support local dev servers on any port while still
         // requiring an explicit origin/pattern in deployed environments.
+        // add production origins to the allowedOrigins list in application.properties or application.yml
+
         configuration.setAllowedOriginPatterns(allowedOrigins.stream().map(String::trim).toList());
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept"));
