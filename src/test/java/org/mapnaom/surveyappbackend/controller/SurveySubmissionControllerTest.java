@@ -124,8 +124,8 @@ class SurveySubmissionControllerTest {
         return new SurveyAnswerDetails(answerId, responseId, questionId, 1, false, Instant.now(), Instant.now());
     }
 
-    private SurveyResponseDetails response() {
-        return new SurveyResponseDetails(responseId, SurveyRole.BOARD, "alice", Instant.now(),
-                List.of(answer()), List.of(), Instant.now(), Instant.now());
+    private SurveyResponseDetails response(){
+        return new SurveyResponseDetails(responseId, SurveyRole.BOARD, "alice", null, null, null,
+                Instant.now(), List.of(answer()), List.of(), Instant.now(), Instant.now());
     }
 }

@@ -1,0 +1,31 @@
+نسخه و تنظیمات Spring Boot
+پاسخ: در pom.xml نسخه Spring Boot برابر 4.1.1 و نسخه Java برابر 17 است؛ پروژه با Maven ساخته می‌شود. وابستگی‌های اصلی شامل Web MVC، Data JPA، Security، LDAP، Validation و Actuator هستند. نقطه شروع SurveyAppBackendApplication با @SpringBootApplication است. در application.properties نام برنامه survey-app-backend و پورت 8080 تعیین شده است. تنظیمات LDAP، JWT، مدیر اولیه و CORS از متغیرهای محیطی قابل دریافت‌اند؛ تنظیمات اجرایی واقعی سرور از مخزن به‌تنهایی قابل تعیین نیست.
+
+نحوه‌ی تعریف Entityها و BaseEntity
+پاسخ: موجودیت‌ها در پکیج entity با Jakarta Persistence، @Entity، @Table و Lombok تعریف شده‌اند و از BaseEntity ارث می‌برند. BaseEntity یک @MappedSuperclass با شناسه UUID تولیدشده توسط GenerationType.UUID و زمان‌های Instant به نام createdAt و updatedAt است؛ @PrePersist هر دو زمان و @PreUpdate زمان ویرایش را تنظیم می‌کند. روابط با @ManyToOne (عمدتاً LAZY) و @OneToMany تعریف شده‌اند؛ برای نمونه Question به Survey و Criterion وابسته است. فرزندان پاسخ در SurveyResponse و سطوح سؤال در Question دارای cascade=ALL و orphanRemoval=true هستند. enumها مانند نقش کاربر به‌صورت STRING ذخیره می‌شوند. محدودیت‌های یکتایی در Entityها تعریف شده‌اند؛ حذف نرم User با فیلد deleted و منطق سرویس انجام می‌شود، نه در BaseEntity.
+منبع: entity/BaseEntity.java و سایر فایل‌های پکیج entity، service/UserService.java.
+
+روش احراز هویت و سطح دسترسی Controllerها
+پاسخ: POST /api/auth/login نام کاربری و رمز را دریافت می‌کند. AuthenticationManager ابتدا DaoAuthenticationProvider (کاربر محلی و BCrypt) و سپس LdapAuthenticationProvider (LDAP bind) را به کار می‌گیرد. JwtService توکن امضاشده حاوی نام کاربری و authorities صادر می‌کند؛ زمان اعتبار پیش‌فرض 3600000 میلی‌ثانیه است. JwtAuthenticationFilter هدر Authorization: Bearer را بررسی می‌کند. نشست STATELESS و CSRF غیرفعال است؛ CORS در SecurityConfig تنظیم می‌شود.
+- ورود، درخواست‌های OPTIONS و dispatch خطا عمومی هستند.
+- /api/users و /api/users/** به ADMIN نیاز دارند؛ استثنای مقدم /api/users/me/** برای USER، ADMIN و SURVEY_ADMIN مجاز است.
+- /api/v1/surveys/active برای USER، ADMIN و SURVEY_ADMIN مجاز است.
+- /api/surveys/dashboard، /api/questions/search و /api/survey-assignments/** به ADMIN یا SURVEY_ADMIN نیاز دارند.
+- سایر مسیرها فقط به احراز هویت نیاز دارند؛ محدودیت نقش عمومی برای تمام Controllerها تعریف نشده است. مالکیت پاسخ‌ها نیز در SurveyResponseService بررسی می‌شود؛ ADMIN و SURVEY_ADMIN می‌توانند پاسخ دیگران را مدیریت کنند.
+منبع: security/SecurityConfig.java، security/JwtService.java، security/JwtAuthenticationFilter.java، auth/AuthController.java و service/SurveyResponseService.java. قواعد بالا بر اساس کد فعلی‌اند؛ توضیح کلی دسترسی کاربران در docs/user-api.md استثنای /me را ذکر نمی‌کند.
+
+ساختار مدیریت Exception
+پاسخ: سرویس‌ها عمدتاً ResponseStatusException با وضعیت‌هایی مانند 400، 403، 404 و 409 پرتاب می‌کنند. SurveySubmissionExceptionHandler یک @RestControllerAdvice محدود به SurveyResponseController و SurveyAnswerController است؛ ResponseStatusException را با وضعیت اصلی و خطاهای MethodArgumentNotValidException و ConstraintViolationException را با وضعیت 400 در قالب ProblemDetail برمی‌گرداند. UserController نیز handler محلی برای ResponseStatusException و خروجی ProblemDetail دارد. SecurityConfig خطاهای 401 و 403 را با JSON دارای message پاسخ می‌دهد. handler سفارشی سراسری برای همه Controllerها وجود ندارد؛ در نتیجه قالب خطا در کل API یکسان نیست و موارد دیگر به سازوکار پیش‌فرض Spring سپرده می‌شوند.
+منبع: exception/SurveySubmissionExceptionHandler.java، controller/UserController.java و security/SecurityConfig.java.
+
+روش migration دیتابیس
+پاسخ: در کد و تنظیمات بررسی‌شده وابستگی یا migration نسخه‌بندی‌شده Flyway/Liquibase و فایل schema.sql/data.sql وجود ندارد. مدیریت schema به Hibernate واگذار شده است: application.properties مقدار ddl-auto=create دارد که هنگام راه‌اندازی schema را بازسازی می‌کند و داده‌های قبلی را حفظ نمی‌کند؛ Docker Compose به‌صورت پیش‌فرض update را اعمال می‌کند و bash-scripts/deployfinal.sh نیز update می‌نویسد. DataInitiator، UserDataInitializer و AdminUserInitializer داده اولیه را هنگام راه‌اندازی ایجاد می‌کنند؛ SurveyResponseDataInitializer فقط با app.seed.survey-responses.enabled=true فعال است. این مقداردهی اولیه، migration نسخه‌بندی‌شده نیست. تاریخچه migration یا راهکار اعمال تغییرات روی دیتابیس مستقر از پروژه قابل تعیین نیست.
+منبع: pom.xml، application.properties، docker-compose.yml، bash-scripts/deployfinal.sh و کلاس‌های initializer.
+
+نوع دیتابیس و تنظیمات JPA
+پاسخ: دیتابیس اصلی PostgreSQL با درایور org.postgresql.Driver و Spring Data JPA/Hibernate است. اتصال پیش‌فرض jdbc:postgresql://localhost:5432/survey_db با کاربر postgres در application.properties تعریف شده و show-sql=true و hibernate.format_sql=true هستند. Docker Compose از postgres:16-alpine، میزبان postgres و volume پایدار postgres_data استفاده می‌کند؛ نام دیتابیس و مشخصات اتصال قابل override هستند. H2 فقط وابستگی تست است و تست‌های persistence از تنظیم create-drop استفاده می‌کنند. dialect و open-in-view در فایل تنظیمات پروژه صریحاً تعیین نشده‌اند. نسخه واقعی دیتابیس نصب‌شده خارج از Docker و مقادیر محیط اجرایی مشخص نیست.
+منبع: pom.xml، application.properties، docker-compose.yml و تست‌های persistence در src/test/java.
+
+الگوی DTO و Mapperهای موجود
+پاسخ: DTOها در پکیج dto و زیرپکیج‌های موضوعی مانند user، survey، question، response و assignment قرار دارند؛ درخواست‌های Create/Save/Update از پاسخ‌ها جدا هستند. کلاس‌های Lombok و Java record هر دو استفاده شده‌اند. اعتبارسنجی درخواست‌ها با Jakarta Validation و @Valid انجام می‌شود. پنج Mapper مبتنی بر MapStruct 1.6.3 شامل SurveyMapper، QuestionMapper، QuestionLevelMapper، DimensionMapper و CriterionMapper موجودند؛ componentModel آن‌ها SPRING و unmappedTargetPolicy آن‌ها IGNORE است و متدهای toEntity، toDto و partialUpdate دارند؛ در partialUpdate مقادیر null نادیده گرفته می‌شوند. برخی روابط به شناسه تخت مانند criterionId تبدیل می‌شوند. Controllerها و سرویس‌های فعلی به این Mapperها ارجاع ندارند و عمدتاً از تبدیل دستی، builder یا متدهای static مانند SurveyResponseDto.from استفاده می‌کنند. SurveyResponseDto اطلاعات پرسشنامه و SurveyResponseDetails اطلاعات پاسخ ثبت‌شده را نمایش می‌دهد.
+منبع: پکیج‌های dto و mapper، controller/DimensionController.java، dto/survey/SurveyResponseDto.java و docs/survey-submission-api.md.
