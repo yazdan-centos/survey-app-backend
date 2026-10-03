@@ -27,7 +27,7 @@ public class Question extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String code;
 
-    @Column(nullable = false, length = 200)
+    @Column(nullable = false, columnDefinition = "text")
     private String text;
 
 
