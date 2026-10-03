@@ -34,9 +34,33 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "text": "What is your favorite programming language?",
-  "type": "TEXT",
-  "required": true
+  "surveyId": "PUT-SURVEY-UUID-HERE",
+  "criterionId": "PUT-CRITERION-UUID-HERE",
+  "code": "MOCK-Q001",
+  "text": "How effectively does the organization lead change?",
+  "role": "MANAGERS",
+  "levels": [
+    {
+      "title": "Initial",
+      "score": 1,
+      "levelOrder": 1
+    },
+    {
+      "title": "Developing",
+      "score": 2,
+      "levelOrder": 2
+    },
+    {
+      "title": "Established",
+      "score": 3,
+      "levelOrder": 3
+    },
+    {
+      "title": "Excellent",
+      "score": 4,
+      "levelOrder": 4
+    }
+  ]
 }
 
 ### Update an existing question
@@ -61,4 +85,3 @@ Accept: application/json
 DELETE {{baseUrl}}/api/questions/{{questionId}}
 Authorization: Bearer {{jwtToken}}
 Accept: application/json
-

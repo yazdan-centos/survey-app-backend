@@ -84,7 +84,7 @@ A named assessment criterion within a dimension.
 - `dimension`: required parent dimension.
 - `questions`: questions assigned to this criterion.
 
-Question creation requests identify an existing criterion using `criterionId`. Question Excel templates and exports include a `criterion_id` column containing that UUID.
+Question creation requests identify an existing survey and criterion using `surveyId` and `criterionId`. The criterion UUID is required because questions cannot exist without a criterion; clients using snake_case may send `criterion_id` as an alias. Question Excel templates and exports include a `criterion_id` column containing that UUID.
 
 ### SurveyRole
 

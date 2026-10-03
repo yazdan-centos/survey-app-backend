@@ -12,6 +12,11 @@
 #
 # The script is idempotent: safe to re-run for updates (git pull + rebuild).
 # It does NOT drop the database on re-runs (data-preserving deployment).
+#
+# SSL VARIANT: serves the frontend over HTTPS (443) with a self-signed
+# certificate at /etc/nginx/ssl/fullchain.crt + server.key; HTTP (80)
+# redirects to HTTPS. Replace the self-signed pair with organization
+# certificates at the same paths to go live.
 #===============================================================================
 set -euo pipefail
 
@@ -326,19 +331,63 @@ fi
 log "Frontend build output: ${FRONTEND_DIR}/${FRONTEND_OUTPUT_DIR}/"
 
 #===============================================================================
-# PHASE 7: NGINX
+# PHASE 7: NGINX (SSL)
 #===============================================================================
-log "Configuring nginx reverse proxy and static hosting..."
+SSL_DIR="/etc/nginx/ssl"
+SSL_CERT="${SSL_DIR}/fullchain.crt"
+SSL_KEY="${SSL_DIR}/server.key"
+
+log "Configuring nginx reverse proxy and static hosting (HTTPS)..."
+mkdir -p "${SSL_DIR}"
+
+# Generate a self-signed certificate for testing if none exists yet.
+# Stable paths (fullchain.crt / server.key) can later be replaced with
+# organization-issued certificates without changing the nginx config.
+if [[ ! -s "${SSL_CERT}" || ! -s "${SSL_KEY}" ]]; then
+    log "Generating self-signed SSL certificate (valid for 3650 days)..."
+    openssl req -x509 -nodes -newkey rsa:2048 -days 3650 \
+        -keyout "${SSL_KEY}" -out "${SSL_CERT}" \
+        -subj "/C=IR/ST=Local/L=Local/O=SurveyApp/CN=${SERVER_IP}" \
+        -addext "subjectAltName=IP:${SERVER_IP},DNS:localhost"
+else
+    log "Existing SSL certificate found at ${SSL_DIR}; reusing it."
+fi
+chown root:nginx "${SSL_KEY}" "${SSL_CERT}"
+chmod 600 "${SSL_KEY}"
+chmod 644 "${SSL_CERT}"
+
 cat > /etc/nginx/conf.d/rest-template.conf << EOF
+# --- HTTP: redirect everything to HTTPS -----------------------------------
 server {
-    listen 80;
+    listen ${SERVER_IP}:80;
     server_name ${SERVER_IP} _;
+
+    # ACME-style challenges stay on HTTP if ever needed
+    location /.well-known/acme-challenge/ { root /var/www/html; }
+    location / { return 301 https://\$host\$request_uri; }
+}
+
+# --- HTTPS: frontend + API reverse proxy ----------------------------------
+server {
+    listen ${SERVER_IP}:443 ssl;
+    http2 on;
+    server_name ${SERVER_IP} _;
+
+    ssl_certificate     ${SSL_CERT};
+    ssl_certificate_key ${SSL_KEY};
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+
     root ${NGINX_ROOT};
     index index.html;
 
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 
     location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
         expires 6M; access_log off; add_header Cache-Control "public, immutable";
@@ -350,7 +399,7 @@ server {
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_set_header X-Forwarded-Proto https;
         proxy_connect_timeout 30s;
         proxy_send_timeout 60s;
         proxy_read_timeout 60s;
@@ -363,10 +412,10 @@ server {
 }
 EOF
 
-# Disable the distro default server block if it conflicts on :80
-if grep -q "listen\s*80" /etc/nginx/nginx.conf && grep -q "server_name\s*_" /etc/nginx/nginx.conf; then
-    sed -i 's|^\(\s*\)listen\s\+80;|\1listen 8081;|' /etc/nginx/nginx.conf || true
-    sed -i 's|^\(\s*\)listen\s\+\[::\]:80;|\1listen [::]:8081;|' /etc/nginx/nginx.conf || true
+# Disable the distro default server blocks if they conflict on :80/:443
+if grep -Eq "listen\s*(\[::\]:)?80([^0-9]|$)" /etc/nginx/nginx.conf && grep -q "server_name\s*_;" /etc/nginx/nginx.conf; then
+    sed -i -E 's|^([[:space:]]*)listen[[:space:]]+80;|\1listen 8081;|' /etc/nginx/nginx.conf || true
+    sed -i -E 's|^([[:space:]]*)listen[[:space:]]+\[::\]:80;|\1listen [::]:8081;|' /etc/nginx/nginx.conf || true
 fi
 
 rm -rf "${NGINX_ROOT:?}"/*
@@ -390,9 +439,10 @@ fi
 #===============================================================================
 # PHASE 9: FIREWALL
 #===============================================================================
-log "Configuring firewalld (HTTP + SSH ${SSH_PORT})..."
+log "Configuring firewalld (HTTP + HTTPS + SSH ${SSH_PORT})..."
 systemctl enable firewalld --now
 firewall-cmd --permanent --add-service=http
+firewall-cmd --permanent --add-service=https
 firewall-cmd --permanent --add-port=${SSH_PORT}/tcp
 firewall-cmd --reload
 
@@ -414,16 +464,17 @@ log "Starting nginx..."
 systemctl enable nginx
 systemctl restart nginx
 
-FE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost/ || echo "000")
-API_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost/api/employees/all || echo "000")
+FE_CODE=$(curl -sk -o /dev/null -w "%{http_code}" https://localhost/ || echo "000")
+API_CODE=$(curl -sk -o /dev/null -w "%{http_code}" https://localhost/api/employees/all || echo "000")
 
 echo ""
 echo -e "${GREEN}============================================================"
 echo "  DEPLOYMENT COMPLETE"
 echo -e "============================================================${NC}"
 echo ""
-echo -e "  ${BLUE}Frontend:${NC}  http://${SERVER_IP}/            (HTTP ${FE_CODE})"
-echo -e "  ${BLUE}API:${NC}       http://${SERVER_IP}/api/        (HTTP ${API_CODE} on /api/employees/all)"
+echo -e "  ${BLUE}Frontend:${NC}  https://${SERVER_IP}/           (HTTPS ${FE_CODE})"
+echo -e "  ${BLUE}API:${NC}       https://${SERVER_IP}/api/     (HTTPS ${API_CODE} on /api/employees/all)"
+echo -e "  ${YELLOW}Note:${NC} self-signed certificate — browsers will show a warning (accept to proceed)."
 echo -e "  ${BLUE}Database:${NC}  ${DB_NAME} on ${DB_HOST}:${DB_PORT}"
 echo ""
 echo -e "  ${YELLOW}Useful commands:${NC}"

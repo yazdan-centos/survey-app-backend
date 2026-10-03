@@ -77,6 +77,8 @@ public class QuestionExcelService {
 
                 Question question = questionMap.computeIfAbsent(key, k -> {
                     Question q = new Question();
+                    q.setCreatedAt(new Date().toInstant());
+                    q.setUpdatedAt(new Date().toInstant());
                     q.setSurvey(survey);
                     q.setCode(code);
                     q.setText(text);

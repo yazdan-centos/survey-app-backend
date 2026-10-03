@@ -103,6 +103,8 @@ public class SecurityConfig {
                         // so they take precedence over the /api/users/** ADMIN rule below.
                         .requestMatchers("/api/users/me/**").hasAnyRole("USER", "ADMIN", "SURVEY_ADMIN")
                         .requestMatchers("/api/surveys/dashboard").hasAnyRole("ADMIN", "SURVEY_ADMIN")
+                        .requestMatchers("/api/surveys/results").hasAnyRole("ADMIN", "SURVEY_ADMIN")
+                        .requestMatchers("/api/surveys/*/results").hasAnyRole("ADMIN", "SURVEY_ADMIN")
                         .requestMatchers("/api/questions/search").hasAnyRole("ADMIN", "SURVEY_ADMIN")
                         .requestMatchers("/api/survey-assignments/**").hasAnyRole("ADMIN", "SURVEY_ADMIN")
                         .requestMatchers("/api/users", "/api/users/**").hasRole("ADMIN")

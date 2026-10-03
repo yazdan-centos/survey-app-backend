@@ -2,6 +2,7 @@ package org.mapnaom.surveyappbackend.dto.question;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Data;
 import org.mapnaom.surveyappbackend.entity.SurveyRole;
 
@@ -14,6 +15,7 @@ public class CreateQuestionRequest {
     private UUID surveyId;
 
     @NotNull
+    @JsonAlias("criterion_id")
     private UUID criterionId;
 
     @NotBlank
