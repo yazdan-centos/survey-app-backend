@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Import;
 
 import java.time.Instant;
 import java.util.Arrays;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -163,7 +162,7 @@ class SurveyDashboardServiceTest {
 
     private Question question(Survey survey, SurveyRole role) {
         Dimension dimension = new Dimension();
-        dimension.setKey(UUID.randomUUID().toString());
+        dimension.setKey(java.util.UUID.randomUUID().toString());
         dimension.setLabel("Quality");
         entityManager.persist(dimension);
         Question question = new Question();
@@ -173,7 +172,7 @@ class SurveyDashboardServiceTest {
         criterion.setDimension(dimension);
         entityManager.persist(criterion);
         question.setCriterion(criterion);
-        question.setCode(UUID.randomUUID().toString().substring(0, 16));
+        question.setCode(java.util.UUID.randomUUID().toString().substring(0, 16));
         question.setText("Question");
         question.setRole(role);
         entityManager.persist(question);

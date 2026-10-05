@@ -6,12 +6,11 @@ import org.mapnaom.surveyappbackend.entity.SurveyRole;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 
-public record QuestionResponseDto(UUID id, UUID surveyId, String code, String text, SurveyRole role,
-                                  int displayOrder, UUID criterionId, String criterionName,
+public record QuestionResponseDto(Long id, Long surveyId, String code, String text, SurveyRole role,
+                                  int displayOrder, Long criterionId, String criterionName,
                                   DimensionResponseDto dimension, List<Level> levels) {
-    public record Level(UUID id, int levelNumber, String description) {}
+    public record Level(Long id, int levelNumber, String description) {}
 
     public static QuestionResponseDto from(Question question) {
         return new QuestionResponseDto(question.getId(), question.getSurvey().getId(), question.getCode(),

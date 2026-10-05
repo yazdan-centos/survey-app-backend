@@ -15,7 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -44,7 +43,7 @@ class SurveyServiceTest {
 
     @Test
     void findByIdThrowsWhenSurveyDoesNotExist() {
-        UUID id = UUID.randomUUID();
+        Long id = 10049L;
         when(surveyRepository.findById(id)).thenReturn(java.util.Optional.empty());
 
         assertThatThrownBy(() -> surveyService.findById(id))
@@ -62,7 +61,7 @@ class SurveyServiceTest {
 
     @Test
     void updateChangesFieldsAndPreservesIdentityAndQuestions() {
-        UUID id = UUID.randomUUID();
+        Long id = 10050L;
         Survey survey = new Survey();
         survey.setId(id);
         var questions = survey.getQuestions();
@@ -83,7 +82,7 @@ class SurveyServiceTest {
 
     @Test
     void updatePreservesActiveWhenOmitted() {
-        UUID id = UUID.randomUUID();
+        Long id = 10051L;
         Survey survey = new Survey();
         survey.setActive(false);
         when(surveyRepository.findById(id)).thenReturn(Optional.of(survey));
@@ -94,7 +93,7 @@ class SurveyServiceTest {
 
     @Test
     void updateMissingSurveyReturnsNotFoundWithoutSaving() {
-        assertThatThrownBy(() -> surveyService.update(UUID.randomUUID(), updateRequest()))
+        assertThatThrownBy(() -> surveyService.update(10052L, updateRequest()))
                 .isInstanceOfSatisfying(ResponseStatusException.class,
                         exception -> assertThat(exception.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND));
         verify(surveyRepository, never()).saveAndFlush(any());
@@ -102,7 +101,7 @@ class SurveyServiceTest {
 
     @Test
     void updateDuplicateVersionReturnsConflict() {
-        UUID id = UUID.randomUUID();
+        Long id = 10053L;
         Survey survey = new Survey();
         when(surveyRepository.findById(id)).thenReturn(Optional.of(survey));
         when(surveyRepository.saveAndFlush(survey))
@@ -115,7 +114,7 @@ class SurveyServiceTest {
 
     @Test
     void deleteRemovesExistingSurvey() {
-        UUID id = UUID.randomUUID();
+        Long id = 10054L;
         Survey survey = new Survey();
         when(surveyRepository.findById(id)).thenReturn(Optional.of(survey));
 
@@ -127,7 +126,7 @@ class SurveyServiceTest {
 
     @Test
     void deleteMissingSurveyReturnsNotFoundWithoutDeleting() {
-        assertThatThrownBy(() -> surveyService.delete(UUID.randomUUID()))
+        assertThatThrownBy(() -> surveyService.delete(10055L))
                 .isInstanceOfSatisfying(ResponseStatusException.class,
                         exception -> assertThat(exception.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND));
         verify(surveyRepository, never()).delete(any(Survey.class));
@@ -135,7 +134,7 @@ class SurveyServiceTest {
 
     @Test
     void deleteWithRelatedDataReturnsConflict() {
-        UUID id = UUID.randomUUID();
+        Long id = 10056L;
         when(surveyRepository.findById(id)).thenReturn(Optional.of(new Survey()));
         doThrow(new DataIntegrityViolationException("linked questions")).when(surveyRepository).flush();
 

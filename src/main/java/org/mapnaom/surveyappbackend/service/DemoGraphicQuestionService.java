@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +42,7 @@ public class DemoGraphicQuestionService {
     }
 
     @Transactional(readOnly = true)
-    public DemoGraphicQuestion findById(UUID id) {
+    public DemoGraphicQuestion findById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Demographic question not found"));
     }
@@ -56,14 +55,14 @@ public class DemoGraphicQuestionService {
     }
 
     @Transactional
-    public DemoGraphicQuestion update(UUID id, DemoGraphicQuestion input) {
+    public DemoGraphicQuestion update(Long id, DemoGraphicQuestion input) {
         DemoGraphicQuestion entity = findById(id);
         copyFields(entity, input);
         return save(entity);
     }
 
     @Transactional
-    public void delete(UUID id) {
+    public void delete(Long id) {
         repository.delete(findById(id));
         repository.flush();
     }

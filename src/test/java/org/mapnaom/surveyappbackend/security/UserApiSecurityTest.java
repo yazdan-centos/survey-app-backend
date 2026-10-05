@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -39,7 +38,7 @@ class UserApiSecurityTest {
     @Test
     void usersAndAdminsCanAccessActiveSurvey() throws Exception {
         Survey survey = new Survey();
-        survey.setId(UUID.randomUUID());
+        survey.setId(10032L);
         survey.setTitle("Current survey");
         survey.setVersion("2026");
         survey.setActive(true);
@@ -82,7 +81,7 @@ class UserApiSecurityTest {
 
     @Test
     void nonAdminsCannotAccessAnyUserManagementEndpoint() throws Exception {
-        UUID id = UUID.randomUUID();
+        Long id = 10033L;
         for (String role : List.of("USER", "SURVEY_ADMIN")) {
             for (String path : List.of("/api/users", "/api/users/" + id, "/api/users/search", "/api/users/template")) {
                 mvc.perform(get(path).with(user("caller").roles(role))).andExpect(status().isForbidden());
@@ -102,7 +101,7 @@ class UserApiSecurityTest {
     void adminCanListAndDeleteUsers() throws Exception {
         when(service.findAll()).thenReturn(List.of());
         mvc.perform(get("/api/users").with(user("admin").roles("ADMIN"))).andExpect(status().isOk());
-        UUID id = UUID.randomUUID();
+        Long id = 10034L;
         mvc.perform(delete("/api/users/{id}", id).with(user("admin").roles("ADMIN")))
                 .andExpect(status().isNoContent());
         verify(service).delete(id);

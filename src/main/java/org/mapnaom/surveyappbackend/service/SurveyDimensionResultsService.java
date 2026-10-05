@@ -20,7 +20,6 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 
 @Service
@@ -35,7 +34,7 @@ public class SurveyDimensionResultsService {
     private final SurveyAnswerRepository repository;
 
     @Transactional(readOnly = true)
-    public SurveyDimensionResultsResponse getResults(UUID surveyId, SurveyRole requestedRole) {
+    public SurveyDimensionResultsResponse getResults(Long surveyId, SurveyRole requestedRole) {
         List<DimensionScoreRow> rows = surveyId == null
                 ? repository.findDimensionScoreRows()
                 : repository.findDimensionScoreRowsBySurveyId(surveyId);
@@ -55,7 +54,7 @@ public class SurveyDimensionResultsService {
     }
 
     private List<DimensionResult> buildDimensions(List<DimensionScoreRow> rows) {
-        Map<UUID, DimensionAccumulator> dimensions = new LinkedHashMap<>();
+        Map<Long, DimensionAccumulator> dimensions = new LinkedHashMap<>();
         rows.stream().sorted(Comparator.comparingInt(DimensionScoreRow::getDimensionOrder))
                 .forEach(row -> dimensions.computeIfAbsent(row.getDimensionId(), ignored ->
                         new DimensionAccumulator(row)).add(row));
@@ -71,7 +70,7 @@ public class SurveyDimensionResultsService {
         private final String label;
         private double total;
         private long count;
-        private final Map<UUID, CriterionAccumulator> criteria = new LinkedHashMap<>();
+        private final Map<Long, CriterionAccumulator> criteria = new LinkedHashMap<>();
 
         private DimensionAccumulator(DimensionScoreRow row) {
             key = row.getDimensionKey();
@@ -93,11 +92,11 @@ public class SurveyDimensionResultsService {
     }
 
     private static final class CriterionAccumulator {
-        private final UUID id;
+        private final Long id;
         private final String label;
         private double total;
         private long count;
-        private final Map<UUID, PointAccumulator> points = new LinkedHashMap<>();
+        private final Map<Long, PointAccumulator> points = new LinkedHashMap<>();
 
         private CriterionAccumulator(DimensionScoreRow row) {
             id = row.getCriterionId();
@@ -120,7 +119,7 @@ public class SurveyDimensionResultsService {
     }
 
     private static final class PointAccumulator {
-        private final UUID id;
+        private final Long id;
         private final String label;
         private double total;
         private long count;

@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -19,13 +18,13 @@ public class CriterionController {
     private final CriterionService service;
 
     @GetMapping
-    public ResponseEntity<List<CriterionResponseDto>> getAllCriteria(@RequestParam(required = false) UUID dimensionId) {
+    public ResponseEntity<List<CriterionResponseDto>> getAllCriteria(@RequestParam(required = false) Long dimensionId) {
         return ResponseEntity.ok((dimensionId == null ? service.findAll() : service.findByDimension(dimensionId))
                 .stream().map(CriterionResponseDto::from).toList());
     }
 
     @GetMapping("/{criterionId}")
-    public ResponseEntity<CriterionResponseDto> getCriterionById(@PathVariable UUID criterionId) {
+    public ResponseEntity<CriterionResponseDto> getCriterionById(@PathVariable Long criterionId) {
         return ResponseEntity.ok(CriterionResponseDto.from(service.findById(criterionId)));
     }
 
@@ -35,13 +34,13 @@ public class CriterionController {
     }
 
     @PutMapping("/{criterionId}")
-    public ResponseEntity<CriterionResponseDto> updateCriterion(@PathVariable UUID criterionId,
+    public ResponseEntity<CriterionResponseDto> updateCriterion(@PathVariable Long criterionId,
             @Valid @RequestBody SaveCriterionRequest request) {
         return ResponseEntity.ok(CriterionResponseDto.from(service.update(criterionId, request)));
     }
 
     @DeleteMapping("/{criterionId}")
-    public ResponseEntity<Void> deleteCriterion(@PathVariable UUID criterionId) {
+    public ResponseEntity<Void> deleteCriterion(@PathVariable Long criterionId) {
         service.delete(criterionId);
         return ResponseEntity.noContent().build();
     }

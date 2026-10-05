@@ -14,7 +14,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -29,9 +28,9 @@ class QuestionExcelServiceTest {
     @Test
     void exportAndImportPreserveCriterionAndLevels() throws Exception {
         Survey survey = new Survey();
-        survey.setId(UUID.randomUUID());
+        survey.setId(10037L);
         Criterion criterion = new Criterion();
-        criterion.setId(UUID.randomUUID());
+        criterion.setId(10038L);
         Question question = new Question();
         question.setSurvey(survey);
         question.setCriterion(criterion);

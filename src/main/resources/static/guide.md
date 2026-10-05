@@ -20,7 +20,9 @@ SurveyResponse
 
 Every entity extends `BaseEntity`, which supplies:
 
-- `id`: a generated UUID primary key.
+- `id`: a generated Long primary key.
+
+Entity IDs and foreign keys use PostgreSQL `BIGINT`; API IDs are JSON numbers. Existing databases with UUID keys require a coordinated migration of primary and foreign keys, or recreation for disposable data. Changing the Java type does not convert existing UUID data.
 - `createdAt`: timestamp set when the row is first persisted.
 - `updatedAt`: timestamp refreshed when the row changes.
 
@@ -84,7 +86,7 @@ A named assessment criterion within a dimension.
 - `dimension`: required parent dimension.
 - `questions`: questions assigned to this criterion.
 
-Question creation requests identify an existing survey and criterion using `surveyId` and `criterionId`. The criterion UUID is required because questions cannot exist without a criterion; clients using snake_case may send `criterion_id` as an alias. Question Excel templates and exports include a `criterion_id` column containing that UUID.
+Question creation requests identify an existing survey and criterion using `surveyId` and `criterionId`. The criterion Long is required because questions cannot exist without a criterion; clients using snake_case may send `criterion_id` as an alias. Question Excel templates and exports include a `criterion_id` column containing that Long.
 
 ### SurveyRole
 
@@ -160,7 +162,7 @@ Spring Security exposes these as authorities named `ROLE_ADMIN`, `ROLE_SURVEY_AD
 - A question has many levels; level numbers must be unique within that question.
 - A response has many survey answers and demographic answers.
 - A survey answer references exactly one response and one question, with a unique response/question pair.
-- All entity relationships use UUID identifiers and database foreign keys.
+- All entity relationships use Long identifiers and database foreign keys.
 
 ## Developer tips
 

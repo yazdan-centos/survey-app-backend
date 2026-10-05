@@ -6,14 +6,14 @@ question points. Scores are calculated from each selected `QuestionLevel.score`.
 Skipped answers are excluded.
 
 ```http
-GET /api/surveys/results?surveyId=<uuid>&role=BOARD
+GET /api/surveys/results?surveyId=<id>&role=BOARD
 Authorization: Bearer <access-token>
 ```
 
 The survey-specific shorthand is also supported:
 
 ```http
-GET /api/surveys/<uuid>/results?role=BOARD
+GET /api/surveys/<id>/results?role=BOARD
 ```
 
 Both `surveyId` and `role` are optional. Without filters, the aggregate includes
@@ -32,11 +32,11 @@ all scored answers. The response also includes one dimension list for every
       "value": 3.75,
       "criteria": [
         {
-          "id": "criterion-uuid",
+          "id": 1,
           "label": "رضایت مشتری",
           "value": 3.75,
           "points": [
-            {"id": "question-uuid", "label": "1-1", "value": 3.75}
+            {"id": 1, "label": "1-1", "value": 3.75}
           ]
         }
       ]

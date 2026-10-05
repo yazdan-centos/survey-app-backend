@@ -12,12 +12,12 @@ Endpoints are grouped alphabetically by entity, then sorted by path and HTTP met
 | GET | `/api/criteria/{criterionId}` | `getCriterionById` | Get one criterion. |
 | PUT | `/api/criteria/{criterionId}` | `updateCriterion` | Replace the name and parent dimension of a criterion. |
 
-POST and PUT require `name` (nonblank, maximum 200 characters) and `dimensionId` (UUID). Names must be unique within a dimension. Responses contain `id`, `name`, `dimensionId`, `createdAt`, and `updatedAt`.
+POST and PUT require `name` (nonblank, maximum 200 characters) and `dimensionId` (Long). Names must be unique within a dimension. Responses contain `id`, `name`, `dimensionId`, `createdAt`, and `updatedAt`.
 
 Example request:
 
 ```json
-{"name":"Leadership","dimensionId":"00000000-0000-0000-0000-000000000001"}
+{"name":"Leadership","dimensionId":1}
 ```
 
 ## Demographic questions

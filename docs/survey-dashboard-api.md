@@ -26,7 +26,7 @@ Requires `ROLE_SURVEY_ADMIN` or `ROLE_ADMIN`. Ordinary users receive 403. The en
   },
   "surveys": [
     {
-      "id": "00000000-0000-0000-0000-000000000001",
+      "id": 1,
       "title": "Annual survey",
       "version": "2026-v1",
       "active": true,

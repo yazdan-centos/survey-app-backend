@@ -8,7 +8,6 @@ import org.mapnaom.surveyappbackend.entity.SurveyRole;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * DTO for {@link org.mapnaom.surveyappbackend.entity.Question}
@@ -22,8 +21,8 @@ public class QuestionDto implements Serializable {
     private String text;
     private SurveyRole role;
     private int displayOrder;
-    private UUID surveyId;
-    private UUID criterionId;
+    private Long surveyId;
+    private Long criterionId;
     private List<QuestionLevelDto> questionLevels;
 
 }

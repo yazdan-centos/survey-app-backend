@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -50,20 +49,20 @@ public class QuestionController {
     }
 
     @GetMapping("/survey/{surveyId}")
-    public ResponseEntity<List<QuestionResponseDto>> getQuestionsBySurveyId(@PathVariable UUID surveyId) {
+    public ResponseEntity<List<QuestionResponseDto>> getQuestionsBySurveyId(@PathVariable Long surveyId) {
         return ResponseEntity.ok(questionService.getSurveyQuestions(surveyId));
     }
 
     @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> importQuestionsFromExcel(
-            @RequestParam UUID surveyId,
+            @RequestParam Long surveyId,
             @RequestParam MultipartFile file) {
         questionExcelService.importQuestions(surveyId, file);
         return ResponseEntity.ok("Questions imported successfully");
     }
 
     @GetMapping("/export")
-    public ResponseEntity<ByteArrayResource> exportQuestionsToExcel(@RequestParam UUID surveyId) {
+    public ResponseEntity<ByteArrayResource> exportQuestionsToExcel(@RequestParam Long surveyId) {
         byte[] data = questionExcelService.exportQuestions(surveyId);
 
         ByteArrayResource resource = new ByteArrayResource(data);

@@ -6,15 +6,14 @@ import lombok.Data;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 public class SaveSurveyAssignmentRequest {
     @NotNull
-    private List<@NotNull UUID> userIds = new ArrayList<>();
+    private List<@NotNull Long> userIds = new ArrayList<>();
 
     @NotNull
-    private List<@NotNull UUID> surveyIds = new ArrayList<>();
+    private List<@NotNull Long> surveyIds = new ArrayList<>();
 
     private Instant activeFrom;
 

@@ -22,7 +22,7 @@ Use this shape for POST and PUT, replacing the question ID with an existing BOAR
 {
   "role": "BOARD",
   "answers": [
-    {"questionId": "00000000-0000-0000-0000-000000000001", "selectedLevel": 2, "skipped": false}
+    {"questionId": 1, "selectedLevel": 2, "skipped": false}
   ],
   "demographics": [
     {"fieldKey": "department", "value": "Engineering"}
@@ -40,13 +40,13 @@ Empty responses are allowed for adding answers individually. The existing model 
 
 ```json
 {
-  "questionId": "00000000-0000-0000-0000-000000000001",
+  "questionId": 1,
   "selectedLevel": 2,
   "skipped": false
 }
 ```
 
-questionId is required. selectedLevel identifies QuestionLevel.levelNumber, not its UUID, score or title. A non-skipped answer requires a valid positive level number. A skipped answer requires a null/omitted level. skipped defaults to false and cannot be null. MANAGERS cannot skip; other audiences can.
+questionId is required. selectedLevel identifies QuestionLevel.levelNumber, not its Long, score or title. A non-skipped answer requires a valid positive level number. A skipped answer requires a null/omitted level. skipped defaults to false and cannot be null. MANAGERS cannot skip; other audiences can.
 
 Each response allows one answer per question. Adding a duplicate returns 409. An existing answer's question and parent cannot be changed; an answer ID scoped to the wrong response returns 404.
 

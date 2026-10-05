@@ -1,0 +1,64 @@
+03:02:15.610 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [org.mapnaom.surveyappbackend.controller.SurveyAssignmentReadControllerTest]: SurveyAssignmentReadControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+03:02:15.850 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration org.mapnaom.surveyappbackend.SurveyAppBackendApplication for test class org.mapnaom.surveyappbackend.controller.SurveyAssignmentReadControllerTest
+03:02:15.856 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [org.mapnaom.surveyappbackend.controller.SurveyAssignmentReadControllerTest]: SurveyAssignmentReadControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+03:02:15.865 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration org.mapnaom.surveyappbackend.SurveyAppBackendApplication for test class org.mapnaom.surveyappbackend.controller.SurveyAssignmentReadControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-05T03:02:16.383-05:00  INFO 24960 --- [survey-app-backend] [           main] m.s.c.SurveyAssignmentReadControllerTest : Starting SurveyAssignmentReadControllerTest using Java 17.0.12 with PID 24960 (started by Administrator in C:\Users\Administrator\Downloads\worldclass-survey-backend\survey-app-backend)
+2026-10-05T03:02:16.385-05:00  INFO 24960 --- [survey-app-backend] [           main] m.s.c.SurveyAssignmentReadControllerTest : No active profile set, falling back to 1 default profile: "default"
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-10-05T03:02:19.545-05:00  INFO 24960 --- [survey-app-backend] [           main] eAuthenticationProviderManagerConfigurer : Found 2 AuthenticationProvider beans, with names [ldapAuthenticationProvider, daoAuthenticationProvider]. Global Authentication Manager will not be configured with AuthenticationProviders. Consider publishing a single AuthenticationProvider bean, or wiring your Providers directly using the DSL.
+2026-10-05T03:02:19.563-05:00  INFO 24960 --- [survey-app-backend] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2026-10-05T03:02:20.352-05:00  INFO 24960 --- [survey-app-backend] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-05T03:02:20.353-05:00  INFO 24960 --- [survey-app-backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-05T03:02:20.357-05:00  INFO 24960 --- [survey-app-backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-10-05T03:02:20.435-05:00  INFO 24960 --- [survey-app-backend] [           main] m.s.c.SurveyAssignmentReadControllerTest : Started SurveyAssignmentReadControllerTest in 4.465 seconds (process running for 6.267)
+2026-10-05T03:02:20.639-05:00  WARN 24960 --- [survey-app-backend] [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'surveyId' for method parameter type Long is not present]
+2026-10-05T03:02:20.653-05:00  WARN 24960 --- [survey-app-backend] [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'surveyId': Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; For input string: "invalid"]
+2026-10-05T03:02:21.025-05:00  INFO 24960 --- [survey-app-backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [org.mapnaom.surveyappbackend.service.SurveyAssignmentReadPersistenceTest]: SurveyAssignmentReadPersistenceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-05T03:02:21.090-05:00  INFO 24960 --- [survey-app-backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration org.mapnaom.surveyappbackend.SurveyAppBackendApplication for test class org.mapnaom.surveyappbackend.service.SurveyAssignmentReadPersistenceTest
+2026-10-05T03:02:21.091-05:00  INFO 24960 --- [survey-app-backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [org.mapnaom.surveyappbackend.service.SurveyAssignmentReadPersistenceTest]: SurveyAssignmentReadPersistenceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-05T03:02:21.114-05:00  INFO 24960 --- [survey-app-backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration org.mapnaom.surveyappbackend.SurveyAppBackendApplication for test class org.mapnaom.surveyappbackend.service.SurveyAssignmentReadPersistenceTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-05T03:02:21.162-05:00  INFO 24960 --- [survey-app-backend] [           main] .s.s.SurveyAssignmentReadPersistenceTest : Starting SurveyAssignmentReadPersistenceTest using Java 17.0.12 with PID 24960 (started by Administrator in C:\Users\Administrator\Downloads\worldclass-survey-backend\survey-app-backend)
+2026-10-05T03:02:21.163-05:00  INFO 24960 --- [survey-app-backend] [           main] .s.s.SurveyAssignmentReadPersistenceTest : No active profile set, falling back to 1 default profile: "default"
+2026-10-05T03:02:21.484-05:00  INFO 24960 --- [survey-app-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-05T03:02:21.591-05:00  INFO 24960 --- [survey-app-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 93 ms. Found 13 JPA repository interfaces.
+2026-10-05T03:02:21.697-05:00  INFO 24960 --- [survey-app-backend] [           main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2026-10-05T03:02:21.775-05:00  INFO 24960 --- [survey-app-backend] [           main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:ce7820b0-da70-4981-ae0d-b450588a4611;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2026-10-05T03:02:22.200-05:00  INFO 24960 --- [survey-app-backend] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-05T03:02:22.290-05:00  INFO 24960 --- [survey-app-backend] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-10-05T03:02:22.725-05:00  INFO 24960 --- [survey-app-backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-05T03:02:22.815-05:00  INFO 24960 --- [survey-app-backend] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:ce7820b0-da70-4981-ae0d-b450588a4611]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: CE7820B0-DA70-4981-AE0D-B450588A4611/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-05T03:02:24.319-05:00  INFO 24960 --- [survey-app-backend] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-05T03:02:24.444-05:00  INFO 24960 --- [survey-app-backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-05T03:02:24.568-05:00  INFO 24960 --- [survey-app-backend] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-05T03:02:26.046-05:00  INFO 24960 --- [survey-app-backend] [           main] .s.s.SurveyAssignmentReadPersistenceTest : Started SurveyAssignmentReadPersistenceTest in 4.925 seconds (process running for 11.879)

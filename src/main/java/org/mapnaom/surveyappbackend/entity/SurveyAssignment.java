@@ -68,4 +68,17 @@ public class SurveyAssignment extends BaseEntity {
                 && (activeFrom == null || !activeFrom.isAfter(now))
                 && (activeUntil == null || !activeUntil.isBefore(now));
     }
+
+    /**
+     * Whether the assignment belongs on the user's profile page: like
+     * {@link #isCurrentlyActive(Instant)} but a {@link SurveyAssignmentStatus#COMPLETED}
+     * assignment stays listed (so it can be shown as completed) while its window is open.
+     * Completed assignments are still not "currently active", so they cannot be submitted again.
+     */
+    public boolean isVisibleOnProfile(Instant now) {
+        return (SurveyAssignmentStatus.isActiveStatus(status) || status == SurveyAssignmentStatus.COMPLETED)
+                && revokedAt == null
+                && (activeFrom == null || !activeFrom.isAfter(now))
+                && (activeUntil == null || !activeUntil.isBefore(now));
+    }
 }

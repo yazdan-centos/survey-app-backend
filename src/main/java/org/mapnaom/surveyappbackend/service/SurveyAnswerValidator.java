@@ -14,7 +14,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 
 /**
@@ -36,17 +35,17 @@ public class SurveyAnswerValidator {
      * @throws ResponseStatusException when a submitted answer is duplicate, missing, invalid for the audience,
      *         mismatched to the survey, or contains an invalid skip/level combination
      */
-    public Map<UUID, Question> validate(SurveyRole role, List<SaveSurveyAnswerRequest> requests,
-                                       UUID expectedSurveyId) {
-        Set<UUID> ids = new HashSet<>();
+    public Map<Long, Question> validate(SurveyRole role, List<SaveSurveyAnswerRequest> requests,
+                                       Long expectedSurveyId) {
+        Set<Long> ids = new HashSet<>();
         for (SaveSurveyAnswerRequest request : requests) {
             if (!ids.add(request.getQuestionId())) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Duplicate question in response");
             }
         }
-        Map<UUID, Question> questions = new LinkedHashMap<>();
+        Map<Long, Question> questions = new LinkedHashMap<>();
         questionRepository.findAllById(ids).forEach(question -> questions.put(question.getId(), question));
-        UUID surveyId = expectedSurveyId;
+        Long surveyId = expectedSurveyId;
         for (SaveSurveyAnswerRequest request : requests) {
             Question question = questions.get(request.getQuestionId());
             // Ensures the submitted question exists in the database before validation continues.

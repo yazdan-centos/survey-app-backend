@@ -26,7 +26,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -96,12 +95,12 @@ public class QuestionService {
         return questionRepository.save(question);
     }
 
-    public List<Question> getBySurvey(UUID surveyId) {
+    public List<Question> getBySurvey(Long surveyId) {
         return questionRepository.findBySurveyId(surveyId);
     }
 
     @Transactional(readOnly = true)
-    public List<QuestionResponseDto> getSurveyQuestions(UUID surveyId) {
+    public List<QuestionResponseDto> getSurveyQuestions(Long surveyId) {
         return questionRepository.findBySurveyId(surveyId).stream().map(QuestionResponseDto::from).toList();
     }
 }

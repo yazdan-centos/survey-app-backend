@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -36,13 +35,13 @@ public class SurveyController {
     }
 
     @PutMapping("/{surveyId}")
-    public ResponseEntity<SurveyResponseDto> updateSurvey(@PathVariable UUID surveyId,
+    public ResponseEntity<SurveyResponseDto> updateSurvey(@PathVariable Long surveyId,
             @Valid @RequestBody UpdateSurveyRequest request) {
         return ResponseEntity.ok(SurveyResponseDto.from(surveyService.update(surveyId, request)));
     }
 
     @DeleteMapping("/{surveyId}")
-    public ResponseEntity<Void> deleteSurvey(@PathVariable UUID surveyId) {
+    public ResponseEntity<Void> deleteSurvey(@PathVariable Long surveyId) {
         surveyService.delete(surveyId);
         return ResponseEntity.noContent().build();
     }

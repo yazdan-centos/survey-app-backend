@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -24,14 +23,14 @@ public class SurveyDimensionResultsController {
 
     @GetMapping("/results")
     public ResponseEntity<SurveyDimensionResultsResponse> getResults(
-            @RequestParam(required = false) UUID surveyId,
+            @RequestParam(required = false) Long surveyId,
             @RequestParam(required = false) SurveyRole role) {
         return response(service.getResults(surveyId, role));
     }
 
     @GetMapping("/{surveyId}/results")
     public ResponseEntity<SurveyDimensionResultsResponse> getSurveyResults(
-            @PathVariable UUID surveyId,
+            @PathVariable Long surveyId,
             @RequestParam(required = false) SurveyRole role) {
         return response(service.getResults(surveyId, role));
     }

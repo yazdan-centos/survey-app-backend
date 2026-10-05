@@ -5,27 +5,26 @@ import org.mapnaom.surveyappbackend.entity.SurveyRole;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Data
 public class QuestionSearchRequest {
     private String q;
-    private UUID id;
+    private Long id;
     private String code;
     private String text;
     private SurveyRole role;
     private Integer displayOrder;
-    private UUID surveyId;
+    private Long surveyId;
     private String surveyTitle;
     private String surveyVersion;
     private Boolean surveyActive;
-    private UUID criterionId;
+    private Long criterionId;
     private String criterionName;
-    private UUID dimensionId;
+    private Long dimensionId;
     private String dimensionKey;
     private String dimensionLabel;
     private Integer dimensionDisplayOrder;
-    private UUID levelId;
+    private Long levelId;
     private Integer levelNumber;
     /** Matches QuestionLevel.description; question wording is filtered with text. */
     private String description;

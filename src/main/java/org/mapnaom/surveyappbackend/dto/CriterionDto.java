@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.mapnaom.surveyappbackend.entity.Criterion;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 /**
  * DTO for {@link Criterion}
@@ -16,5 +15,5 @@ import java.util.UUID;
 @NoArgsConstructor
 public class CriterionDto implements Serializable {
     private String name;
-    private UUID dimensionId;
+    private Long dimensionId;
 }

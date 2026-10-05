@@ -20,7 +20,6 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +30,7 @@ public class SurveyDashboardService {
     public SurveyDashboardResponse getDashboard() {
         Instant generatedAt = Instant.now();
         var overviews = repository.findSurveyOverviews();
-        Map<UUID, Map<SurveyRole, AudienceOverview>> grouped = new HashMap<>();
+        Map<Long, Map<SurveyRole, AudienceOverview>> grouped = new HashMap<>();
         for (var audience : repository.findAudienceOverviews()) {
             grouped.computeIfAbsent(audience.getSurveyId(), id -> new EnumMap<>(SurveyRole.class))
                     .put(audience.getRole(), audience);

@@ -9,6 +9,7 @@ import org.mapnaom.surveyappbackend.dto.survey.SurveyResponseDto;
 import org.mapnaom.surveyappbackend.entity.Survey;
 import org.mapnaom.surveyappbackend.entity.SurveyAssignment;
 import org.mapnaom.surveyappbackend.entity.SurveyAssignmentStatus;
+import org.mapnaom.surveyappbackend.entity.SurveyResponse;
 import org.mapnaom.surveyappbackend.entity.User;
 import org.mapnaom.surveyappbackend.repository.SurveyAssignmentRepository;
 import org.mapnaom.surveyappbackend.repository.SurveyRepository;
@@ -16,17 +17,15 @@ import org.mapnaom.surveyappbackend.repository.SurveyResponseRepository;
 import org.mapnaom.surveyappbackend.repository.UserRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -79,8 +78,16 @@ public class SurveyAssignmentService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public List<SurveyAssignmentResponseDto> findAssignmentsForSurvey(Long surveyId) {
+        findSurvey(surveyId);
+        return assignmentRepository.findAllBySurveyIdOrderByAssignedAtDescIdDesc(surveyId).stream()
+                .map(SurveyAssignmentResponseDto::from)
+                .toList();
+    }
+
     @Transactional
-    public SurveyAssignmentResponseDto revoke(UUID assignmentId) {
+    public SurveyAssignmentResponseDto revoke(Long assignmentId) {
         SurveyAssignment assignment = findAssignment(assignmentId);
         assignment.setStatus(SurveyAssignmentStatus.REVOKED);
         assignment.setRevokedAt(Instant.now());
@@ -103,14 +110,22 @@ public class SurveyAssignmentService {
     }
 
     /**
-     * Surveys currently active for a user: survey.active == true, assignment
-     * status ASSIGNED/ACTIVE, not revoked, and inside the time window.
+     * Surveys listed on a user's profile: survey.active == true, not revoked,
+     * inside the time window and either still open (ASSIGNED/ACTIVE) or already
+     * COMPLETED by this user. Completion and the response id are user-specific.
      */
     @Transactional(readOnly = true)
-    public List<ActiveSurveyDto> findActiveSurveysForUser(UUID userId) {
+    public List<ActiveSurveyDto> findActiveSurveysForUser(Long userId) {
         Instant now = Instant.now();
-        return assignmentRepository.findActiveAssignments(userId, now).stream()
-                .map(ActiveSurveyDto::from)
+        Map<Long, Long> latestResponseBySurvey = new HashMap<>();
+        for (SurveyResponse response : responseRepository.findAllByUserIdOrderBySubmittedAtDesc(userId)) {
+            if (response.getSurvey() != null) {
+                latestResponseBySurvey.putIfAbsent(response.getSurvey().getId(), response.getId());
+            }
+        }
+        return assignmentRepository.findProfileAssignments(userId, now).stream()
+                .map(assignment -> ActiveSurveyDto.from(assignment,
+                        latestResponseBySurvey.get(assignment.getSurvey().getId())))
                 .toList();
     }
 
@@ -118,7 +133,7 @@ public class SurveyAssignmentService {
      * Surveys a user participated in, derived from their survey responses.
      */
     @Transactional(readOnly = true)
-    public List<ParticipatedSurveyDto> findParticipatedSurveysForUser(UUID userId) {
+    public List<ParticipatedSurveyDto> findParticipatedSurveysForUser(Long userId) {
         return responseRepository.findAllByUserIdOrderBySubmittedAtDesc(userId).stream()
                 .map(response -> ParticipatedSurveyDto.builder()
                         .survey(SurveyResponseDto.from(response.getSurvey()))
@@ -133,7 +148,7 @@ public class SurveyAssignmentService {
      * i.e. they submitted at least one response for it (admins always pass).
      */
     @Transactional(readOnly = true)
-    public void assertResultAccess(User user, UUID surveyId) {
+    public void assertResultAccess(User user, Long surveyId) {
         findSurvey(surveyId);
         if (isPrivileged(user)) {
             return;
@@ -149,17 +164,17 @@ public class SurveyAssignmentService {
                 || user.getRole() == org.mapnaom.surveyappbackend.entity.UserRole.SURVEY_ADMIN;
     }
 
-    private User findUser(UUID id) {
+    private User findUser(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found: " + id));
     }
 
-    private Survey findSurvey(UUID id) {
+    private Survey findSurvey(Long id) {
         return surveyRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Survey not found: " + id));
     }
 
-    private SurveyAssignment findAssignment(UUID id) {
+    private SurveyAssignment findAssignment(Long id) {
         return assignmentRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Survey assignment not found: " + id));
     }

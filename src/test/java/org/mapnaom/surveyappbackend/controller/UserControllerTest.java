@@ -18,7 +18,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -47,7 +46,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$[0].username").value("alice"))
                 .andExpect(jsonPath("$[0].password").doesNotExist());
         mvc.perform(get("/api/users/{id}", user.getId())).andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(user.getId().toString()))
+                .andExpect(jsonPath("$.id").value(user.getId().intValue()))
                 .andExpect(jsonPath("$.password").doesNotExist());
     }
 
@@ -80,7 +79,7 @@ class UserControllerTest {
 
     @Test
     void invalidInputReturns400() throws Exception {
-        mvc.perform(put("/api/users/{id}", UUID.randomUUID()).contentType(MediaType.APPLICATION_JSON)
+        mvc.perform(put("/api/users/{id}", 10029L).contentType(MediaType.APPLICATION_JSON)
                         .content("{\"username\":\" \",\"email\":\"invalid\"}"))
                 .andExpect(status().isBadRequest());
         mvc.perform(get("/api/users/not-a-uuid")).andExpect(status().isBadRequest());
@@ -90,7 +89,7 @@ class UserControllerTest {
 
     @Test
     void deleteReturns204AndErrorsIncludeReason() throws Exception {
-        UUID id = UUID.randomUUID();
+        Long id = 10030L;
         mvc.perform(delete("/api/users/{id}", id)).andExpect(status().isNoContent())
                 .andExpect(content().string(""));
         verify(service).delete(id);
@@ -126,7 +125,7 @@ class UserControllerTest {
     private User user() {
         User user = User.builder().username("alice").password("secret-hash").role(UserRole.USER)
                 .enabled(true).deleted(false).ldapUser(false).build();
-        user.setId(UUID.randomUUID());
+        user.setId(10031L);
         return user;
     }
 }

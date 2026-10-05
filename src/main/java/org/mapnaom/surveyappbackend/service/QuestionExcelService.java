@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -49,7 +50,7 @@ public class QuestionExcelService {
     }
 
     @Transactional
-    public void importQuestions(UUID surveyId, MultipartFile file) {
+    public void importQuestions(Long surveyId, MultipartFile file) {
         Survey survey = surveyRepository.findById(surveyId)
                 .orElseThrow(() -> new RuntimeException("Survey not found"));
 
@@ -69,7 +70,7 @@ public class QuestionExcelService {
                 Integer levelScore = getInteger(row.getCell(4));
                 Integer levelOrder = getInteger(row.getCell(5));
 
-                UUID criterionId = UUID.fromString(getString(row.getCell(6)));
+                Long criterionId = new BigDecimal(getString(row.getCell(6))).longValueExact();
                 Criterion criterion = criterionRepository.findById(criterionId)
                         .orElseThrow(() -> new IllegalArgumentException("Criterion not found: " + criterionId));
 
@@ -111,7 +112,7 @@ public class QuestionExcelService {
     }
 
     @Transactional(readOnly = true)
-    public byte[] exportQuestions(UUID surveyId) {
+    public byte[] exportQuestions(Long surveyId) {
         List<Question> questions = questionRepository.findBySurveyId(surveyId);
 
         try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream()) {

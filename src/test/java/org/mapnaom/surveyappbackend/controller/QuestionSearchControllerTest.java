@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -44,11 +43,11 @@ class QuestionSearchControllerTest {
 
     @Test
     void bindsAllFiltersAndReturnsPaginatedDtos() throws Exception {
-        UUID id = UUID.randomUUID();
-        UUID surveyId = UUID.randomUUID();
-        UUID criterionId = UUID.randomUUID();
-        UUID dimensionId = UUID.randomUUID();
-        UUID levelId = UUID.randomUUID();
+        Long id = 3000000000L;
+        Long surveyId = 10012L;
+        Long criterionId = 10013L;
+        Long dimensionId = 10014L;
+        Long levelId = 10015L;
         var dto = new QuestionResponseDto(id, surveyId, "Q1", "Quality", SurveyRole.BOARD,
                 0, criterionId, "Strategy", null,
                 List.of(new QuestionResponseDto.Level(levelId, 1, "Excellent")));
@@ -69,7 +68,7 @@ class QuestionSearchControllerTest {
                         .param("page", "1").param("size", "5").param("sort", "code,desc"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.totalElements").value(6))
-                .andExpect(jsonPath("$.content[0].id").value(id.toString()))
+                .andExpect(jsonPath("$.content[0].id").value(org.hamcrest.Matchers.is(id), Long.class))
                 .andExpect(jsonPath("$.content[0].levels[0].description").value("Excellent"));
 
         var filterCaptor = ArgumentCaptor.forClass(QuestionSearchRequest.class);
@@ -94,10 +93,10 @@ class QuestionSearchControllerTest {
 
     @Test
     void acceptsJsonSearchObjectWithPageableAndReturnsPageMetadata() throws Exception {
-        UUID surveyId = UUID.randomUUID();
-        UUID dimensionId = UUID.randomUUID();
-        UUID criterionId = UUID.randomUUID();
-        var dto = new QuestionResponseDto(UUID.randomUUID(), surveyId, "Q1", "Leadership", SurveyRole.BOARD,
+        Long surveyId = 10016L;
+        Long dimensionId = 10017L;
+        Long criterionId = 10018L;
+        var dto = new QuestionResponseDto(10019L, surveyId, "Q1", "Leadership", SurveyRole.BOARD,
                 0, criterionId, "Strategy", null, List.of());
         when(service.search(any(), any())).thenReturn(new PageImpl<>(List.of(dto), PageRequest.of(1, 5), 6));
 

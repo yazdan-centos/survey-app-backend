@@ -24,7 +24,6 @@ import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -199,7 +198,7 @@ class SurveySubmissionPersistenceTest {
     @Test
     void invalidIndividualUpdateKeepsOriginalAnswer() {
         var response = responses.create(request(answer(first, 1)));
-        UUID answerId = response.answers().get(0).id();
+        Long answerId = response.answers().get(0).id();
         assertStatus(() -> answers.update(response.id(), answerId, answer(first, 99)), HttpStatus.BAD_REQUEST);
         assertThat(answers.findById(response.id(), answerId).selectedLevel()).isEqualTo(1);
     }
@@ -244,20 +243,20 @@ class SurveySubmissionPersistenceTest {
     @Test
     void unknownQuestionResponseAndAnswerReturn404() {
         var input = answer(first, 1);
-        input.setQuestionId(UUID.randomUUID());
+        input.setQuestionId(10057L);
         assertStatus(() -> responses.create(request(input)), HttpStatus.NOT_FOUND);
-        assertStatus(() -> responses.findById(UUID.randomUUID()), HttpStatus.NOT_FOUND);
-        assertStatus(() -> responses.update(UUID.randomUUID(), request()), HttpStatus.NOT_FOUND);
-        assertStatus(() -> answers.create(UUID.randomUUID(), answer(first, 1)), HttpStatus.NOT_FOUND);
+        assertStatus(() -> responses.findById(10058L), HttpStatus.NOT_FOUND);
+        assertStatus(() -> responses.update(10059L, request()), HttpStatus.NOT_FOUND);
+        assertStatus(() -> answers.create(10060L, answer(first, 1)), HttpStatus.NOT_FOUND);
         var response = responses.create(request());
-        assertStatus(() -> answers.findById(response.id(), UUID.randomUUID()), HttpStatus.NOT_FOUND);
+        assertStatus(() -> answers.findById(response.id(), 10061L), HttpStatus.NOT_FOUND);
     }
 
     @Test
     void answerCannotBeMovedToAnotherQuestionOrUpdatedThroughAnotherResponse() {
         var firstResponse = responses.create(request(answer(first, 1)));
         var secondResponse = responses.create(request());
-        UUID id = firstResponse.answers().get(0).id();
+        Long id = firstResponse.answers().get(0).id();
         assertStatus(() -> answers.update(firstResponse.id(), id, answer(second, 1)), HttpStatus.BAD_REQUEST);
         assertStatus(() -> answers.update(secondResponse.id(), id, answer(first, 1)), HttpStatus.NOT_FOUND);
         assertStatus(() -> answers.findById(secondResponse.id(), id), HttpStatus.NOT_FOUND);
@@ -267,7 +266,7 @@ class SurveySubmissionPersistenceTest {
     @Test
     void otherRespondentsCannotReadOrModifySubmissionsOrAnswers() {
         var response = responses.create(request(answer(first, 1)));
-        UUID answerId = response.answers().get(0).id();
+        Long answerId = response.answers().get(0).id();
         authenticate("bob", "USER");
         assertStatus(() -> responses.findById(response.id()), HttpStatus.FORBIDDEN);
         assertStatus(() -> responses.update(response.id(), request()), HttpStatus.FORBIDDEN);

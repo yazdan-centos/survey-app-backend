@@ -15,7 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -26,9 +25,9 @@ class SurveySubmissionControllerTest {
     private SurveyResponseService responses;
     private SurveyAnswerService answers;
     private MockMvc mvc;
-    private final UUID responseId = UUID.randomUUID();
-    private final UUID answerId = UUID.randomUUID();
-    private final UUID questionId = UUID.randomUUID();
+    private final Long responseId = 10026L;
+    private final Long answerId = 10027L;
+    private final Long questionId = 10028L;
 
     @BeforeEach
     void setUp() {
@@ -44,8 +43,8 @@ class SurveySubmissionControllerTest {
         mvc.perform(post("/api/survey-responses").contentType(MediaType.APPLICATION_JSON).content(responseBody()))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("Location", "/api/survey-responses/" + responseId))
-                .andExpect(jsonPath("$.id").value(responseId.toString()))
-                .andExpect(jsonPath("$.answers[0].questionId").value(questionId.toString()))
+                .andExpect(jsonPath("$.id").value(responseId.intValue()))
+                .andExpect(jsonPath("$.answers[0].questionId").value(questionId.intValue()))
                 .andExpect(jsonPath("$.answers[0].response").doesNotExist());
         verify(responses).create(argThat(r -> r.getRole() == SurveyRole.BOARD && r.getAnswers().size() == 1
                 && r.getAnswers().get(0).getQuestionId().equals(questionId)));
@@ -81,9 +80,9 @@ class SurveySubmissionControllerTest {
         when(answers.findByResponseId(responseId)).thenReturn(List.of(answer()));
         when(answers.findById(responseId, answerId)).thenReturn(answer());
         mvc.perform(get("/api/survey-responses/{id}/answers", responseId)).andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(answerId.toString()));
+                .andExpect(jsonPath("$[0].id").value(answerId.intValue()));
         mvc.perform(get("/api/survey-responses/{id}/answers/{answerId}", responseId, answerId))
-                .andExpect(status().isOk()).andExpect(jsonPath("$.responseId").value(responseId.toString()));
+                .andExpect(status().isOk()).andExpect(jsonPath("$.responseId").value(responseId.intValue()));
     }
 
     @Test

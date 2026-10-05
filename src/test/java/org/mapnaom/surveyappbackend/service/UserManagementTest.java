@@ -19,7 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -42,7 +41,7 @@ class UserManagementTest {
 
     @Test
     void missingUserReturns404ForReadUpdateAndDelete() {
-        UUID id = UUID.randomUUID();
+        Long id = 10062L;
         assertStatus(() -> service.findById(id), HttpStatus.NOT_FOUND);
         assertStatus(() -> service.update(id, request()), HttpStatus.NOT_FOUND);
         assertStatus(() -> service.delete(id), HttpStatus.NOT_FOUND);
@@ -148,7 +147,7 @@ class UserManagementTest {
     private User user() {
         User user = User.builder().username("alice").email("alice@example.com").password("old-hash")
                 .role(UserRole.USER).enabled(true).deleted(false).ldapUser(false).build();
-        user.setId(UUID.randomUUID());
+        user.setId(10063L);
         return user;
     }
 

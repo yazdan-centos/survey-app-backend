@@ -15,7 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -56,7 +55,7 @@ class DemoGraphicQuestionServiceTest {
         assertThatThrownBy(() -> service.create(question("managers", 0, "Second?", "No")))
                 .isInstanceOf(ResponseStatusException.class)
                 .extracting("statusCode").isEqualTo(HttpStatus.CONFLICT);
-        assertThatThrownBy(() -> service.findById(UUID.randomUUID()))
+        assertThatThrownBy(() -> service.findById(10035L))
                 .isInstanceOf(ResponseStatusException.class)
                 .extracting("statusCode").isEqualTo(HttpStatus.NOT_FOUND);
     }

@@ -22,7 +22,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +38,7 @@ public class UserService {
         return userRepository.findAllByDeletedFalse();
     }
 
-    public User findById(UUID id) {
+    public User findById(Long id) {
         return userRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
@@ -58,7 +57,7 @@ public class UserService {
     }
 
     @Transactional
-    public User update(UUID id, UpdateUserRequest request) {
+    public User update(Long id, UpdateUserRequest request) {
         User user = findById(id);
         if (userRepository.existsByUsernameAndIdNot(request.getUsername(), id)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
@@ -89,7 +88,7 @@ public class UserService {
     }
 
     @Transactional
-    public void delete(UUID id) {
+    public void delete(Long id) {
         User user = findById(id);
         user.setDeleted(true);
         user.setEnabled(false);

@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -18,6 +17,12 @@ import java.util.UUID;
 public class SurveyAssignmentController {
 
     private final SurveyAssignmentService surveyAssignmentService;
+
+    /** Lists persisted assignment history for one survey, including user details. */
+    @GetMapping
+    public ResponseEntity<List<SurveyAssignmentResponseDto>> listAssignments(@RequestParam Long surveyId) {
+        return ResponseEntity.ok(surveyAssignmentService.findAssignmentsForSurvey(surveyId));
+    }
 
     /**
      * Assigns the given surveys to the given users (cartesian product).
@@ -30,7 +35,7 @@ public class SurveyAssignmentController {
     }
 
     @DeleteMapping("/{assignmentId}")
-    public ResponseEntity<SurveyAssignmentResponseDto> revokeAssignment(@PathVariable UUID assignmentId) {
+    public ResponseEntity<SurveyAssignmentResponseDto> revokeAssignment(@PathVariable Long assignmentId) {
         return ResponseEntity.ok(surveyAssignmentService.revoke(assignmentId));
     }
 }

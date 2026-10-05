@@ -8,12 +8,11 @@ import org.mapnaom.surveyappbackend.dto.survey.SurveyResponseDto;
 import org.mapnaom.surveyappbackend.dto.user.UserResponse;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Data
 @Builder
 public class SurveyAssignmentResponseDto {
-    private UUID id;
+    private Long id;
     private UserResponse user;
     private SurveyResponseDto survey;
     private SurveyAssignmentStatus status;

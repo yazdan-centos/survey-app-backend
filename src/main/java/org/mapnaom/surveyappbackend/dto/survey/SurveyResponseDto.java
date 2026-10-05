@@ -5,12 +5,11 @@ import lombok.Data;
 import org.mapnaom.surveyappbackend.entity.Survey;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Data
 @Builder
 public class SurveyResponseDto {
-    private UUID id;
+    private Long id;
     private String title;
     private String version;
     private Boolean active;

@@ -2,6 +2,8 @@ package org.mapnaom.surveyappbackend.auth;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import org.mapnaom.surveyappbackend.entity.User;
+import org.mapnaom.surveyappbackend.repository.UserRepository;
 import org.mapnaom.surveyappbackend.security.JwtService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,10 +17,13 @@ import java.util.List;
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final UserRepository userRepository;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtService jwtService) {
+    public AuthController(AuthenticationManager authenticationManager, JwtService jwtService,
+                          UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/login")
@@ -26,6 +31,10 @@ public class AuthController {
         var authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.username(), request.password()));
         var accessToken = jwtService.issue(authentication);
         var claims = jwtService.parse(accessToken);
+        var displayName = userRepository.findByUsername(authentication.getName())
+                .map(User::getDisplayName)
+                .filter(name -> !name.isBlank())
+                .orElse(authentication.getName());
         var authorities = authentication.getAuthorities().stream()
                 .map(grantedAuthority -> grantedAuthority.getAuthority())
                 .toList();
@@ -37,6 +46,7 @@ public class AuthController {
                 accessToken,
                 new UserResponse(
                         authentication.getName(),
+                        displayName,
                         authorities,
                         roles,
                         authorities.contains("ROLE_ADMIN") || roles.contains("ADMIN"),
@@ -49,7 +59,13 @@ public class AuthController {
     public record LoginResponse(String accessToken, UserResponse user) {
     }
 
-    public record UserResponse(String username, List<String> authorities, List<String> roles,
-                               boolean isAdmin, long expiresAt) {
+    public record UserResponse(
+            String username,
+            String displayName,
+            List<String> authorities,
+            List<String> roles,
+            boolean isAdmin,
+            long expiresAt
+    ) {
     }
 }

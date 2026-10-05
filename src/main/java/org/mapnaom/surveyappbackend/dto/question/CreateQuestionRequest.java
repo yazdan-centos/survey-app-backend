@@ -7,16 +7,15 @@ import lombok.Data;
 import org.mapnaom.surveyappbackend.entity.SurveyRole;
 
 import java.util.List;
-import java.util.UUID;
 
 @Data
 public class CreateQuestionRequest {
     @NotNull
-    private UUID surveyId;
+    private Long surveyId;
 
     @NotNull
     @JsonAlias("criterion_id")
-    private UUID criterionId;
+    private Long criterionId;
 
     @NotBlank
     private String code;

@@ -12,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.UUID;
 import java.util.List;
 import tools.jackson.databind.json.JsonMapper;
 
@@ -35,7 +34,7 @@ class SurveyControllerTest {
 
     @Test
     void updateReturnsUpdatedSurvey() throws Exception {
-        UUID id = UUID.randomUUID();
+        Long id = 10020L;
         Survey survey = new Survey();
         survey.setId(id);
         survey.setTitle("Updated survey");
@@ -48,7 +47,7 @@ class SurveyControllerTest {
                                 {"title":"Updated survey","version":"2027","active":false}
                                 """))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(id.toString()))
+                .andExpect(jsonPath("$.id").value(id.intValue()))
                 .andExpect(jsonPath("$.title").value("Updated survey"))
                 .andExpect(jsonPath("$.active").value(false));
         verify(surveyService).update(eq(id), argThat(request ->
@@ -62,7 +61,7 @@ class SurveyControllerTest {
                 "{\"title\":\"Survey\",\"version\":\" \"}",
                 "{\"title\":\"" + "x".repeat(201) + "\",\"version\":\"2027\"}",
                 "{\"title\":\"Survey\",\"version\":\"" + "x".repeat(51) + "\"}"}) {
-            mvc.perform(put("/api/v1/surveys/{id}", UUID.randomUUID())
+            mvc.perform(put("/api/v1/surveys/{id}", 10021L)
                             .contentType(MediaType.APPLICATION_JSON).content(body))
                     .andExpect(status().isBadRequest());
         }
@@ -71,7 +70,7 @@ class SurveyControllerTest {
 
     @Test
     void deleteReturnsNoContent() throws Exception {
-        UUID id = UUID.randomUUID();
+        Long id = 10022L;
         mvc.perform(delete("/api/v1/surveys/{id}", id))
                 .andExpect(status().isNoContent()).andExpect(content().string(""));
         verify(surveyService).delete(id);
@@ -79,7 +78,7 @@ class SurveyControllerTest {
 
     @Test
     void endpointsReturnServiceErrors() throws Exception {
-        UUID id = UUID.randomUUID();
+        Long id = 10023L;
         for (HttpStatus status : new HttpStatus[]{HttpStatus.NOT_FOUND, HttpStatus.CONFLICT}) {
             doThrow(new ResponseStatusException(status)).when(surveyService).delete(id);
             doThrow(new ResponseStatusException(status)).when(surveyService).update(eq(id), any());
@@ -93,7 +92,7 @@ class SurveyControllerTest {
     @Test
     void surveyEndpointsReturnCompleteJsonWithoutCircularEntityRelationships() throws Exception {
         Survey survey = new Survey();
-        survey.setId(UUID.randomUUID());
+        survey.setId(10024L);
         survey.setTitle("Survey with questions");
         survey.setVersion("2026");
         Question question = new Question();

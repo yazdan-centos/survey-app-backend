@@ -5,10 +5,9 @@ import org.mapnaom.surveyappbackend.entity.SurveyRole;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
-public record SurveyResponseDetails(UUID id, SurveyRole role, String respondentUsername,
-                                    UUID userId, UUID surveyId, UUID surveyAssignmentId,
+public record SurveyResponseDetails(Long id, SurveyRole role, String respondentUsername,
+                                    Long userId, Long surveyId, Long surveyAssignmentId,
                                     Instant submittedAt,
                                     List<SurveyAnswerDetails> answers, List<DemographicDetails> demographics,
                                     Instant createdAt, Instant updatedAt) {
@@ -23,6 +22,6 @@ public record SurveyResponseDetails(UUID id, SurveyRole role, String respondentU
                 response.getCreatedAt(), response.getUpdatedAt());
     }
 
-    public record DemographicDetails(UUID id, String fieldKey, String value) {
+    public record DemographicDetails(Long id, String fieldKey, String value) {
     }
 }

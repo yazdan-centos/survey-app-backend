@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +25,7 @@ public class DimensionService {
     }
 
     @Transactional(readOnly = true)
-    public Dimension findById(UUID id) {
+    public Dimension findById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Dimension not found"));
     }
@@ -37,7 +36,7 @@ public class DimensionService {
     }
 
     @Transactional
-    public Dimension update(UUID id, SaveDimensionRequest request) {
+    public Dimension update(Long id, SaveDimensionRequest request) {
         return save(findById(id), request);
     }
 
@@ -54,7 +53,7 @@ public class DimensionService {
     }
 
     @Transactional
-    public void delete(UUID id) {
+    public void delete(Long id) {
         Dimension entity = findById(id);
         if (criterionRepository.existsByDimensionId(id)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,

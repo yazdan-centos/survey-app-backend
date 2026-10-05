@@ -27,7 +27,6 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -66,12 +65,12 @@ public class SurveyResponseService {
     }
 
     @Transactional(readOnly = true)
-    public SurveyResponseDetails findById(UUID id) {
+    public SurveyResponseDetails findById(Long id) {
         return SurveyResponseDetails.from(findAccessible(id, false));
     }
 
     @Transactional
-    public SurveyResponseDetails update(UUID id, @NotNull @Valid SaveSurveyResponseRequest request) {
+    public SurveyResponseDetails update(Long id, @NotNull @Valid SaveSurveyResponseRequest request) {
         SurveyResponse response = findAccessible(id, true);
         apply(response, request, response.getSurvey() == null ? null : response.getSurvey().getId());
         return SurveyResponseDetails.from(persist(response));
@@ -82,14 +81,14 @@ public class SurveyResponseService {
      * against: it must exist, belong to the submitting user, and be currently
      * active.
      */
-    private SurveyAssignment resolveAssignment(UUID assignmentId, User user) {
+    private SurveyAssignment resolveAssignment(Long assignmentId, User user) {
         if (assignmentId == null) {
             return null;
         }
         SurveyAssignment assignment = assignmentRepository.findById(assignmentId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Survey assignment not found: " + assignmentId));
-        if (user == null || assignment.getUser().getId() != user.getId()) {
+        if (user == null || !assignment.getUser().getId().equals(user.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN,
                     "Survey assignment belongs to another user");
         }
@@ -100,7 +99,7 @@ public class SurveyResponseService {
         return assignment;
     }
 
-    SurveyResponse findAccessible(UUID id, boolean forUpdate) {
+    SurveyResponse findAccessible(Long id, boolean forUpdate) {
         Authentication authentication = currentAuthentication();
         SurveyResponse response = (forUpdate ? responseRepository.findForUpdate(id) : responseRepository.findById(id))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Survey response not found"));
@@ -131,7 +130,7 @@ public class SurveyResponseService {
         }
     }
 
-    private void apply(SurveyResponse response, SaveSurveyResponseRequest request, UUID expectedSurveyId) {
+    private void apply(SurveyResponse response, SaveSurveyResponseRequest request, Long expectedSurveyId) {
         var questions = answerValidator.validate(request.getRole(), request.getAnswers(), expectedSurveyId);
         var demographicKeys = new HashSet<String>();
         for (var demographic : request.getDemographics()) {
@@ -141,7 +140,7 @@ public class SurveyResponseService {
         }
 
         // Reuse existing children so updates keep their IDs and do not insert duplicate question pairs.
-        Map<UUID, SurveyAnswer> existingAnswers = response.getAnswers().stream()
+        Map<Long, SurveyAnswer> existingAnswers = response.getAnswers().stream()
                 .collect(Collectors.toMap(answer -> answer.getQuestion().getId(), Function.identity()));
         response.getAnswers().removeIf(answer -> !questions.containsKey(answer.getQuestion().getId()));
         for (var input : request.getAnswers()) {

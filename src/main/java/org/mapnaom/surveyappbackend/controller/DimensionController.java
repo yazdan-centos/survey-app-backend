@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -25,7 +24,7 @@ public class DimensionController {
     }
 
     @GetMapping("/{dimensionId}")
-    public ResponseEntity<DimensionResponseDto> getDimensionById(@PathVariable UUID dimensionId) {
+    public ResponseEntity<DimensionResponseDto> getDimensionById(@PathVariable Long dimensionId) {
         return ResponseEntity.ok(DimensionResponseDto.from(service.findById(dimensionId)));
     }
 
@@ -35,13 +34,13 @@ public class DimensionController {
     }
 
     @PutMapping("/{dimensionId}")
-    public ResponseEntity<DimensionResponseDto> updateDimension(@PathVariable UUID dimensionId,
+    public ResponseEntity<DimensionResponseDto> updateDimension(@PathVariable Long dimensionId,
             @Valid @RequestBody SaveDimensionRequest request) {
         return ResponseEntity.ok(DimensionResponseDto.from(service.update(dimensionId, request)));
     }
 
     @DeleteMapping("/{dimensionId}")
-    public ResponseEntity<Void> deleteDimension(@PathVariable UUID dimensionId) {
+    public ResponseEntity<Void> deleteDimension(@PathVariable Long dimensionId) {
         service.delete(dimensionId);
         return ResponseEntity.noContent().build();
     }

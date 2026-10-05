@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -31,7 +30,7 @@ class DimensionControllerTest {
         service = mock(DimensionService.class);
         mvc = MockMvcBuilders.standaloneSetup(new DimensionController(service)).build();
         entity = new Dimension();
-        entity.setId(UUID.randomUUID());
+        entity.setId(10004L);
         entity.setKey("quality");
         entity.setLabel("Quality");
         Criterion child = new Criterion();
@@ -46,12 +45,12 @@ class DimensionControllerTest {
         when(service.create(any())).thenReturn(entity);
         when(service.update(eq(entity.getId()), any())).thenReturn(entity);
         mvc.perform(get("/api/dimensions"))
-                .andExpect(status().isOk()).andExpect(jsonPath("$[0].id").value(entity.getId().toString()));
+                .andExpect(status().isOk()).andExpect(jsonPath("$[0].id").value(entity.getId().intValue()));
         for (var request : List.of(get("/api/dimensions/{id}", entity.getId()),
                 post("/api/dimensions").contentType(MediaType.APPLICATION_JSON).content(BODY),
                 put("/api/dimensions/{id}", entity.getId()).contentType(MediaType.APPLICATION_JSON).content(BODY))) {
             mvc.perform(request).andExpect(status().isOk())
-                    .andExpect(jsonPath("$.id").value(entity.getId().toString()))
+                    .andExpect(jsonPath("$.id").value(entity.getId().intValue()))
                     .andExpect(jsonPath("$.key").value("quality"))
                     .andExpect(jsonPath("$.criteria").doesNotExist())
                     .andExpect(jsonPath("$.questions").doesNotExist())

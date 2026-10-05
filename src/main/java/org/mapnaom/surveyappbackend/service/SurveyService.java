@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -32,13 +31,13 @@ public class SurveyService {
         return surveyRepository.findAll();
     }
 
-    public Survey findById(UUID id) {
+    public Survey findById(Long id) {
         return surveyRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Survey not found"));
     }
 
     @Transactional
-    public Survey update(UUID id, UpdateSurveyRequest request) {
+    public Survey update(Long id, UpdateSurveyRequest request) {
         Survey survey = findById(id);
         survey.setTitle(request.getTitle());
         survey.setVersion(request.getVersion());
@@ -54,7 +53,7 @@ public class SurveyService {
     }
 
     @Transactional
-    public void delete(UUID id) {
+    public void delete(Long id) {
         Survey survey = findById(id);
         try {
             surveyRepository.delete(survey);

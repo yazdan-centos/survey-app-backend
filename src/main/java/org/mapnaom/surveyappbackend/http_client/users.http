@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:8080
 @adminToken = REPLACE_WITH_ADMIN_ACCESS_TOKEN
-@userId = 00000000-0000-0000-0000-000000000000
+@userId = 1
 
 ### Find all users
 GET {{baseUrl}}/api/users

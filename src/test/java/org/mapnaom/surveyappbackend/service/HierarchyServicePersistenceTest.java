@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import jakarta.persistence.EntityManager;
 
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -61,7 +60,7 @@ class HierarchyServicePersistenceTest {
 
     @Test
     void missingRecordsAndParentsReturnNotFound() {
-        UUID missing = UUID.randomUUID();
+        Long missing = 10036L;
         assertStatus(() -> dimensions.findById(missing), HttpStatus.NOT_FOUND);
         assertStatus(() -> dimensions.update(missing, dimension("missing")), HttpStatus.NOT_FOUND);
         assertStatus(() -> dimensions.delete(missing), HttpStatus.NOT_FOUND);
@@ -125,7 +124,7 @@ class HierarchyServicePersistenceTest {
         return request;
     }
 
-    private SaveCriterionRequest criterion(UUID dimensionId, String name) {
+    private SaveCriterionRequest criterion(Long dimensionId, String name) {
         var request = new SaveCriterionRequest();
         request.setDimensionId(dimensionId);
         request.setName(name);

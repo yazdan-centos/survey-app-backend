@@ -7,9 +7,8 @@ import org.springframework.data.repository.Repository;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
-public interface SurveyDashboardRepository extends Repository<Survey, UUID> {
+public interface SurveyDashboardRepository extends Repository<Survey, Long> {
     @Query("""
             select s.id as id, s.title as title, s.version as version, s.active as active,
                    s.createdAt as createdAt, s.updatedAt as updatedAt, count(q.id) as questionCount
@@ -36,7 +35,7 @@ public interface SurveyDashboardRepository extends Repository<Survey, UUID> {
     long countUnassignedResponses();
 
     interface SurveyOverview {
-        UUID getId();
+        Long getId();
         String getTitle();
         String getVersion();
         boolean getActive();
@@ -46,7 +45,7 @@ public interface SurveyDashboardRepository extends Repository<Survey, UUID> {
     }
 
     interface AudienceOverview {
-        UUID getSurveyId();
+        Long getSurveyId();
         SurveyRole getRole();
         long getResponseCount();
         long getAnswerCount();

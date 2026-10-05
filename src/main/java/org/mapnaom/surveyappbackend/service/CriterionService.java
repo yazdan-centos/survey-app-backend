@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -27,13 +26,13 @@ public class CriterionService {
     }
 
     @Transactional(readOnly = true)
-    public Criterion findById(UUID id) {
+    public Criterion findById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Criterion not found"));
     }
 
     @Transactional(readOnly = true)
-    public List<Criterion> findByDimension(UUID dimensionId) {
+    public List<Criterion> findByDimension(Long dimensionId) {
         dimensionService.findById(dimensionId);
         return repository.findByDimensionId(dimensionId);
     }
@@ -44,7 +43,7 @@ public class CriterionService {
     }
 
     @Transactional
-    public Criterion update(UUID id, SaveCriterionRequest request) {
+    public Criterion update(Long id, SaveCriterionRequest request) {
         return save(findById(id), request);
     }
 
@@ -60,7 +59,7 @@ public class CriterionService {
     }
 
     @Transactional
-    public void delete(UUID id) {
+    public void delete(Long id) {
         Criterion entity = findById(id);
         if (questionRepository.existsByCriterionId(id)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,

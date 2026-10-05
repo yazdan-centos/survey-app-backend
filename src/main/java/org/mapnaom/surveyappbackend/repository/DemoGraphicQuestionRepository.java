@@ -8,9 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 @Repository
-public interface DemoGraphicQuestionRepository extends JpaRepository<DemoGraphicQuestion, UUID>, JpaSpecificationExecutor<DemoGraphicQuestion> {
+public interface DemoGraphicQuestionRepository extends JpaRepository<DemoGraphicQuestion, Long>, JpaSpecificationExecutor<DemoGraphicQuestion> {
     @EntityGraph(attributePaths = "options")
     List<DemoGraphicQuestion> findAllByOrderByGroupKeyAscDisplayOrderAsc();
 
@@ -19,7 +18,7 @@ public interface DemoGraphicQuestionRepository extends JpaRepository<DemoGraphic
 
     @Override
     @EntityGraph(attributePaths = "options")
-    Optional<DemoGraphicQuestion> findById(UUID id);
+    Optional<DemoGraphicQuestion> findById(Long id);
 
     boolean existsByGroupKeyAndDisplayOrder(String groupKey, int displayOrder);
 }

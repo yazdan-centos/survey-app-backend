@@ -10,7 +10,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -31,7 +30,7 @@ class DemoGraphicQuestionControllerTest {
         service = mock(DemoGraphicQuestionService.class);
         mvc = MockMvcBuilders.standaloneSetup(new DemoGraphicQuestionController(service)).build();
         question = new DemoGraphicQuestion();
-        question.setId(UUID.randomUUID());
+        question.setId(10003L);
         question.setGroupKey("board");
         question.setQuestion("Your role?");
         question.setDisplayOrder(0);

@@ -12,7 +12,6 @@ import org.mapnaom.surveyappbackend.entity.GuideTheme;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * DTO for {@link org.mapnaom.surveyappbackend.entity.Guide}
@@ -26,7 +25,7 @@ public class GuideDto implements Serializable {
     private GuideTheme theme = GuideTheme.INDIGO;
     private GuideSeverity severity = GuideSeverity.INFO;
     private GuideStatus status = GuideStatus.DRAFT;
-    private UUID surveyId;
+    private Long surveyId;
     private String surveyVersion;
     private String title;
     private String subtitle;

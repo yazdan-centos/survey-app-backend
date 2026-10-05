@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -37,7 +36,7 @@ class SurveyDashboardControllerTest {
     @Test
     void surveyAdminsAndAdminsCanReadDashboardJson() throws Exception {
         var now = Instant.parse("2026-09-18T10:00:00Z");
-        var id = UUID.randomUUID();
+        var id = 10025L;
         var zero = BigDecimal.ZERO.setScale(2);
         var survey = new SurveyStats(id, "Annual survey", "v1", true, now, now,
                 1, 1, 1, 1, 0, zero, now,
@@ -51,7 +50,7 @@ class SurveyDashboardControllerTest {
                     .andExpect(header().string("Cache-Control", "no-store"))
                     .andExpect(jsonPath("$.summary.totalSurveys").value(1))
                     .andExpect(jsonPath("$.summary.totalResponses").value(1))
-                    .andExpect(jsonPath("$.surveys[0].id").value(id.toString()))
+                    .andExpect(jsonPath("$.surveys[0].id").value((int) id))
                     .andExpect(jsonPath("$.surveys[0].audiences[0].role").value("BOARD"))
                     .andExpect(jsonPath("$.surveys[0].respondentUsername").doesNotExist())
                     .andExpect(jsonPath("$.surveys[0].answers").doesNotExist());

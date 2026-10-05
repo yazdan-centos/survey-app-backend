@@ -4,9 +4,8 @@ import org.mapnaom.surveyappbackend.entity.User;
 import org.mapnaom.surveyappbackend.entity.UserRole;
 
 import java.time.Instant;
-import java.util.UUID;
 
-public record UserResponse(UUID id, String username, String firstName, String lastName,
+public record UserResponse(Long id, String username, String firstName, String lastName,
                            String displayName, String email, String employeeId, String department,
                            UserRole role, Boolean enabled, Boolean deleted, Boolean ldapUser,
                            String dn, Instant createdAt, Instant updatedAt) {

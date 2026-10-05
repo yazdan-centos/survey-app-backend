@@ -5,7 +5,6 @@ import lombok.Data;
 import org.mapnaom.surveyappbackend.dto.survey.SurveyResponseDto;
 
 import java.time.Instant;
-import java.util.UUID;
 
 /**
  * A survey the current user has participated in, derived from the user's
@@ -15,6 +14,6 @@ import java.util.UUID;
 @Builder
 public class ParticipatedSurveyDto {
     private SurveyResponseDto survey;
-    private UUID responseId;
+    private Long responseId;
     private Instant submittedAt;
 }

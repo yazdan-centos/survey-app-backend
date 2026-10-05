@@ -4,7 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import java.util.UUID;
 
 @Data
 public class SaveCriterionRequest {
@@ -13,5 +12,5 @@ public class SaveCriterionRequest {
     private String name;
 
     @NotNull
-    private UUID dimensionId;
+    private Long dimensionId;
 }

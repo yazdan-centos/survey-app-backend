@@ -16,7 +16,6 @@ import org.mapnaom.surveyappbackend.service.QuestionService;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -29,19 +28,19 @@ class QuestionReadControllerTest {
     @Test
     void readsQuestionTextDimensionAndLevelsWithoutSerializingEntityCycles() throws Exception {
         Survey survey = new Survey();
-        survey.setId(UUID.randomUUID());
+        survey.setId(10005L);
         Dimension dimension = new Dimension();
-        dimension.setId(UUID.randomUUID());
+        dimension.setId(10006L);
         dimension.setKey("newDimension");
         dimension.setLabel("New dimension");
         dimension.setDisplayOrder(3);
         Criterion criterion = new Criterion();
-        criterion.setId(UUID.randomUUID());
+        criterion.setId(10007L);
         criterion.setName("Criterion");
         criterion.setDimension(dimension);
         dimension.getCriteria().add(criterion);
         Question question = new Question();
-        question.setId(UUID.randomUUID());
+        question.setId(10008L);
         question.setCode("Q1");
         question.setText("Question from backend");
         question.setRole(SurveyRole.BOARD);
@@ -51,7 +50,7 @@ class QuestionReadControllerTest {
         criterion.getQuestions().add(question);
         for (int number : List.of(4, 2)) {
             QuestionLevel level = new QuestionLevel();
-            level.setId(UUID.randomUUID());
+            level.setId(10009L);
             level.setQuestion(question);
             level.setLevelNumber(number);
             level.setDescription("Description " + number);
@@ -65,11 +64,11 @@ class QuestionReadControllerTest {
         var mvc = MockMvcBuilders.standaloneSetup(new QuestionController(service, mock(QuestionExcelService.class))).build();
         mvc.perform(get("/api/questions/survey/{id}", survey.getId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(question.getId().toString()))
-                .andExpect(jsonPath("$[0].surveyId").value(survey.getId().toString()))
+                .andExpect(jsonPath("$[0].id").value(question.getId().intValue()))
+                .andExpect(jsonPath("$[0].surveyId").value(survey.getId().intValue()))
                 .andExpect(jsonPath("$[0].text").value("Question from backend"))
                 .andExpect(jsonPath("$[0].role").value("BOARD"))
-                .andExpect(jsonPath("$[0].criterionId").value(criterion.getId().toString()))
+                .andExpect(jsonPath("$[0].criterionId").value(criterion.getId().intValue()))
                 .andExpect(jsonPath("$[0].dimension.key").value("newDimension"))
                 .andExpect(jsonPath("$[0].dimension.displayOrder").value(3))
                 .andExpect(jsonPath("$[0].levels[0].levelNumber").value(2))
@@ -81,7 +80,7 @@ class QuestionReadControllerTest {
 
     @Test
     void emptySurveyReturnsAnEmptyArray() throws Exception {
-        UUID surveyId = UUID.randomUUID();
+        Long surveyId = 10010L;
         QuestionService service = mock(QuestionService.class);
         when(service.getSurveyQuestions(surveyId)).thenReturn(List.of());
         var mvc = MockMvcBuilders.standaloneSetup(new QuestionController(service, mock(QuestionExcelService.class))).build();

@@ -5,11 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 import java.util.List;
-import java.util.UUID;
 
-public interface CriterionRepository extends JpaRepository<Criterion, UUID> {
-    Optional<Criterion> findByDimensionIdAndName(UUID dimensionId, String name);
-    List<Criterion> findByDimensionId(UUID dimensionId);
-    boolean existsByDimensionId(UUID dimensionId);
-    Boolean existsByDimensionIdAndName(UUID dimensionId, String name);
+public interface CriterionRepository extends JpaRepository<Criterion, Long> {
+    Optional<Criterion> findByDimensionIdAndName(Long dimensionId, String name);
+    List<Criterion> findByDimensionId(Long dimensionId);
+    boolean existsByDimensionId(Long dimensionId);
+    Boolean existsByDimensionIdAndName(Long dimensionId, String name);
 }

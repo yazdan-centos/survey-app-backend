@@ -4,12 +4,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
-import java.util.UUID;
 
 @Data
 public class SaveSurveyAnswerRequest {
     @NotNull
-    private UUID questionId;
+    private Long questionId;
 
     @Positive
     private Integer selectedLevel;

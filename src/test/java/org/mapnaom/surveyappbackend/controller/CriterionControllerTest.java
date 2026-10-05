@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -23,7 +22,7 @@ class CriterionControllerTest {
     private MockMvc mvc;
     private Criterion entity;
     private static final String BODY = """
-            {"name":"Quality","dimensionId":"00000000-0000-0000-0000-000000000001"}
+            {"name":"Quality","dimensionId":1}
             """;
 
     @BeforeEach
@@ -31,10 +30,10 @@ class CriterionControllerTest {
         service = mock(CriterionService.class);
         mvc = MockMvcBuilders.standaloneSetup(new CriterionController(service)).build();
         entity = new Criterion();
-        entity.setId(UUID.randomUUID());
+        entity.setId(10001L);
         entity.setName("Quality");
         Dimension parent = new Dimension();
-        parent.setId(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+        parent.setId(1L);
         entity.setDimension(parent);
         parent.getCriteria().add(entity);
         Question child = new Question();
@@ -49,12 +48,12 @@ class CriterionControllerTest {
         when(service.create(any())).thenReturn(entity);
         when(service.update(eq(entity.getId()), any())).thenReturn(entity);
         mvc.perform(get("/api/criteria"))
-                .andExpect(status().isOk()).andExpect(jsonPath("$[0].id").value(entity.getId().toString()));
+                .andExpect(status().isOk()).andExpect(jsonPath("$[0].id").value(entity.getId().intValue()));
         for (var request : List.of(get("/api/criteria/{id}", entity.getId()),
                 post("/api/criteria").contentType(MediaType.APPLICATION_JSON).content(BODY),
                 put("/api/criteria/{id}", entity.getId()).contentType(MediaType.APPLICATION_JSON).content(BODY))) {
             mvc.perform(request).andExpect(status().isOk())
-                    .andExpect(jsonPath("$.id").value(entity.getId().toString()))
+                    .andExpect(jsonPath("$.id").value(entity.getId().intValue()))
                     .andExpect(jsonPath("$.name").value("Quality"))
                     .andExpect(jsonPath("$.criteria").doesNotExist())
                     .andExpect(jsonPath("$.questions").doesNotExist())
@@ -86,10 +85,10 @@ class CriterionControllerTest {
 
     @Test
     void filtersCriteriaByDimension() throws Exception {
-        UUID id = UUID.randomUUID();
+        Long id = 10002L;
         when(service.findByDimension(id)).thenReturn(List.of(entity));
         mvc.perform(get("/api/criteria").param("dimensionId", id.toString()))
-                .andExpect(status().isOk()).andExpect(jsonPath("$[0].id").value(entity.getId().toString()));
+                .andExpect(status().isOk()).andExpect(jsonPath("$[0].id").value(entity.getId().intValue()));
         verify(service).findByDimension(id);
     }
 

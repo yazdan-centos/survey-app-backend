@@ -9,19 +9,18 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-public interface SurveyResponseRepository extends JpaRepository<SurveyResponse, UUID> {
+public interface SurveyResponseRepository extends JpaRepository<SurveyResponse, Long> {
     @Query("select (count(d) > 0) from DemographicAnswer d where d.fieldKey = :key and d.value = :value")
     boolean existsByDemographic(@Param("key") String key, @Param("value") String value);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select r from SurveyResponse r where r.id = :id")
-    Optional<SurveyResponse> findForUpdate(@Param("id") UUID id);
+    Optional<SurveyResponse> findForUpdate(@Param("id") Long id);
 
-    boolean existsByUserIdAndSurveyId(UUID userId, UUID surveyId);
+    boolean existsByUserIdAndSurveyId(Long userId, Long surveyId);
 
-    List<SurveyResponse> findAllByUserIdOrderBySubmittedAtDesc(UUID userId);
+    List<SurveyResponse> findAllByUserIdOrderBySubmittedAtDesc(Long userId);
 
-    List<SurveyResponse> findAllBySurveyId(UUID surveyId);
+    List<SurveyResponse> findAllBySurveyId(Long surveyId);
 }

@@ -7,10 +7,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-public interface SurveyAnswerRepository extends JpaRepository<SurveyAnswer, UUID> {
-    Optional<SurveyAnswer> findByIdAndResponseId(UUID id, UUID responseId);
+public interface SurveyAnswerRepository extends JpaRepository<SurveyAnswer, Long> {
+    Optional<SurveyAnswer> findByIdAndResponseId(Long id, Long responseId);
 
     @Query("""
             select d.id as dimensionId, d.key as dimensionKey, d.label as dimensionLabel,
@@ -43,16 +42,16 @@ public interface SurveyAnswerRepository extends JpaRepository<SurveyAnswer, UUID
               and q.survey.id = :surveyId
             order by d.displayOrder, c.name, q.displayOrder, r.role
             """)
-    List<DimensionScoreRow> findDimensionScoreRowsBySurveyId(@Param("surveyId") UUID surveyId);
+    List<DimensionScoreRow> findDimensionScoreRowsBySurveyId(@Param("surveyId") Long surveyId);
 
     interface DimensionScoreRow {
-        UUID getDimensionId();
+        Long getDimensionId();
         String getDimensionKey();
         String getDimensionLabel();
         int getDimensionOrder();
-        UUID getCriterionId();
+        Long getCriterionId();
         String getCriterionName();
-        UUID getQuestionId();
+        Long getQuestionId();
         String getQuestionCode();
         org.mapnaom.surveyappbackend.entity.SurveyRole getRole();
         double getScore();

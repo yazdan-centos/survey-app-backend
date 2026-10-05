@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -28,10 +27,10 @@ class QuestionServiceTest {
 
     @Test
     void createMapsQuestionAndLevels() {
-        UUID surveyId = UUID.randomUUID();
+        Long surveyId = 10039L;
         Survey survey = new Survey();
         Criterion criterion = new Criterion();
-        criterion.setId(UUID.randomUUID());
+        criterion.setId(10040L);
         CreateQuestionRequest request = new CreateQuestionRequest();
         request.setSurveyId(surveyId); request.setCode("Q1"); request.setText("Leadership"); request.setRole(SurveyRole.MANAGERS);
         request.setCriterionId(criterion.getId());
@@ -59,8 +58,8 @@ class QuestionServiceTest {
     @Test
     void createThrowsWhenCriterionMissing() {
         CreateQuestionRequest request = new CreateQuestionRequest();
-        request.setSurveyId(UUID.randomUUID());
-        request.setCriterionId(UUID.randomUUID());
+        request.setSurveyId(10041L);
+        request.setCriterionId(10042L);
         when(surveyRepository.findById(request.getSurveyId())).thenReturn(java.util.Optional.of(new Survey()));
         when(criterionRepository.findById(request.getCriterionId())).thenReturn(java.util.Optional.empty());
 
@@ -70,7 +69,7 @@ class QuestionServiceTest {
 
     @Test
     void createThrowsWhenSurveyMissing() {
-        UUID id = UUID.randomUUID();
+        Long id = 10043L;
         CreateQuestionRequest request = new CreateQuestionRequest(); request.setSurveyId(id);
         when(surveyRepository.findById(id)).thenReturn(java.util.Optional.empty());
         assertThatThrownBy(() -> questionService.create(request)).hasMessage("Survey not found");

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -38,7 +37,7 @@ public class DemoGraphicQuestionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DemoGraphicQuestion> getById(@PathVariable UUID id) {
+    public ResponseEntity<DemoGraphicQuestion> getById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -48,12 +47,12 @@ public class DemoGraphicQuestionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DemoGraphicQuestion> update(@PathVariable UUID id, @RequestBody DemoGraphicQuestion question) {
+    public ResponseEntity<DemoGraphicQuestion> update(@PathVariable Long id, @RequestBody DemoGraphicQuestion question) {
         return ResponseEntity.ok(service.update(id, question));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

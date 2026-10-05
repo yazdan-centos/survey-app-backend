@@ -34,8 +34,8 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "surveyId": "PUT-SURVEY-UUID-HERE",
-  "criterionId": "PUT-CRITERION-UUID-HERE",
+  "surveyId": 1,
+  "criterionId": 1,
   "code": "MOCK-Q001",
   "text": "How effectively does the organization lead change?",
   "role": "MANAGERS",

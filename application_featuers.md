@@ -94,7 +94,7 @@ All endpoints below except login require authentication.
 - Java 17 and Spring Boot, built with Maven and the included Maven wrapper.
 - Spring MVC REST controllers and Jakarta Bean Validation on request DTOs.
 - Spring Data JPA persistence with the PostgreSQL driver.
-- UUID identifiers and automatic creation/update timestamps inherited from `BaseEntity`.
+- Long identifiers and automatic creation/update timestamps inherited from `BaseEntity`.
 - Spring Security, LDAP authentication, and JWT signing and verification.
 - Apache POI for Excel processing.
 - Dockerfile and Docker Compose configuration included in the workspace.

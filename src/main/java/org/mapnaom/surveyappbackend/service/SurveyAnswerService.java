@@ -14,7 +14,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Validated
@@ -25,12 +24,12 @@ public class SurveyAnswerService {
     private final SurveyAnswerValidator answerValidator;
 
     @Transactional
-    public SurveyAnswerDetails create(UUID responseId, @NotNull @Valid SaveSurveyAnswerRequest request) {
+    public SurveyAnswerDetails create(Long responseId, @NotNull @Valid SaveSurveyAnswerRequest request) {
         var response = responseService.findAccessible(responseId, true);
         if (response.getAnswers().stream().anyMatch(answer -> answer.getQuestion().getId().equals(request.getQuestionId()))) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "An answer already exists for this question");
         }
-        UUID surveyId = response.getAnswers().isEmpty() ? null
+        Long surveyId = response.getAnswers().isEmpty() ? null
                 : response.getAnswers().get(0).getQuestion().getSurvey().getId();
         var questions = answerValidator.validate(response.getRole(), List.of(request), surveyId);
         SurveyAnswer answer = new SurveyAnswer();
@@ -47,7 +46,7 @@ public class SurveyAnswerService {
     }
 
     @Transactional
-    public SurveyAnswerDetails update(UUID responseId, UUID answerId, @NotNull @Valid SaveSurveyAnswerRequest request) {
+    public SurveyAnswerDetails update(Long responseId, Long answerId, @NotNull @Valid SaveSurveyAnswerRequest request) {
         var response = responseService.findAccessible(responseId, true);
         SurveyAnswer answer = findAnswer(responseId, answerId);
         if (!answer.getQuestion().getId().equals(request.getQuestionId())) {
@@ -61,18 +60,18 @@ public class SurveyAnswerService {
     }
 
     @Transactional(readOnly = true)
-    public List<SurveyAnswerDetails> findByResponseId(UUID responseId) {
+    public List<SurveyAnswerDetails> findByResponseId(Long responseId) {
         return responseService.findAccessible(responseId, false).getAnswers().stream()
                 .map(SurveyAnswerDetails::from).toList();
     }
 
     @Transactional(readOnly = true)
-    public SurveyAnswerDetails findById(UUID responseId, UUID answerId) {
+    public SurveyAnswerDetails findById(Long responseId, Long answerId) {
         responseService.findAccessible(responseId, false);
         return SurveyAnswerDetails.from(findAnswer(responseId, answerId));
     }
 
-    private SurveyAnswer findAnswer(UUID responseId, UUID answerId) {
+    private SurveyAnswer findAnswer(Long responseId, Long answerId) {
         return answerRepository.findByIdAndResponseId(answerId, responseId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Survey answer not found in this response"));
     }

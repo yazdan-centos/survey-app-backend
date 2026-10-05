@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -20,7 +19,7 @@ public class SurveyAnswerController {
     private final SurveyAnswerService surveyAnswerService;
 
     @PostMapping
-    public ResponseEntity<SurveyAnswerDetails> createSurveyAnswer(@PathVariable UUID responseId,
+    public ResponseEntity<SurveyAnswerDetails> createSurveyAnswer(@PathVariable Long responseId,
             @Valid @RequestBody SaveSurveyAnswerRequest request) {
         var surveyAnswer = surveyAnswerService.create(responseId, request);
         return ResponseEntity.created(
@@ -29,19 +28,19 @@ public class SurveyAnswerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<SurveyAnswerDetails>> getSurveyAnswersByResponseId(@PathVariable UUID responseId) {
+    public ResponseEntity<List<SurveyAnswerDetails>> getSurveyAnswersByResponseId(@PathVariable Long responseId) {
         return ResponseEntity.ok(surveyAnswerService.findByResponseId(responseId));
     }
 
     @GetMapping("/{answerId}")
-    public ResponseEntity<SurveyAnswerDetails> getSurveyAnswerById(@PathVariable UUID responseId,
-            @PathVariable UUID answerId) {
+    public ResponseEntity<SurveyAnswerDetails> getSurveyAnswerById(@PathVariable Long responseId,
+            @PathVariable Long answerId) {
         return ResponseEntity.ok(surveyAnswerService.findById(responseId, answerId));
     }
 
     @PutMapping("/{answerId}")
-    public ResponseEntity<SurveyAnswerDetails> updateSurveyAnswer(@PathVariable UUID responseId,
-            @PathVariable UUID answerId,
+    public ResponseEntity<SurveyAnswerDetails> updateSurveyAnswer(@PathVariable Long responseId,
+            @PathVariable Long answerId,
             @Valid @RequestBody SaveSurveyAnswerRequest request) {
         return ResponseEntity.ok(surveyAnswerService.update(responseId, answerId, request));
     }

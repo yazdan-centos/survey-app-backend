@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -27,12 +26,12 @@ public class SurveyResponseController {
     }
 
     @GetMapping("/{responseId}")
-    public ResponseEntity<SurveyResponseDetails> getSurveyResponseById(@PathVariable UUID responseId) {
+    public ResponseEntity<SurveyResponseDetails> getSurveyResponseById(@PathVariable Long responseId) {
         return ResponseEntity.ok(surveyResponseService.findById(responseId));
     }
 
     @PutMapping("/{responseId}")
-    public ResponseEntity<SurveyResponseDetails> updateSurveyResponse(@PathVariable UUID responseId,
+    public ResponseEntity<SurveyResponseDetails> updateSurveyResponse(@PathVariable Long responseId,
             @Valid @RequestBody SaveSurveyResponseRequest request) {
         return ResponseEntity.ok(surveyResponseService.update(responseId, request));
     }

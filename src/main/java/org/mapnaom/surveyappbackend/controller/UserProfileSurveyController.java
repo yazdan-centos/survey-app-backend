@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Per-user survey endpoints: the surveys currently assigned and active for the
@@ -53,7 +52,7 @@ public class UserProfileSurveyController {
      * only validates access; result payloads come from the dashboard endpoints.
      */
     @GetMapping("/surveys/{surveyId}/results")
-    public ResponseEntity<Void> getMySurveyResults(@PathVariable UUID surveyId) {
+    public ResponseEntity<Void> getMySurveyResults(@PathVariable Long surveyId) {
         User user = currentUser();
         surveyAssignmentService.assertResultAccess(user, surveyId);
         return ResponseEntity.ok().build();

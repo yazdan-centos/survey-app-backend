@@ -4,11 +4,10 @@ import org.mapnaom.surveyappbackend.entity.SurveyRole;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
 /** Chart-compatible survey score data, including an aggregate and role groups. */
 public record SurveyDimensionResultsResponse(
-        UUID surveyId,
+        Long surveyId,
         Instant generatedAt,
         List<DimensionResult> dimensions,
         List<RoleResult> roles) {

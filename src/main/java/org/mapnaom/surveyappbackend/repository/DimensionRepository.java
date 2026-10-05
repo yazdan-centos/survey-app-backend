@@ -5,9 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface DimensionRepository extends JpaRepository<Dimension, UUID> {
+public interface DimensionRepository extends JpaRepository<Dimension, Long> {
     Optional<Dimension> findByKey(String key);
 }
